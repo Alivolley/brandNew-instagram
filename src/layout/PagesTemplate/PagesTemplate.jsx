@@ -7,10 +7,10 @@ const PagesTemplate = ({ children }) => {
    return (
       <Wrapper>
          <Grid container spacing={2}>
-            <Grid sm={0} md={3}>
+            <Grid sm={0} md={3} lg={2.5}>
                <LeftsideMenu />
             </Grid>
-            <Grid sm={12} md={9}>
+            <Grid sm={12} md={9} lg={9.5}>
                {children}
             </Grid>
          </Grid>
