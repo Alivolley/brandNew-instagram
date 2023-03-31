@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import SearchIcon from "../../assets/svgs/searchIcon";
+import SearchIcon from "../../assets/svgs/SearchIcon";
 import HomeIcon from "./../../assets/svgs/HomeIcon";
 import ExploreIcon from "./../../assets/svgs/ExploreIcon";
 import DirectIcon from "./../../assets/svgs/DirectIcon";
