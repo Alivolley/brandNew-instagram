@@ -13,6 +13,8 @@ const PagesTemplate = ({ children }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
+   console.log(theme);
+
    return (
       <Wrapper templateTheme={templateTheme}>
          <Grid container>
@@ -26,7 +28,7 @@ const PagesTemplate = ({ children }) => {
                   <LeftsideMenu />
                )}
             </Grid>
-            <Grid sm={12} md={9} lg={9.5}>
+            <Grid sm={12} md={9} lg={9.5} sx={{ marginTop: isMatch && "8rem" }}>
                {children}
             </Grid>
          </Grid>
