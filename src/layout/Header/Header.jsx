@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import ActivityIcon from "../../assets/svgs/ActivityIcon";
 import InstagramText from "../../assets/svgs/InstagramText";
 import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 
 const Header = () => {
+   const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
    return (
-      <Wrapper>
+      <Wrapper templateTheme={templateTheme}>
          <Logo to="/">
             <InstagramText />
          </Logo>
 
          <RightGroup>
-            <HeaderSearch />
+            <HeaderSearch templateTheme={templateTheme} />
 
             <BottunItem>
                <Icon>
@@ -32,11 +34,16 @@ const Wrapper = styled.div`
    top: 0;
    right: 0;
    left: 0;
-   background-color: transparent;
    display: flex;
    align-items: center;
    padding: 1.5rem 2rem;
    border-bottom: 0.1rem solid var(--border-color);
+   background-color: ${({ templateTheme }) => templateTheme};
+
+   svg {
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      fill: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   }
 `;
 
 const Logo = styled(NavLink)`

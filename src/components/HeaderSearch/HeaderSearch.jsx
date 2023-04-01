@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import HeaderSearchIcon from "./../../assets/svgs/HeaderSearchIcon";
 
-const HeaderSearch = () => {
+const HeaderSearch = ({ templateTheme }) => {
    const [searchValue, setSearchValue] = useState("");
 
    return (
-      <Wrapper>
+      <Wrapper templateTheme={templateTheme}>
          <Icon>
             <HeaderSearchIcon />
          </Icon>
@@ -24,6 +24,11 @@ const Wrapper = styled.div`
    background-color: rgb(239, 239, 239);
    padding: 0.7rem 1.5rem;
    border-radius: 0.7rem;
+   background-color: ${({ templateTheme }) => (templateTheme === "white" ? " rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
+
+   input {
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   }
 `;
 
 const Icon = styled.button`

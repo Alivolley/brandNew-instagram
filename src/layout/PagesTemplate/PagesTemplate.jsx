@@ -13,8 +13,6 @@ const PagesTemplate = ({ children }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-   console.log(theme);
-
    return (
       <Wrapper templateTheme={templateTheme}>
          <Grid container>
