@@ -102,6 +102,8 @@ const Leftside = styled.div`
    border-right: 0.1rem solid var(--border-color);
    position: sticky;
    top: 0;
+   left: 0;
+   bottom: 0;
 
    svg,
    p {

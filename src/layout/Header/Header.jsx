@@ -7,7 +7,7 @@ import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 
 const Header = () => {
-   const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
+   const { templateTheme } = useContext(GeneralInfoContext);
    return (
       <Wrapper templateTheme={templateTheme}>
          <Logo to="/">
