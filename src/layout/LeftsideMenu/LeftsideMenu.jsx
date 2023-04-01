@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "../../assets/svgs/SearchIcon";
 import HomeIcon from "./../../assets/svgs/HomeIcon";
@@ -11,15 +11,24 @@ import InstagramText from "./../../assets/svgs/InstagramText";
 import ThemeChangeIcon from "./../../assets/svgs/ThemeChangeIcon";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import MoreIcon from "../../assets/svgs/MoreIcon";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 
 const LeftsideMenu = () => {
+   const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
+
+   const changeTheme = () => {
+      const foundedTheme = localStorage.getItem("theme");
+      setTemplateTheme(() => (foundedTheme === "white" ? "black" : "white"));
+      localStorage.setItem("theme", foundedTheme === "white" ? "black" : "white");
+   };
+
    return (
-      <Leftside>
-         <Logo>
+      <Leftside templateTheme={templateTheme}>
+         <Logo to="/">
             <InstagramText />
          </Logo>
          <Links>
-            <LinkedItem>
+            <LinkedItem to="/">
                <Icon>
                   <HomeIcon />
                </Icon>
@@ -33,14 +42,14 @@ const LeftsideMenu = () => {
                <Text>Search</Text>
             </BottunItem>
 
-            <LinkedItem>
+            <LinkedItem to="/explore">
                <Icon>
                   <ExploreIcon />
                </Icon>
                <Text>Explore</Text>
             </LinkedItem>
 
-            <LinkedItem>
+            <LinkedItem to="/direct">
                <Icon>
                   <DirectIcon />
                </Icon>
@@ -54,21 +63,21 @@ const LeftsideMenu = () => {
                <Text>Notifications</Text>
             </BottunItem>
 
-            <LinkedItem>
+            <LinkedItem to="/createPost">
                <Icon>
                   <CreatePostIcon />
                </Icon>
                <Text>Create</Text>
             </LinkedItem>
 
-            <BottunItem>
+            <LinkedItem to="/profile">
                <ProfilePhoto src={NoProfilePhoto} />
                <Text>Profile</Text>
-            </BottunItem>
+            </LinkedItem>
          </Links>
 
          <MoreOptions>
-            <BottunItem>
+            <BottunItem onClick={changeTheme}>
                <Icon>
                   <ThemeChangeIcon />
                </Icon>
@@ -91,18 +100,30 @@ export default LeftsideMenu;
 const Leftside = styled.div`
    padding: 4rem 2.5rem;
    border-right: 0.1rem solid var(--border-color);
+   position: sticky;
+   top: 0;
+
+   svg,
+   p {
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      fill: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   }
 `;
 
-const Logo = styled.div``;
+const Logo = styled(NavLink)``;
 
 const Links = styled.div`
    margin-top: 5rem;
    display: flex;
    flex-direction: column;
    gap: 3rem;
+
+   .active {
+      font-weight: 700;
+   }
 `;
 
-const LinkedItem = styled(Link)`
+const LinkedItem = styled(NavLink)`
    text-decoration: none;
    display: flex;
    gap: 2rem;
@@ -111,7 +132,8 @@ const LinkedItem = styled(Link)`
    transition: all 0.15s;
 
    &:hover {
-      div {
+      div,
+      img {
          transform: scale(1.15);
       }
    }
