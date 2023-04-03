@@ -1,5 +1,7 @@
 :root {
    --border-color: #dbdbdb;
+   --blueBtn-color: #0f9bf6;
+   --validation-color: #ff3041;
 }
 
 html {
