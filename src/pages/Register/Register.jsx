@@ -63,7 +63,7 @@ const Register = () => {
          setConfirmTextError("Passwords are not matched");
       } else {
          cleanErrors();
-         registerRequest();
+         registerRequest(usernameValue, emailValue, passwordValue, confirmValue);
       }
    };
 
