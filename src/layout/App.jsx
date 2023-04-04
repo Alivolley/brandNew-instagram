@@ -6,7 +6,7 @@ import Routes from "./Routes";
 
 const App = () => {
    const [templateTheme, setTemplateTheme] = useState("white");
-   const [isLogin, setIsLogin] = useState();
+   const [isLogin, setIsLogin] = useState(Cookies.get("accessToken"));
 
    useEffect(() => {
       setIsLogin(Cookies.get("accessToken"));
