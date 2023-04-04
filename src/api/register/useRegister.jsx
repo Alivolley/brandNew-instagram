@@ -19,7 +19,6 @@ const useRegister = () => {
       axiosInstance
          .post("register_email/", newUser)
          .then((res) => {
-            console.log(res);
             if (res.status === 200) {
                sessionStorage.setItem("detail", JSON.stringify(newUser));
                navigate("/registerCode");

@@ -30,6 +30,11 @@ axiosInstance.interceptors.response.use(
          } catch (err) {
             return console.log(err);
          }
+      } else if (error.response.status === 403) {
+         Cookies.remove("accessToken");
+         Cookies.remove("refreshToken");
+         sessionStorage.clear();
+         location.href = "/login";
       } else {
          return Promise.reject(error);
       }

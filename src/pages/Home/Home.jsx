@@ -9,7 +9,6 @@ const Home = () => {
       axiosInstance
          .get("saved_posts/")
          .then((res) => {
-            // console.log(res);
             setDklflsfk(res.data.total_pages);
          })
          .catch((err) => console.log(err))
