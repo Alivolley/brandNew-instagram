@@ -1,14 +1,21 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import PagesTemplate from "../PagesTemplate/PagesTemplate";
 
 const PrivateRoute = () => {
+   const { isLogin } = useContext(GeneralInfoContext);
+
    return (
-      <div>
-         <PagesTemplate>
-            <Outlet />
-         </PagesTemplate>
-      </div>
+      <>
+         {isLogin ? (
+            <PagesTemplate>
+               <Outlet />
+            </PagesTemplate>
+         ) : (
+            <Navigate to="/login" />
+         )}
+      </>
    );
 };
 

@@ -1,14 +1,11 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 
 const AuthRoute = () => {
-   // const islogin  = Cookies.get('accessToken')
+   const { isLogin } = useContext(GeneralInfoContext);
 
-   return (
-      <>
-         <Outlet />
-      </>
-   );
+   return <>{isLogin ? <Navigate to="/" /> : <Outlet />}</>;
 };
 
 export default AuthRoute;
