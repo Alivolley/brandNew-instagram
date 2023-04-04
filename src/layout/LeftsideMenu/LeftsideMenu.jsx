@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "../../assets/svgs/SearchIcon";
@@ -12,9 +12,11 @@ import ThemeChangeIcon from "./../../assets/svgs/ThemeChangeIcon";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import MoreIcon from "../../assets/svgs/MoreIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleMenu";
 
 const LeftsideMenu = () => {
    const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
+   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
 
    const changeTheme = () => {
       const foundedTheme = localStorage.getItem("theme");
@@ -84,11 +86,12 @@ const LeftsideMenu = () => {
                <Text>Change theme</Text>
             </BottunItem>
 
-            <BottunItem>
+            <BottunItem onClick={() => setIsToggleMenuOpen((prev) => !prev)}>
                <Icon>
                   <MoreIcon />
                </Icon>
                <Text>More</Text>
+               <SidebarToggleMenu isOpen={isToggleMenuOpen} closeMenu={() => setIsToggleMenuOpen(false)} />
             </BottunItem>
          </MoreOptions>
       </Leftside>
@@ -134,7 +137,7 @@ const LinkedItem = styled(NavLink)`
    transition: all 0.15s;
 
    &:hover {
-      div,
+      & > span,
       img {
          transform: scale(1.15);
       }
@@ -142,6 +145,7 @@ const LinkedItem = styled(NavLink)`
 `;
 
 const BottunItem = styled.button`
+   position: relative;
    display: flex;
    align-items: center;
    gap: 2rem;
@@ -151,7 +155,7 @@ const BottunItem = styled.button`
    transition: all 0.15s;
 
    &:hover {
-      div,
+      & > span,
       img {
          transform: scale(1.15);
       }
@@ -160,7 +164,7 @@ const BottunItem = styled.button`
 
 const Text = styled.p``;
 
-const Icon = styled.div`
+const Icon = styled.span`
    transition: all 0.15s;
 `;
 
