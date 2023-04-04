@@ -66,6 +66,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
    border: 0.1rem solid var(--border-color);
    width: fit-content;
+   min-width: 25rem;
    padding: 5rem;
    border-radius: 1rem;
    background-color: transparent;

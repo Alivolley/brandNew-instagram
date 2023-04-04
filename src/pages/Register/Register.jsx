@@ -7,6 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import useRegister from "../../api/register/useRegister";
+import { Link } from "react-router-dom";
 
 const Register = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -143,6 +144,11 @@ const Register = () => {
                   Sign up
                </SubmitBtn>
             </Form>
+
+            <LoginText templateTheme={templateTheme}>
+               Have an account?
+               <GotoLogin to="/login">Log in</GotoLogin>
+            </LoginText>
          </Wrapper>
       </Container>
    );
@@ -161,6 +167,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
    border: 0.1rem solid var(--border-color);
    width: fit-content;
+   min-width: 25rem;
    padding: 5rem;
    border-radius: 1rem;
    background-color: transparent;
@@ -243,4 +250,18 @@ const SubmitBtn = styled(LoadingButton)`
    &:disabled {
       background-color: var(--border-color) !important;
    }
+`;
+
+const LoginText = styled.p`
+   margin-top: 3rem;
+   font-size: 1.5rem;
+   text-align: center;
+   color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+`;
+
+const GotoLogin = styled(Link)`
+   text-decoration: none;
+   color: var(--blueBtn-color);
+   padding: 0 0.7rem;
+   font-weight: 600;
 `;
