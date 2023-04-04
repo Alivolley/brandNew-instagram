@@ -152,7 +152,7 @@ export default Register;
 
 const Container = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
-   height: 100vh;
+   min-height: 100vh;
    display: flex;
    justify-content: center;
    align-items: center;

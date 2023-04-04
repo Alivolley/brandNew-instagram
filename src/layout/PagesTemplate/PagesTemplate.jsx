@@ -26,7 +26,7 @@ const PagesTemplate = ({ children }) => {
                   <LeftsideMenu />
                )}
             </Grid>
-            <Grid sm={12} md={9} lg={9.5} sx={{ marginTop: isMatch && "8rem" }}>
+            <Grid sm={12} md={9} lg={9.5} sx={{ marginTop: isMatch && "8rem", marginBottom: isMatch && "8rem" }}>
                {children}
             </Grid>
          </Grid>
@@ -39,4 +39,5 @@ export default PagesTemplate;
 const Wrapper = styled.div`
    position: relative;
    background-color: ${({ templateTheme }) => templateTheme};
+   min-height: 100vh;
 `;

@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../libs/axiosInstance";
 
 const useRegister = () => {
    const [loading, setLoading] = useState(false);
+   const navigate = useNavigate();
 
    const registerRequest = (usernameValue, emailValue, passwordValue, confirmValue) => {
       setLoading(true);
@@ -15,8 +17,14 @@ const useRegister = () => {
       };
 
       axiosInstance
-         .post("register_email", newUser)
-         .then((res) => console.log(res))
+         .post("register_email/", newUser)
+         .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+               sessionStorage.setItem("detail", JSON.stringify(newUser));
+               navigate("/registerCode");
+            }
+         })
          .catch((err) => console.log(err))
          .finally(() => setLoading(false));
    };
