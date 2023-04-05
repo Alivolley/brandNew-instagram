@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import LeftsideMenu from "../LeftsideMenu/LeftsideMenu";
 import { useTheme } from "@mui/system";
 import { useMediaQuery } from "@mui/material";
@@ -16,7 +16,7 @@ const PagesTemplate = ({ children }) => {
    return (
       <Wrapper templateTheme={templateTheme}>
          <Grid container>
-            <Grid sm={12} md={3} lg={2.5}>
+            <Grid item xs={12} md={3} lg={2.5}>
                {isMatch ? (
                   <>
                      <Header />
@@ -26,7 +26,7 @@ const PagesTemplate = ({ children }) => {
                   <LeftsideMenu />
                )}
             </Grid>
-            <Grid sm={12} md={9} lg={9.5} sx={{ marginTop: isMatch && "8rem", marginBottom: isMatch && "8rem" }}>
+            <Grid item xs={12} md={9} lg={9.5} sx={{ marginTop: isMatch && "8rem", marginBottom: isMatch && "8rem" }}>
                {children}
             </Grid>
          </Grid>

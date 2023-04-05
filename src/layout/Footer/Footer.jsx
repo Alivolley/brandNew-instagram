@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import ActivityIcon from "../../assets/svgs/ActivityIcon";
 import CreatePostIcon from "../../assets/svgs/CreatePostIcon";
 import DirectIcon from "../../assets/svgs/DirectIcon";
 import ExploreIcon from "../../assets/svgs/ExploreIcon";
 import HomeIcon from "../../assets/svgs/HomeIcon";
-import SearchIcon from "../../assets/svgs/SearchIcon";
 import ThemeChangeIcon from "../../assets/svgs/ThemeChangeIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
@@ -66,6 +64,7 @@ const Wrapper = styled.div`
    bottom: 0;
    right: 0;
    left: 0;
+   z-index: 5;
    display: flex;
    justify-content: space-between;
    padding: 1.5rem 4rem;
