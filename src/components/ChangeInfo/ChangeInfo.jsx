@@ -10,6 +10,7 @@ import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import useEditInfoSetting from "../../api/setting/useEditInfoSetting";
 import { toast } from "react-toastify";
+import ChangePhotoModal from "../ChangePhotoModal/ChangePhotoModal";
 
 const ChangeInfo = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -18,6 +19,7 @@ const ChangeInfo = () => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
+   const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
    const [nameValue, setNameValue] = useState("");
    const [usernameValue, setUsernameValue] = useState("");
    const [bioValue, setBioValue] = useState("");
@@ -32,7 +34,7 @@ const ChangeInfo = () => {
 
    const editinfoHandler = (e) => {
       e.preventDefault();
-      if (nameValue && usernameValue && emailValue) {
+      if (usernameValue && emailValue) {
          // const newInfo = {
          //    name: nameValue,
          //    website: "",
@@ -42,7 +44,7 @@ const ChangeInfo = () => {
          // };
          // editInfoSettingRequest();
       } else {
-         toast.warn("Name & Username & Email can't be empty", {
+         toast.warn("Username & Email can't be empty", {
             autoClose: 5000,
             theme: "colored",
          });
@@ -55,11 +57,14 @@ const ChangeInfo = () => {
             <LoadingSpinner />
          ) : (
             <>
+               <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
                <Header>
                   <Image src={`https://djangoinsta.pythonanywhere.com/${profilePhoto}` || NoProfilePhoto} />
                   <HeaderTexts>
-                     <HeaderUsername isMatch={isMatch}>ali-azghandi</HeaderUsername>
-                     <Headerbutton isMatch={isMatch}>Change profile photo</Headerbutton>
+                     <HeaderUsername isMatch={isMatch}>{usernameValue}</HeaderUsername>
+                     <Headerbutton isMatch={isMatch} onClick={() => setShowChangePhotoModal(true)}>
+                        Change profile photo
+                     </Headerbutton>
                   </HeaderTexts>
                </Header>
 
