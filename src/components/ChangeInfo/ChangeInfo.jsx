@@ -69,7 +69,7 @@ const ChangeInfo = () => {
                   getInfoEdit={getInfoEdit}
                />
                <Header>
-                  <Image src={`https://djangoinsta.pythonanywhere.com/${profilePhoto}` || NoProfilePhoto} />
+                  <Image src={profilePhoto ? `https://djangoinsta.pythonanywhere.com/${profilePhoto}` : NoProfilePhoto} />
                   <HeaderTexts>
                      <HeaderUsername isMatch={isMatch}>{usernameValue}</HeaderUsername>
                      <Headerbutton isMatch={isMatch} onClick={() => setShowChangePhotoModal(true)}>

@@ -3,14 +3,20 @@ import Dialog from "@mui/material/Dialog";
 import styled from "styled-components";
 import { LoadingButton } from "@mui/lab";
 import useEditProfilePhoto from "../../api/setting/useEditProfilePhoto";
+import useDeleteProfilePhoto from "../../api/setting/useDeleteProfilePhoto";
 
 const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch, getInfoEdit }) => {
    const [editProfilePhotoRequest, editReqloading] = useEditProfilePhoto();
+   const [deleteProfilePhotoRequest, deleteLoading] = useDeleteProfilePhoto();
 
    const changePhotoHandler = (e) => {
       const formData = new FormData();
       formData.append("profile_photo", e.target.files[0]);
       editProfilePhotoRequest(formData, getInfoEdit, handleClose);
+   };
+
+   const deleteProfileHandler = () => {
+      deleteProfilePhotoRequest(getInfoEdit, handleClose);
    };
 
    return (
@@ -23,7 +29,9 @@ const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch, getInfoEd
                <UploadText hidden={editReqloading}>Upload photo</UploadText>
             </UploadButton>
             <hr />
-            <RemoveButton variant="none">Remove Current Photo</RemoveButton>
+            <RemoveButton variant="none" onClick={deleteProfileHandler} loading={deleteLoading}>
+               Remove Current Photo
+            </RemoveButton>
             <hr />
             <CancelButton templateTheme={templateTheme} onClick={handleClose}>
                Cancel
