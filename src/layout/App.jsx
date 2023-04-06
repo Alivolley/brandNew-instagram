@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useRoutes } from "react-router-dom";
 import GeneralInfoContext from "../contexts/GeneralInfoContext";
 import Routes from "./Routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
    const [templateTheme, setTemplateTheme] = useState("white");
@@ -22,7 +24,10 @@ const App = () => {
    const router = useRoutes(Routes);
    return (
       <GeneralInfoContext.Provider value={{ templateTheme, setTemplateTheme, isLogin }}>
-         <>{router}</>
+         <>
+            {router}
+            <ToastContainer />
+         </>
       </GeneralInfoContext.Provider>
    );
 };

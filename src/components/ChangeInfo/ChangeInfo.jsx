@@ -8,10 +8,13 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import useEditInfoSetting from "../../api/setting/useEditInfoSetting";
+import { toast } from "react-toastify";
 
 const ChangeInfo = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
    const [infoSettingRequest, loading] = useGetInfoSetting();
+   const [editInfoSettingRequest, editReqloading] = useEditInfoSetting();
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -21,15 +24,29 @@ const ChangeInfo = () => {
    const [emailValue, setEmailValue] = useState("");
    const [genderValue, setGenderValue] = useState("");
    const [suggestionValue, setSuggestionValue] = useState(false);
+   const [profilePhoto, setProfilePhoto] = useState("");
 
    useEffect(() => {
-      infoSettingRequest(setNameValue, setUsernameValue, setBioValue, setEmailValue, setGenderValue, setSuggestionValue);
+      infoSettingRequest(setNameValue, setUsernameValue, setBioValue, setEmailValue, setGenderValue, setSuggestionValue, setProfilePhoto);
    }, []);
 
-   const editProfileHandler = (e) => {
+   const editinfoHandler = (e) => {
       e.preventDefault();
-
-      //   console.log(nameValue, usernameValue, bioValue, emailValue, phoneValue, genderValue, suggestionValue);
+      if (nameValue && usernameValue && emailValue) {
+         // const newInfo = {
+         //    name: nameValue,
+         //    website: "",
+         //    bio: bioValue,
+         //    gender: genderValue,
+         //    open_suggestions: suggestionValue,
+         // };
+         // editInfoSettingRequest();
+      } else {
+         toast.warn("Name & Username & Email can't be empty", {
+            autoClose: 5000,
+            theme: "colored",
+         });
+      }
    };
 
    return (
@@ -39,14 +56,14 @@ const ChangeInfo = () => {
          ) : (
             <>
                <Header>
-                  <Image src={NoProfilePhoto} />
+                  <Image src={`https://djangoinsta.pythonanywhere.com/${profilePhoto}` || NoProfilePhoto} />
                   <HeaderTexts>
                      <HeaderUsername isMatch={isMatch}>ali-azghandi</HeaderUsername>
                      <Headerbutton isMatch={isMatch}>Change profile photo</Headerbutton>
                   </HeaderTexts>
                </Header>
 
-               <Form onSubmit={editProfileHandler}>
+               <Form onSubmit={editinfoHandler}>
                   <Item>
                      <Label>Name</Label>
                      <Input type="text" value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
@@ -82,7 +99,7 @@ const ChangeInfo = () => {
                      <InputCheckbox type="checkbox" value={suggestionValue} onChange={() => setSuggestionValue((prev) => !prev)} checked={suggestionValue} />
                   </Item>
 
-                  <SubmitBtn loading={false} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
+                  <SubmitBtn loading={editReqloading} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
                      Submit changes
                   </SubmitBtn>
                </Form>
@@ -98,9 +115,9 @@ const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
-   border: 0.1rem solid var(--border-color);
    padding: ${({ isMatch }) => (isMatch ? "0.5rem 2rem" : "2rem")};
    margin: 1.5rem;
+   border-bottom: 0.1rem solid var(--border-color);
 
    label,
    p {
@@ -111,7 +128,12 @@ const Wrapper = styled.div`
    input,
    textarea {
       width: ${({ isMatch }) => (isMatch ? "13rem" : "20rem")};
-      background-color: ${({ templateTheme }) => (templateTheme === "white" ? " rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
+      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "white" : " rgb(38, 38, 38)")};
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "white")};
+   }
+
+   input:disabled {
+      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
       color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
    }
 `;
@@ -129,6 +151,8 @@ const Image = styled.img`
    height: 5rem;
    border-radius: 50%;
    border: 0.1rem solid var(--border-color);
+   object-fit: contain;
+   background-color: black;
 `;
 
 const HeaderTexts = styled.div`
@@ -172,10 +196,6 @@ const Input = styled.input`
    padding: 0.5rem 1rem;
    font-size: 1.4rem;
    border: 0.1rem solid black;
-
-   &:disabled {
-      background-color: gray !important;
-   }
 `;
 
 const TextArea = styled.textarea`
@@ -194,8 +214,8 @@ const InputCheckbox = styled.input`
 const Select = styled.select`
    padding: 0.5rem 1rem;
    width: ${({ isMatch }) => (isMatch ? "15.5rem" : "22.4rem")};
-   background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : "rgb(38, 38, 38)")};
-   color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+   background-color: ${({ templateTheme }) => (templateTheme === "white" ? "white" : "rgb(38, 38, 38)")};
+   color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "white")};
    font-size: 1.4rem;
    border: 0.1rem solid black;
 `;
