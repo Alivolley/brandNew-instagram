@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import { useContext } from "react";
@@ -6,9 +6,12 @@ import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import { LoadingButton } from "@mui/lab";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
+import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ChangeInfo = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
+   const [infoSettingRequest, loading] = useGetInfoSetting();
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -16,69 +19,75 @@ const ChangeInfo = () => {
    const [usernameValue, setUsernameValue] = useState("");
    const [bioValue, setBioValue] = useState("");
    const [emailValue, setEmailValue] = useState("");
-   const [phoneValue, setPhoneValue] = useState("");
    const [genderValue, setGenderValue] = useState("");
    const [suggestionValue, setSuggestionValue] = useState(false);
+
+   useEffect(() => {
+      infoSettingRequest(setNameValue, setUsernameValue, setBioValue, setEmailValue, setGenderValue, setSuggestionValue);
+   }, []);
 
    const editProfileHandler = (e) => {
       e.preventDefault();
 
-      console.log(nameValue, usernameValue, bioValue, emailValue, phoneValue, genderValue, suggestionValue);
+      //   console.log(nameValue, usernameValue, bioValue, emailValue, phoneValue, genderValue, suggestionValue);
    };
 
    return (
       <Wrapper templateTheme={templateTheme} isMatch={isMatch}>
-         <Header>
-            <Image src={NoProfilePhoto} />
-            <HeaderTexts>
-               <HeaderUsername isMatch={isMatch}>ali-azghandi</HeaderUsername>
-               <Headerbutton isMatch={isMatch}>Change profile photo</Headerbutton>
-            </HeaderTexts>
-         </Header>
+         {loading ? (
+            <LoadingSpinner />
+         ) : (
+            <>
+               <Header>
+                  <Image src={NoProfilePhoto} />
+                  <HeaderTexts>
+                     <HeaderUsername isMatch={isMatch}>ali-azghandi</HeaderUsername>
+                     <Headerbutton isMatch={isMatch}>Change profile photo</Headerbutton>
+                  </HeaderTexts>
+               </Header>
 
-         <Form onSubmit={editProfileHandler}>
-            <Item>
-               <Label>Name</Label>
-               <Input type="text" value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
-            </Item>
-            <Item>
-               <Label>Username</Label>
-               <Input type="text" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} />
-            </Item>
-            <Item>
-               <Label>Website</Label>
-               <Input type="text" value="Only avalible on phone" disabled />
-            </Item>
-            <Item>
-               <Label>Bio</Label>
-               <TextArea type="text" value={bioValue} onChange={(e) => setBioValue(e.target.value)} />
-            </Item>
-            <Item>
-               <Label>Email</Label>
-               <Input type="text" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
-            </Item>
-            <Item>
-               <Label>Phone number</Label>
-               <Input type="number" value={phoneValue} onChange={(e) => setPhoneValue(e.target.value)} />
-            </Item>
-            <Item>
-               <Label>Gender</Label>
-               <Select isMatch={isMatch} templateTheme={templateTheme} value={genderValue} onChange={(e) => setGenderValue(e.target.value)}>
-                  <Option>Male</Option>
-                  <Option>Female</Option>
-                  <Option>Custom</Option>
-                  <Option>Prefer not to say</Option>
-               </Select>
-            </Item>
-            <Item>
-               <Label>Show as suggestion</Label>
-               <InputCheckbox type="checkbox" value={suggestionValue} onChange={() => setSuggestionValue((prev) => !prev)} checked={suggestionValue} />
-            </Item>
+               <Form onSubmit={editProfileHandler}>
+                  <Item>
+                     <Label>Name</Label>
+                     <Input type="text" value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
+                  </Item>
+                  <Item>
+                     <Label>Username</Label>
+                     <Input type="text" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} />
+                  </Item>
+                  <Item>
+                     <Label>Website</Label>
+                     <Input type="text" value="Only avalible on phone" disabled />
+                  </Item>
+                  <Item>
+                     <Label>Bio</Label>
+                     <TextArea type="text" value={bioValue} onChange={(e) => setBioValue(e.target.value)} />
+                  </Item>
+                  <Item>
+                     <Label>Email</Label>
+                     <Input type="text" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
+                  </Item>
 
-            <SubmitBtn loading={false} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
-               Submit changes
-            </SubmitBtn>
-         </Form>
+                  <Item>
+                     <Label>Gender</Label>
+                     <Select isMatch={isMatch} templateTheme={templateTheme} value={genderValue} onChange={(e) => setGenderValue(e.target.value)}>
+                        <Option value="male">Male</Option>
+                        <Option value="female">Female</Option>
+                        <Option value="custom">Custom</Option>
+                        <Option value="prefer not to say">Prefer not to say</Option>
+                     </Select>
+                  </Item>
+                  <Item>
+                     <Label>Show as suggestion</Label>
+                     <InputCheckbox type="checkbox" value={suggestionValue} onChange={() => setSuggestionValue((prev) => !prev)} checked={suggestionValue} />
+                  </Item>
+
+                  <SubmitBtn loading={false} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
+                     Submit changes
+                  </SubmitBtn>
+               </Form>
+            </>
+         )}
       </Wrapper>
    );
 };
@@ -163,6 +172,10 @@ const Input = styled.input`
    padding: 0.5rem 1rem;
    font-size: 1.4rem;
    border: 0.1rem solid black;
+
+   &:disabled {
+      background-color: gray !important;
+   }
 `;
 
 const TextArea = styled.textarea`
@@ -183,9 +196,13 @@ const Select = styled.select`
    width: ${({ isMatch }) => (isMatch ? "15.5rem" : "22.4rem")};
    background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : "rgb(38, 38, 38)")};
    color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+   font-size: 1.4rem;
+   border: 0.1rem solid black;
 `;
 
-const Option = styled.option``;
+const Option = styled.option`
+   font-size: 1.4rem;
+`;
 
 const SubmitBtn = styled(LoadingButton)`
    font-size: 1.5rem !important;
