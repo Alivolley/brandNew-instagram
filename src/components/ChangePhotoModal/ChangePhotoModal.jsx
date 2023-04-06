@@ -2,16 +2,25 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import styled from "styled-components";
 import { LoadingButton } from "@mui/lab";
+import useEditProfilePhoto from "../../api/setting/useEditProfilePhoto";
 
-const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch }) => {
+const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch, getInfoEdit }) => {
+   const [editProfilePhotoRequest, editReqloading] = useEditProfilePhoto();
+
+   const changePhotoHandler = (e) => {
+      const formData = new FormData();
+      formData.append("profile_photo", e.target.files[0]);
+      editProfilePhotoRequest(formData, getInfoEdit, handleClose);
+   };
+
    return (
       <Dialog onClose={handleClose} open={show}>
          <Wrapper templateTheme={templateTheme} isMatch={isMatch}>
             <Title templateTheme={templateTheme}>Change Profile Photo</Title>
             <hr />
-            <UploadButton variant="none">
-               <UploadInput type="file" accept="image/*" />
-               <UploadText>Upload photo</UploadText>
+            <UploadButton variant="none" loading={editReqloading}>
+               <UploadInput type="file" accept="image/*" onChange={changePhotoHandler} />
+               <UploadText hidden={editReqloading}>Upload photo</UploadText>
             </UploadButton>
             <hr />
             <RemoveButton variant="none">Remove Current Photo</RemoveButton>

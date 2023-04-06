@@ -29,8 +29,12 @@ const ChangeInfo = () => {
    const [profilePhoto, setProfilePhoto] = useState("");
 
    useEffect(() => {
-      infoSettingRequest(setNameValue, setUsernameValue, setBioValue, setEmailValue, setGenderValue, setSuggestionValue, setProfilePhoto);
+      getInfoEdit();
    }, []);
+
+   const getInfoEdit = () => {
+      infoSettingRequest(setNameValue, setUsernameValue, setBioValue, setEmailValue, setGenderValue, setSuggestionValue, setProfilePhoto);
+   };
 
    const editinfoHandler = (e) => {
       e.preventDefault();
@@ -57,7 +61,13 @@ const ChangeInfo = () => {
             <LoadingSpinner />
          ) : (
             <>
-               <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
+               <ChangePhotoModal
+                  show={showChangePhotoModal}
+                  handleClose={() => setShowChangePhotoModal(false)}
+                  templateTheme={templateTheme}
+                  isMatch={isMatch}
+                  getInfoEdit={getInfoEdit}
+               />
                <Header>
                   <Image src={`https://djangoinsta.pythonanywhere.com/${profilePhoto}` || NoProfilePhoto} />
                   <HeaderTexts>
