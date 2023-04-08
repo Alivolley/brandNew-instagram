@@ -7,6 +7,8 @@ import Setting from "../pages/Setting/Setting";
 import AuthRoute from "./AuthRoute/AuthRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Profile from "../pages/Profile/Profile";
+import ProfileSaved from "../components/ProfileSaved/ProfileSaved";
+import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
 
 const Routes = [
    {
@@ -25,7 +27,14 @@ const Routes = [
       children: [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
-         { path: "profile", element: <Profile /> },
+         {
+            path: "profile/",
+            element: <Profile />,
+            children: [
+               { path: "posts", element: <ProfilePosts /> },
+               { path: "saved", element: <ProfileSaved /> },
+            ],
+         },
       ],
    },
 ];

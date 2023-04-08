@@ -72,7 +72,7 @@ const LeftsideMenu = () => {
                <Text>Create</Text>
             </LinkedItem>
 
-            <LinkedItem to="/profile">
+            <LinkedItem to="/profile/posts">
                <ProfilePhoto src={NoProfilePhoto} />
                <Text>Profile</Text>
             </LinkedItem>
