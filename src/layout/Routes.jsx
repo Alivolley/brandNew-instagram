@@ -6,6 +6,7 @@ import RegisterCode from "../pages/RegisterCode/RegisterCode";
 import Setting from "../pages/Setting/Setting";
 import AuthRoute from "./AuthRoute/AuthRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import Profile from "../pages/Profile/Profile";
 
 const Routes = [
    {
@@ -24,6 +25,7 @@ const Routes = [
       children: [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
+         { path: "profile", element: <Profile /> },
       ],
    },
 ];

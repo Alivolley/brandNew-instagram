@@ -72,7 +72,7 @@ const LeftsideMenu = () => {
                <Text>Create</Text>
             </LinkedItem>
 
-            <LinkedItem to="/setting">
+            <LinkedItem to="/profile">
                <ProfilePhoto src={NoProfilePhoto} />
                <Text>Profile</Text>
             </LinkedItem>
@@ -107,7 +107,7 @@ const Leftside = styled.div`
    top: 0;
    left: 0;
    bottom: 0;
-   min-height: 100vh;
+   /* min-height: 100vh; */
 
    svg,
    p {
