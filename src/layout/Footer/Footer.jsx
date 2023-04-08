@@ -50,7 +50,7 @@ const Footer = () => {
             </Icon>
          </BottunItem>
 
-         <LinkedItem to="/profile">
+         <LinkedItem to="/profile/posts">
             <ProfilePhoto src={NoProfilePhoto} />
          </LinkedItem>
       </Wrapper>
