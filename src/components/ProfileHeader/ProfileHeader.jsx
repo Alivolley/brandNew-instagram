@@ -79,6 +79,12 @@ const Discribtion = styled.div`
    display: flex;
    flex-direction: column;
    gap: 2rem;
+
+   @media (max-width: 600px) {
+      padding: 1.5rem;
+      margin-top: 3rem;
+      align-items: center;
+   }
 `;
 
 const Title = styled.div`
@@ -104,11 +110,19 @@ const EditButton = styled(Link)`
    &:hover {
       background-color: var(--border-color);
    }
+
+   @media (max-width: 600px) {
+      font-size: 1.3rem;
+   }
 `;
 
 const FollowersWrapper = styled.div`
    display: flex;
    gap: 4rem;
+
+   @media (max-width: 400px) {
+      gap: 1rem;
+   }
 `;
 
 const PostsCounts = styled.p`
