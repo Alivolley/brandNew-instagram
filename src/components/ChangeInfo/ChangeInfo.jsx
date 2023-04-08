@@ -9,7 +9,6 @@ import { useTheme } from "@mui/system";
 import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import useEditInfoSetting from "../../api/setting/useEditInfoSetting";
-import { toast } from "react-toastify";
 import ChangePhotoModal from "../ChangePhotoModal/ChangePhotoModal";
 
 const ChangeInfo = () => {
@@ -38,21 +37,15 @@ const ChangeInfo = () => {
 
    const editinfoHandler = (e) => {
       e.preventDefault();
-      if (usernameValue && emailValue) {
-         // const newInfo = {
-         //    name: nameValue,
-         //    website: "",
-         //    bio: bioValue,
-         //    gender: genderValue,
-         //    open_suggestions: suggestionValue,
-         // };
-         // editInfoSettingRequest();
-      } else {
-         toast.warn("Username & Email can't be empty", {
-            autoClose: 5000,
-            theme: "colored",
-         });
-      }
+
+      const newInfo = {
+         name: nameValue,
+         website: "",
+         bio: bioValue,
+         gender: genderValue,
+         open_suggestions: suggestionValue,
+      };
+      editInfoSettingRequest(newInfo, getInfoEdit);
    };
 
    return (
@@ -85,7 +78,7 @@ const ChangeInfo = () => {
                   </Item>
                   <Item>
                      <Label>Username</Label>
-                     <Input type="text" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} />
+                     <Input type="text" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} disabled />
                   </Item>
                   <Item>
                      <Label>Website</Label>
@@ -97,7 +90,7 @@ const ChangeInfo = () => {
                   </Item>
                   <Item>
                      <Label>Email</Label>
-                     <Input type="text" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
+                     <Input type="text" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} disabled />
                   </Item>
 
                   <Item>
@@ -106,7 +99,7 @@ const ChangeInfo = () => {
                         <Option value="male">Male</Option>
                         <Option value="female">Female</Option>
                         <Option value="custom">Custom</Option>
-                        <Option value="prefer not to say">Prefer not to say</Option>
+                        <Option value="none">Prefer not to say</Option>
                      </Select>
                   </Item>
                   <Item>

@@ -1,24 +1,23 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const useEditInfoSetting = () => {
    const [editReqloading, setEditReqLoading] = useState(false);
 
-   const editInfoSettingRequest = () => {
+   const editInfoSettingRequest = (newInfo, getInfoEdit) => {
       setEditReqLoading(true);
 
       axiosInstance
-         .put("edit/profile/")
+         .put("edit/profile/", newInfo)
          .then((res) => {
-            console.log(res);
-            // if (res.status === 200) {
-            //    setNameValue(res.data.name);
-            //    setUsernameValue(res.data.username);
-            //    setBioValue(res.data.bio);
-            //    setEmailValue(res.data.email);
-            //    setGenderValue(res.data.gender);
-            //    setSuggestionValue(res.data.open_suggestions);
-            // }
+            if (res.status === 200) {
+               getInfoEdit();
+               toast.success("Information changed successfully", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            }
          })
          .catch((err) => console.log(err))
          .finally(() => setEditReqLoading(false));

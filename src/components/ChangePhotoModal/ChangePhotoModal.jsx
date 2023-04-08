@@ -49,6 +49,10 @@ const Wrapper = styled.div`
    flex-direction: column;
    background-color: ${({ templateTheme }) => templateTheme};
    border: 0.1rem solid var(--border-color);
+
+   button:disabled {
+      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : "rgb(38, 38, 38)")};
+   }
 `;
 
 const Title = styled.p`
