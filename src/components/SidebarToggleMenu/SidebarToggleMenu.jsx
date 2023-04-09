@@ -23,19 +23,19 @@ const SidebarToggleMenu = ({ isOpen, closeMenu }) => {
                </Icon>
             </LinkedItem>
 
-            <LinkedItem to="/direct">
+            <LinkedItem to="/profile/saved">
                <Text>Saved</Text>
                <Icon>
                   <SavedIcon />
                </Icon>
             </LinkedItem>
 
-            <BottunItem>
+            <LinkedItem to="/developers">
                <Text>Developers</Text>
                <Icon>
                   <GroupIcon fontSize="large" />
                </Icon>
-            </BottunItem>
+            </LinkedItem>
 
             <BottunItem>
                <Text>Logout</Text>
