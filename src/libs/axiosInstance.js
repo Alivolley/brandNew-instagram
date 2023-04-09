@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
             const res = await axiosInstance.post("login/refresh/", {
                refresh: refreshToken,
             });
-            Cookies.set("accessToken", res.data.access);
+            Cookies.set("accessToken", res.data.access, { expires: 1 });
             originalReq.headers.Authorization = `Bearer ${res.data.access}`;
             return await axiosInstance(originalReq);
          } catch (err) {
