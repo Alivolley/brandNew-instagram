@@ -5,11 +5,16 @@ import { useTheme } from "@mui/system";
 import { useMediaQuery } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import useEditPassword from "../../api/setting/useEditPassword";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const ChangePassword = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+   const [editPasswordRequest, editReqloading] = useEditPassword();
+   const [showPassword, setShowPassword] = useState(false);
 
    const [oldPassValue, setOldPassValue] = useState("");
    const [newPassValue, setNewPassValue] = useState("");
@@ -18,14 +23,20 @@ const ChangePassword = () => {
    const changePassHandler = (e) => {
       e.preventDefault();
       if (oldPassValue && newPassValue && confirmValue) {
-         // const newInfo = {
-         //    name: nameValue,
-         //    website: "",
-         //    bio: bioValue,
-         //    gender: genderValue,
-         //    open_suggestions: suggestionValue,
-         // };
-         // editInfoSettingRequest();
+         if (newPassValue === confirmValue) {
+            const newInfo = {
+               old_password: oldPassValue,
+               password1: newPassValue,
+               password2: confirmValue,
+            };
+
+            editPasswordRequest(newInfo);
+         } else {
+            toast.error("Password and confrim must be the same", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         }
       } else {
          toast.warn("All password fileds must have value", {
             autoClose: 5000,
@@ -39,20 +50,29 @@ const ChangePassword = () => {
          <Form onSubmit={changePassHandler}>
             <Item>
                <Label>Old password</Label>
-               <Input type="text" value={oldPassValue} onChange={(e) => setOldPassValue(e.target.value)} />
+               <Input type={showPassword ? "text" : "password"} value={oldPassValue} onChange={(e) => setOldPassValue(e.target.value)} />
+               <VisibleIcon onClick={() => setShowPassword((prev) => !prev)} templateTheme={templateTheme}>
+                  {showPassword ? <VisibilityOffIcon fontSize="inherit" /> : <VisibilityIcon fontSize="inherit" />}
+               </VisibleIcon>
             </Item>
 
             <Item>
                <Label>New password</Label>
-               <Input type="text" value={newPassValue} onChange={(e) => setNewPassValue(e.target.value)} />
+               <Input type={showPassword ? "text" : "password"} value={newPassValue} onChange={(e) => setNewPassValue(e.target.value)} />
+               <VisibleIcon onClick={() => setShowPassword((prev) => !prev)} templateTheme={templateTheme}>
+                  {showPassword ? <VisibilityOffIcon fontSize="inherit" /> : <VisibilityIcon fontSize="inherit" />}
+               </VisibleIcon>
             </Item>
 
             <Item>
                <Label>Confirm password</Label>
-               <Input type="text" value={confirmValue} onChange={(e) => setConfirmValue(e.target.value)} />
+               <Input type={showPassword ? "text" : "password"} value={confirmValue} onChange={(e) => setConfirmValue(e.target.value)} />
+               <VisibleIcon onClick={() => setShowPassword((prev) => !prev)} templateTheme={templateTheme}>
+                  {showPassword ? <VisibilityOffIcon fontSize="inherit" /> : <VisibilityIcon fontSize="inherit" />}
+               </VisibleIcon>
             </Item>
 
-            <SubmitBtn loading={false} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
+            <SubmitBtn loading={editReqloading} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
                Change password
             </SubmitBtn>
          </Form>
@@ -92,6 +112,7 @@ const Form = styled.form`
 `;
 
 const Item = styled.div`
+   position: relative;
    display: flex;
    align-items: center;
    gap: 1rem;
@@ -115,4 +136,13 @@ const SubmitBtn = styled(LoadingButton)`
    &:disabled {
       background-color: var(--border-color) !important;
    }
+`;
+
+const VisibleIcon = styled.div`
+   position: absolute;
+   right: 0.4rem;
+   top: 0.6rem;
+   cursor: pointer;
+   font-size: 1.6rem;
+   color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
 `;

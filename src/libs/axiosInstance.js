@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
          } catch (err) {
             return console.log(err);
          }
-      } else if (error.response.status === 403) {
+      } else if (error.response.status === 410) {
          Cookies.remove("accessToken");
          Cookies.remove("refreshToken");
          sessionStorage.clear();
