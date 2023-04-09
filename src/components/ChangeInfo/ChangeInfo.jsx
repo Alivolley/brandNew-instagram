@@ -7,9 +7,9 @@ import { LoadingButton } from "@mui/lab";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import useEditInfoSetting from "../../api/setting/useEditInfoSetting";
 import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
+import SettingChangeInfo from "../Skeletons/SettingChangeInfo/SettingChangeInfo";
 
 const ChangeInfo = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -51,7 +51,7 @@ const ChangeInfo = () => {
    return (
       <Wrapper templateTheme={templateTheme} isMatch={isMatch}>
          {loading ? (
-            <LoadingSpinner />
+            <SettingChangeInfo />
          ) : (
             <>
                <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
