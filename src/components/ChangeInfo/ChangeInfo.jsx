@@ -45,7 +45,7 @@ const ChangeInfo = () => {
          gender: genderValue,
          open_suggestions: suggestionValue,
       };
-      editInfoSettingRequest(newInfo, getInfoEdit);
+      editInfoSettingRequest(newInfo);
    };
 
    return (
@@ -54,13 +54,7 @@ const ChangeInfo = () => {
             <LoadingSpinner />
          ) : (
             <>
-               <ChangePhotoModal
-                  show={showChangePhotoModal}
-                  handleClose={() => setShowChangePhotoModal(false)}
-                  templateTheme={templateTheme}
-                  isMatch={isMatch}
-                  getInfoEdit={getInfoEdit}
-               />
+               <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
                <Header>
                   <Image src={profilePhoto ? `https://djangoinsta.pythonanywhere.com/${profilePhoto}` : NoProfilePhoto} />
                   <HeaderTexts>

@@ -4,15 +4,14 @@ import axiosInstance from "../../libs/axiosInstance";
 const useDeleteProfilePhoto = () => {
    const [deleteLoading, setDeleteLoading] = useState(false);
 
-   const deleteProfilePhotoRequest = (getInfoEdit, handleClose) => {
+   const deleteProfilePhotoRequest = () => {
       setDeleteLoading(true);
 
       axiosInstance
          .delete("edit/profile_photo/")
          .then((res) => {
             if (res.status === 200) {
-               getInfoEdit();
-               handleClose();
+               location.reload();
             }
          })
          .catch((err) => console.log(err))

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const useEditProfilePhoto = () => {
    const [editReqloading, setEditReqLoading] = useState(false);
 
-   const editProfilePhotoRequest = (newImage, getInfoEdit, handleClose) => {
+   const editProfilePhotoRequest = (newImage) => {
       setEditReqLoading(true);
 
       axiosInstance
@@ -16,12 +16,11 @@ const useEditProfilePhoto = () => {
          })
          .then((res) => {
             if (res.status === 200) {
-               getInfoEdit();
-               handleClose();
                toast.success("Profile photo changed successfully", {
                   autoClose: 5000,
                   theme: "colored",
                });
+               location.reload();
             }
          })
          .catch((err) => console.log(err))

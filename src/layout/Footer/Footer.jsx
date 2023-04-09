@@ -8,9 +8,10 @@ import HomeIcon from "../../assets/svgs/HomeIcon";
 import ThemeChangeIcon from "../../assets/svgs/ThemeChangeIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
+import FooterProfile from "../../components/Skeletons/FooterProfile/FooterProfile";
 
-const Footer = () => {
-   const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
+const Footer = ({ userInfoLoading }) => {
+   const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
 
    const changeTheme = () => {
       const foundedTheme = localStorage.getItem("theme");
@@ -49,10 +50,13 @@ const Footer = () => {
                <ThemeChangeIcon />
             </Icon>
          </BottunItem>
-
-         <LinkedItem to="/profile/posts">
-            <ProfilePhoto src={NoProfilePhoto} />
-         </LinkedItem>
+         {!userInfoLoading ? (
+            <LinkedItem to="/profile/posts">
+               <ProfilePhoto src={NoProfilePhoto} />
+            </LinkedItem>
+         ) : (
+            <FooterProfile />
+         )}
       </Wrapper>
    );
 };

@@ -5,18 +5,18 @@ import { toast } from "react-toastify";
 const useEditInfoSetting = () => {
    const [editReqloading, setEditReqLoading] = useState(false);
 
-   const editInfoSettingRequest = (newInfo, getInfoEdit) => {
+   const editInfoSettingRequest = (newInfo) => {
       setEditReqLoading(true);
 
       axiosInstance
          .put("edit/profile/", newInfo)
          .then((res) => {
             if (res.status === 200) {
-               getInfoEdit();
                toast.success("Information changed successfully", {
                   autoClose: 5000,
                   theme: "colored",
                });
+               location.reload();
             }
          })
          .catch((err) => console.log(err))

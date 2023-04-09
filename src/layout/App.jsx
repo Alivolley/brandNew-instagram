@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
    const [templateTheme, setTemplateTheme] = useState("white");
    const [isLogin, setIsLogin] = useState(Cookies.get("accessToken"));
+   const [userInfos, setUserInfos] = useState();
 
    useEffect(() => {
       setIsLogin(Cookies.get("accessToken"));
@@ -23,7 +24,7 @@ const App = () => {
 
    const router = useRoutes(Routes);
    return (
-      <GeneralInfoContext.Provider value={{ templateTheme, setTemplateTheme, isLogin }}>
+      <GeneralInfoContext.Provider value={{ templateTheme, setTemplateTheme, isLogin, userInfos, setUserInfos }}>
          <>
             {router}
             <ToastContainer />

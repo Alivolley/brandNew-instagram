@@ -13,9 +13,10 @@ import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import MoreIcon from "../../assets/svgs/MoreIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleMenu";
+import LeftMenuProfile from "../../components/Skeletons/LeftMenuProfile/LeftMenuProfile";
 
-const LeftsideMenu = () => {
-   const { setTemplateTheme, templateTheme } = useContext(GeneralInfoContext);
+const LeftsideMenu = ({ userInfoLoading }) => {
+   const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
    const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
 
    const changeTheme = () => {
@@ -71,11 +72,14 @@ const LeftsideMenu = () => {
                </Icon>
                <Text>Create</Text>
             </LinkedItem>
-
-            <LinkedItem to="/profile/posts">
-               <ProfilePhoto src={NoProfilePhoto} />
-               <Text>Profile</Text>
-            </LinkedItem>
+            {!userInfoLoading ? (
+               <LinkedItem to="/profile/posts">
+                  <ProfilePhoto src={NoProfilePhoto} />
+                  <Text>Profile</Text>
+               </LinkedItem>
+            ) : (
+               <LeftMenuProfile />
+            )}
          </Links>
 
          <MoreOptions>
@@ -107,7 +111,6 @@ const Leftside = styled.div`
    top: 0;
    left: 0;
    bottom: 0;
-   /* min-height: 100vh; */
 
    svg,
    p {
