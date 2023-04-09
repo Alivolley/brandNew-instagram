@@ -5,8 +5,8 @@ import styled from "styled-components";
 const LeftMenuProfile = () => {
    return (
       <Wrapper>
-         <Skeleton variant="circular" width={30} height={30} />
-         <Skeleton variant="text" width={70} height={50} />
+         <Skeleton variant="circular" width={24} height={24} sx={{ backgroundColor: "#80808083" }} animation="pulse" />
+         <Skeleton variant="text" width={70} height={21} sx={{ backgroundColor: "#80808083" }} animation="pulse" />
       </Wrapper>
    );
 };
