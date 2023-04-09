@@ -4,11 +4,15 @@ import styled from "styled-components";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import { Link } from "react-router-dom";
 import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
+import FollowersModal from "../Modals/FollowersModal/FollowersModal";
+import FollowingsModal from "../Modals/FollowingsModal/FollowingsModal";
 
 const ProfileHeader = ({ templateTheme }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
    const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
+   const [showFollowersModal, setShowFollowersModal] = useState(false);
+   const [showFollowingsModal, setShowFollowingsModal] = useState(false);
 
    return (
       <Wrapper isMatch={isMatch} templateTheme={templateTheme}>
@@ -30,11 +34,11 @@ const ProfileHeader = ({ templateTheme }) => {
                         <CountHolder>7</CountHolder>
                         posts
                      </PostsCounts>
-                     <FollowersCounts>
+                     <FollowersCounts onClick={() => setShowFollowersModal(true)}>
                         <CountHolder>854</CountHolder>
                         followers
                      </FollowersCounts>
-                     <FollowingsCounts>
+                     <FollowingsCounts onClick={() => setShowFollowingsModal(true)}>
                         <CountHolder>264</CountHolder>
                         following
                      </FollowingsCounts>
@@ -51,6 +55,8 @@ const ProfileHeader = ({ templateTheme }) => {
          </Grid>
 
          <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
+         <FollowersModal show={showFollowersModal} handleClose={() => setShowFollowersModal(false)} templateTheme={templateTheme} />
+         <FollowingsModal show={showFollowingsModal} handleClose={() => setShowFollowingsModal(false)} templateTheme={templateTheme} />
       </Wrapper>
    );
 };

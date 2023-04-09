@@ -40,4 +40,6 @@ export default ProfileSaved;
 
 const Wrapper = styled.div`
    padding: 2rem;
+   max-width: 100rem;
+   margin: 0 auto;
 `;
