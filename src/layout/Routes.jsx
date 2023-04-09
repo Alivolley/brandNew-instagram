@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Profile from "../pages/Profile/Profile";
 import ProfileSaved from "../components/ProfileSaved/ProfileSaved";
 import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
+import Explore from "../pages/Explore/Explore";
 
 const Routes = [
    {
@@ -27,6 +28,7 @@ const Routes = [
       children: [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
+         { path: "explore", element: <Explore /> },
          {
             path: "profile/",
             element: <Profile />,
