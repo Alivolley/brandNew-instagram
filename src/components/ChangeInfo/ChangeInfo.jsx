@@ -9,7 +9,7 @@ import { useTheme } from "@mui/system";
 import useGetInfoSetting from "../../api/setting/useGetInfoSetting";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import useEditInfoSetting from "../../api/setting/useEditInfoSetting";
-import ChangePhotoModal from "../ChangePhotoModal/ChangePhotoModal";
+import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
 
 const ChangeInfo = () => {
    const { templateTheme } = useContext(GeneralInfoContext);

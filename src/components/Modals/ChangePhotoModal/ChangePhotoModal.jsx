@@ -2,8 +2,8 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import styled from "styled-components";
 import { LoadingButton } from "@mui/lab";
-import useEditProfilePhoto from "../../api/setting/useEditProfilePhoto";
-import useDeleteProfilePhoto from "../../api/setting/useDeleteProfilePhoto";
+import useEditProfilePhoto from "../../../api/setting/useEditProfilePhoto";
+import useDeleteProfilePhoto from "../../../api/setting/useDeleteProfilePhoto";
 
 const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch }) => {
    const [editProfilePhotoRequest, editReqloading] = useEditProfilePhoto();
@@ -44,7 +44,7 @@ const ChangePhotoModal = ({ show, handleClose, templateTheme, isMatch }) => {
 export default ChangePhotoModal;
 
 const Wrapper = styled.div`
-   width: ${({ isMatch }) => (isMatch ? "100%" : "33rem")};
+   width: ${({ isMatch }) => (isMatch ? "auto" : "33rem")};
    display: flex;
    flex-direction: column;
    background-color: ${({ templateTheme }) => templateTheme};

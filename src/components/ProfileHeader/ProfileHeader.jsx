@@ -1,19 +1,21 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
 import { Link } from "react-router-dom";
+import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
 
 const ProfileHeader = ({ templateTheme }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+   const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
 
    return (
       <Wrapper isMatch={isMatch} templateTheme={templateTheme}>
          <Grid container>
             <Grid item xs={12} sm={4}>
-               <ImageWrapper>
-                  <Image src={NoProfilePhoto}></Image>
+               <ImageWrapper onClick={() => setShowChangePhotoModal(true)}>
+                  <Image src={NoProfilePhoto} />
                </ImageWrapper>
             </Grid>
             <Grid item xs={12} sm={8}>
@@ -47,6 +49,8 @@ const ProfileHeader = ({ templateTheme }) => {
                </Discribtion>
             </Grid>
          </Grid>
+
+         <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
       </Wrapper>
    );
 };
@@ -65,6 +69,7 @@ const Wrapper = styled.div`
 const ImageWrapper = styled.div`
    display: flex;
    justify-content: center;
+   cursor: pointer;
 `;
 
 const Image = styled.img`
