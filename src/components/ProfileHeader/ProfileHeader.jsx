@@ -54,9 +54,18 @@ const ProfileHeader = ({ templateTheme }) => {
             </Grid>
          </Grid>
 
-         <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
-         <FollowersModal show={showFollowersModal} handleClose={() => setShowFollowersModal(false)} templateTheme={templateTheme} />
-         <FollowingsModal show={showFollowingsModal} handleClose={() => setShowFollowingsModal(false)} templateTheme={templateTheme} />
+         <ChangePhotoModal
+            show={showChangePhotoModal}
+            handleClose={() => setShowChangePhotoModal(false)}
+            templateTheme={templateTheme}
+            isMatch={isMatch}
+         />
+         {showFollowersModal && (
+            <FollowersModal show={showFollowersModal} handleClose={() => setShowFollowersModal(false)} templateTheme={templateTheme} />
+         )}
+         {showFollowingsModal && (
+            <FollowingsModal show={showFollowingsModal} handleClose={() => setShowFollowingsModal(false)} templateTheme={templateTheme} />
+         )}
       </Wrapper>
    );
 };

@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
 import CloseButtonIcon from "./../../../assets/svgs/CloseButtonIcon";
 import FollowersItem from "../../FollowersItem/FollowersItem";
+import { useParams } from "react-router-dom";
+import useFollowers from "../../../api/followers/useFollowers";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import FollowersItemLoading from "../../Skeletons/FollowersItem/FollowersItemLoading";
 
 const FollowersModal = ({ show, handleClose, templateTheme }) => {
+   const { username } = useParams();
+   const [getFollowersRequest, getMoreFollowers, loading, followersData, nextUrl] = useFollowers(username);
+
+   useEffect(() => {
+      getFollowersRequest();
+   }, []);
+
    return (
       <Modal open={show} onClose={handleClose} sx={{ backdropFilter: "brightness(60%)" }}>
          <Wrapper templateTheme={templateTheme}>
@@ -16,35 +27,17 @@ const FollowersModal = ({ show, handleClose, templateTheme }) => {
                </CloseBtn>
             </Header>
             <ModlaBody>
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
-               <FollowersItem />
+               {followersData.map((follower) => (
+                  <FollowersItem key={follower.id} detail={follower} onClose={handleClose} />
+               ))}
+
+               {loading && <FollowersItemLoading />}
+
+               {nextUrl && !loading && (
+                  <AddButton onClick={getMoreFollowers}>
+                     <ControlPointIcon color="inherit" fontSize="inherit" />
+                  </AddButton>
+               )}
             </ModlaBody>
          </Wrapper>
       </Modal>
@@ -99,4 +92,13 @@ const ModlaBody = styled.div`
    display: flex;
    flex-direction: column;
    gap: 2rem;
+`;
+
+const AddButton = styled.button`
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+   width: fit-content;
+   margin: 0 auto;
+   font-size: 2.4rem;
 `;

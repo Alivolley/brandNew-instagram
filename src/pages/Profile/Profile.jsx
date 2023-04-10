@@ -13,7 +13,7 @@ const Profile = () => {
 
    useEffect(() => {
       profileDetailRequest();
-   }, []);
+   }, [username]);
 
    return (
       <Wrapper templateTheme={templateTheme}>

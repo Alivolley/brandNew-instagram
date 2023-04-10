@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import testPhoto from "./../../assets/Images/testPhoto.png";
+import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import { LoadingButton } from "@mui/lab";
 
-const FollowersItem = () => {
+const FollowersItem = ({ detail, onClose }) => {
    return (
       <Wrapper>
-         <Image src={testPhoto} />
+         <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.profile_photo}` : noProfile} />
          <Details>
-            <UserName>ali-azghandiali-azghandi</UserName>
-            <Name>ali ahga</Name>
+            <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
+               {detail?.username}
+            </UserName>
+            <Name>{detail?.name}</Name>
          </Details>
          <RemoveButton variant="contained" color="info" size="small" loading={false}>
             Remove
