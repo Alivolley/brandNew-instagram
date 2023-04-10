@@ -3,12 +3,13 @@ import styled from "styled-components";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 import ProfileTabs from "../../components/ProfileTabs/ProfileTabs";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import useProfile from "../../api/profile/useProfile";
 
 const Profile = () => {
+   const { username } = useParams();
    const { templateTheme } = useContext(GeneralInfoContext);
-   const [profileDetailRequest, loading] = useProfile();
+   const [profileDetailRequest, loading, profileInfos] = useProfile({ username });
 
    useEffect(() => {
       profileDetailRequest();

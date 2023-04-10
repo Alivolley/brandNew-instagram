@@ -6,9 +6,10 @@ import SettingIcon from "../../assets/svgs/SettingIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import GroupIcon from "@mui/icons-material/Group";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
+import MoreOptionsLeftMenu from "../Skeletons/MoreOptionsLeftMenu/MoreOptionsLeftMenu";
 
-const SidebarToggleMenu = ({ isOpen, closeMenu }) => {
-   const { templateTheme } = useContext(GeneralInfoContext);
+const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
+   const { templateTheme, userInfos } = useContext(GeneralInfoContext);
    const toggleMenuRef = useRef();
 
    useOnClickOutside(toggleMenuRef, closeMenu);
@@ -23,13 +24,16 @@ const SidebarToggleMenu = ({ isOpen, closeMenu }) => {
                </Icon>
             </LinkedItem>
 
-            <LinkedItem to="/profile/saved">
-               <Text>Saved</Text>
-               <Icon>
-                  <SavedIcon />
-               </Icon>
-            </LinkedItem>
-
+            {!userInfoLoading ? (
+               <LinkedItem to={`/profile/${userInfos.username}/saved`}>
+                  <Text>Saved</Text>
+                  <Icon>
+                     <SavedIcon />
+                  </Icon>
+               </LinkedItem>
+            ) : (
+               <MoreOptionsLeftMenu />
+            )}
             <LinkedItem to="/developers">
                <Text>Developers</Text>
                <Icon>

@@ -33,8 +33,8 @@ const Routes = [
             path: "profile/",
             element: <Profile />,
             children: [
-               { path: "posts", element: <ProfilePosts /> },
-               { path: "saved", element: <ProfileSaved /> },
+               { path: ":username/posts", element: <ProfilePosts /> },
+               { path: ":username/saved", element: <ProfileSaved /> },
             ],
          },
       ],

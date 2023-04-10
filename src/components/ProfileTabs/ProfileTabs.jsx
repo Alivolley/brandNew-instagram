@@ -1,17 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostsTab from "../../assets/svgs/PostsTab";
 import SavedTab from "../../assets/svgs/SavedTab";
 
 const ProfileTabs = ({ templateTheme }) => {
+   const { username } = useParams();
+
    return (
       <Wrapper templateTheme={templateTheme}>
-         <Tab to="posts">
+         <Tab to={`${username}/posts`}>
             <PostsTab />
             POSTS
          </Tab>
-         <Tab to="saved">
+         <Tab to={`${username}/saved`}>
             <SavedTab />
             SAVED
          </Tab>

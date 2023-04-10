@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 
-const useProfile = () => {
+const useProfile = ({ username }) => {
    const [loading, setLoading] = useState(true);
    const [profileInfos, setProfileInfos] = useState({});
 
@@ -9,14 +9,17 @@ const useProfile = () => {
       setLoading(true);
 
       axiosInstance
-         .get(`profile/ali/`)
+         .get(`profile/${username}/`)
          .then((res) => {
             console.log(res);
+            if (res.status === 200) {
+               // setProfileInfos()
+            }
          })
          .catch((err) => console.log(err))
          .finally(() => setLoading(false));
    };
 
-   return [profileDetailRequest, loading];
+   return [profileDetailRequest, loading, profileInfos];
 };
 export default useProfile;

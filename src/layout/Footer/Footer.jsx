@@ -51,7 +51,7 @@ const Footer = ({ userInfoLoading }) => {
             </Icon>
          </BottunItem>
          {!userInfoLoading ? (
-            <LinkedItem to="/profile/posts">
+            <LinkedItem to={`/profile/${userInfos.username}/posts`}>
                <ProfilePhoto src={NoProfilePhoto} />
             </LinkedItem>
          ) : (

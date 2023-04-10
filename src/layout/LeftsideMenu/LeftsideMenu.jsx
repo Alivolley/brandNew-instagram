@@ -73,7 +73,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Create</Text>
             </LinkedItem>
             {!userInfoLoading ? (
-               <LinkedItem to="/profile/posts">
+               <LinkedItem to={`/profile/${userInfos.username}/posts`}>
                   <ProfilePhoto src={NoProfilePhoto} />
                   <Text>Profile</Text>
                </LinkedItem>
@@ -95,7 +95,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                   <MoreIcon />
                </Icon>
                <Text>More</Text>
-               <SidebarToggleMenu isOpen={isToggleMenuOpen} closeMenu={() => setIsToggleMenuOpen(false)} />
+               <SidebarToggleMenu isOpen={isToggleMenuOpen} closeMenu={() => setIsToggleMenuOpen(false)} userInfoLoading={userInfoLoading} />
             </BottunItem>
          </MoreOptions>
       </Leftside>

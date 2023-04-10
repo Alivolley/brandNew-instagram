@@ -10,10 +10,11 @@ const useUserInfo = () => {
       setLoading(true);
 
       axiosInstance
-         .get(`/`)
+         .get(`user_information/`)
          .then((res) => {
-            // setUserInfos()
-            console.log(res);
+            if (res.status === 200) {
+               setUserInfos(res.data);
+            }
          })
          .catch((err) => console.log(err))
          .finally(() => setLoading(false));
