@@ -9,7 +9,7 @@ import useProfile from "../../api/profile/useProfile";
 const Profile = () => {
    const { username } = useParams();
    const { templateTheme } = useContext(GeneralInfoContext);
-   const [profileDetailRequest, loading, profileInfos] = useProfile({ username });
+   const [profileDetailRequest, loading, profileInfos] = useProfile(username);
 
    useEffect(() => {
       profileDetailRequest();

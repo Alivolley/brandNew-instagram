@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import testPhoto from "./../../assets/Images/testPhoto.png";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import MultyplyPosts from "./../../assets/svgs/MultyplyPosts";
 import IsVideoIcon from "./../../assets/svgs/IsVideoIcon";
 
-const PostsCover = () => {
+const PostsCover = ({ detail }) => {
    const [containerHeight, setContainerHeight] = useState();
    const containerRef = useRef();
 
@@ -17,19 +16,21 @@ const PostsCover = () => {
 
    return (
       <Wrapper containerHeight={containerHeight} onLoad={(e) => setContainerHeight(e.target.width)} ref={containerRef}>
-         <IconWrapper>
-            <MultyplyPosts />
-            {/* <IsVideoIcon /> */}
-         </IconWrapper>
-         <ImageCover src={testPhoto} />
+         <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file.extension !== "image" ? <IsVideoIcon /> : null}</IconWrapper>
+
+         {detail?.file.extension === "image" ? (
+            <ImageCover src={`https://djangoinsta.pythonanywhere.com${detail?.file.page}`} />
+         ) : (
+            <VideoCover src={`https://djangoinsta.pythonanywhere.com${detail?.file.page}`} />
+         )}
          <CoverShadow className="shadow-color">
             <LikesCount>
                <FavoriteIcon fontSize="large" />
-               25
+               {detail?.likes_count}
             </LikesCount>
             <CommentsCount>
                <ModeCommentIcon fontSize="large" />
-               389
+               {detail?.comments_count}
             </CommentsCount>
          </CoverShadow>
       </Wrapper>
@@ -50,6 +51,13 @@ const Wrapper = styled.div`
 `;
 
 const ImageCover = styled.img`
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   object-position: center center;
+`;
+
+const VideoCover = styled.video`
    width: 100%;
    height: 100%;
    object-fit: cover;

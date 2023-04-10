@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 
-const useProfile = ({ username }) => {
+const useProfile = (username) => {
    const [loading, setLoading] = useState(true);
    const [profileInfos, setProfileInfos] = useState({});
 
