@@ -85,6 +85,8 @@ const ImageWrapper = styled.div`
    display: flex;
    justify-content: center;
    cursor: pointer;
+   width: fit-content;
+   margin: 0 auto;
 `;
 
 const Image = styled.img`

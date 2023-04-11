@@ -14,10 +14,12 @@ import MoreIcon from "../../assets/svgs/MoreIcon";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleMenu";
 import LeftMenuProfile from "../../components/Skeletons/LeftMenuProfile/LeftMenuProfile";
+import NotificationDrawer from "../../components/NotificationDrawer/NotificationDrawer";
 
 const LeftsideMenu = ({ userInfoLoading }) => {
    const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
    const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
+   const [showNotifications, setShowNotifications] = useState(false);
 
    const changeTheme = () => {
       const foundedTheme = localStorage.getItem("theme");
@@ -59,7 +61,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Messages</Text>
             </LinkedItem>
 
-            <BottunItem>
+            <BottunItem onClick={() => setShowNotifications(true)}>
                <Icon>
                   <ActivityIcon />
                </Icon>
@@ -73,8 +75,10 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Create</Text>
             </LinkedItem>
             {!userInfoLoading ? (
-               <LinkedItem to={`/profile/${userInfos.username}/posts`}>
-                  <ProfilePhoto src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userInfos.profile_photo}` : NoProfilePhoto} />
+               <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
+                  <ProfilePhoto
+                     src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userInfos?.profile_photo}` : NoProfilePhoto}
+                  />
                   <Text>Profile</Text>
                </LinkedItem>
             ) : (
@@ -98,6 +102,8 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <SidebarToggleMenu isOpen={isToggleMenuOpen} closeMenu={() => setIsToggleMenuOpen(false)} userInfoLoading={userInfoLoading} />
             </BottunItem>
          </MoreOptions>
+
+         <NotificationDrawer show={showNotifications} colseHandler={() => setShowNotifications(false)} templateTheme={templateTheme} />
       </Leftside>
    );
 };

@@ -31,7 +31,7 @@ const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
             </LinkedItem>
 
             {!userInfoLoading ? (
-               <LinkedItem to={`/profile/${userInfos.username}/saved`}>
+               <LinkedItem to={`/profile/${userInfos?.username}/saved`}>
                   <Text>Saved</Text>
                   <Icon>
                      <SavedIcon />
@@ -47,7 +47,7 @@ const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
                </Icon>
             </LinkedItem>
 
-            <BottunItem onClick={logoutHandler}>
+            <BottunItem onClick={logoutHandler} disabled={loading}>
                <Text>Logout</Text>
             </BottunItem>
          </Links>

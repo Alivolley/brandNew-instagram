@@ -51,7 +51,7 @@ const Footer = ({ userInfoLoading }) => {
             </Icon>
          </BottunItem>
          {!userInfoLoading ? (
-            <LinkedItem to={`/profile/${userInfos.username}/posts`}>
+            <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
                <ProfilePhoto src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userInfos.profile_photo}` : NoProfilePhoto} />
             </LinkedItem>
          ) : (

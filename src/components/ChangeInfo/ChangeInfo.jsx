@@ -54,7 +54,12 @@ const ChangeInfo = () => {
             <SettingChangeInfo />
          ) : (
             <>
-               <ChangePhotoModal show={showChangePhotoModal} handleClose={() => setShowChangePhotoModal(false)} templateTheme={templateTheme} isMatch={isMatch} />
+               <ChangePhotoModal
+                  show={showChangePhotoModal}
+                  handleClose={() => setShowChangePhotoModal(false)}
+                  templateTheme={templateTheme}
+                  isMatch={isMatch}
+               />
                <Header>
                   <Image src={profilePhoto ? `https://djangoinsta.pythonanywhere.com/${profilePhoto}` : NoProfilePhoto} />
                   <HeaderTexts>
@@ -67,10 +72,6 @@ const ChangeInfo = () => {
 
                <Form onSubmit={editinfoHandler}>
                   <Item>
-                     <Label>Name</Label>
-                     <Input type="text" value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
-                  </Item>
-                  <Item>
                      <Label>Username</Label>
                      <Input type="text" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} disabled />
                   </Item>
@@ -79,12 +80,16 @@ const ChangeInfo = () => {
                      <Input type="text" value="Only avalible on phone" disabled />
                   </Item>
                   <Item>
-                     <Label>Bio</Label>
-                     <TextArea type="text" value={bioValue} onChange={(e) => setBioValue(e.target.value)} />
-                  </Item>
-                  <Item>
                      <Label>Email</Label>
                      <Input type="text" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} disabled />
+                  </Item>
+                  <Item>
+                     <Label>Name</Label>
+                     <Input type="text" value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
+                  </Item>
+                  <Item>
+                     <Label>Bio</Label>
+                     <TextArea type="text" value={bioValue} onChange={(e) => setBioValue(e.target.value)} />
                   </Item>
 
                   <Item>
@@ -98,7 +103,12 @@ const ChangeInfo = () => {
                   </Item>
                   <Item>
                      <Label>Show as suggestion</Label>
-                     <InputCheckbox type="checkbox" value={suggestionValue} onChange={() => setSuggestionValue((prev) => !prev)} checked={suggestionValue} />
+                     <InputCheckbox
+                        type="checkbox"
+                        value={suggestionValue}
+                        onChange={() => setSuggestionValue((prev) => !prev)}
+                        checked={suggestionValue}
+                     />
                   </Item>
 
                   <SubmitBtn loading={editReqloading} variant="contained" size={isMatch ? "small" : "large"} type="submit" color="info">
@@ -135,8 +145,8 @@ const Wrapper = styled.div`
    }
 
    input:disabled {
-      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : "#4c4c4c22")};
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgba(239, 239, 239, 0.37)")};
    }
 `;
 
