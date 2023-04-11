@@ -8,7 +8,7 @@ const useGetInfoSetting = () => {
       setLoading(true);
 
       axiosInstance
-         .get("edit/profile/")
+         .get("accounts/edit/profile/")
          .then((res) => {
             if (res.status === 200) {
                setNameValue(res.data.name || "");

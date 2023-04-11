@@ -9,7 +9,7 @@ const useProfile = (username) => {
       setLoading(true);
 
       axiosInstance
-         .get(`profile/${username}/`)
+         .get(`accounts/profile/${username}/`)
          .then((res) => {
             console.log(res);
             if (res.status === 200) {

@@ -10,7 +10,7 @@ const useFollowings = (username) => {
       setLoading(true);
 
       axiosInstance
-         .get(`${username}/following/`)
+         .get(`accounts/${username}/following/`)
          .then((res) => {
             if (res.status === 200) {
                setFollowingsData(res.data.results);

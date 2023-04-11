@@ -9,7 +9,7 @@ const useEditProfilePhoto = () => {
       setEditReqLoading(true);
 
       axiosInstance
-         .put("edit/profile_photo/", newImage, {
+         .put("accounts/edit/profile_photo/", newImage, {
             headers: {
                "Content-Type": "multipart/form-data",
             },

@@ -9,7 +9,7 @@ const useEditPassword = () => {
       setEditReqLoading(true);
 
       axiosInstance
-         .put("change/password/", newInfo)
+         .put("accounts/change/password/", newInfo)
          .then((res) => {
             if (res.status === 200) {
                toast.success("password changed successfully", {

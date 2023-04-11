@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
       const originalReq = error.config;
       if (error.response.status === 401) {
          try {
-            const res = await axiosInstance.post("login/refresh/", {
+            const res = await axiosInstance.post("auth/login/refresh/", {
                refresh: refreshToken,
             });
             Cookies.set("accessToken", res.data.access, { expires: 1 });

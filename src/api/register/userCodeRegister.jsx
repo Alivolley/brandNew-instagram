@@ -11,7 +11,7 @@ const userCodeRegister = () => {
       setLoading(true);
 
       axiosInstance
-         .post("register_user/", newUser)
+         .post("auth/register_user/", newUser)
          .then((res) => {
             if (res.status === 200) {
                sessionStorage.clear();

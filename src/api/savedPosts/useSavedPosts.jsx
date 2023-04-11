@@ -11,7 +11,7 @@ const useSavedPosts = () => {
       setLoading(true);
 
       axiosInstance
-         .get("saved_posts/")
+         .get("accounts/saved_posts/")
          .then((res) => {
             if (res.status === 200) {
                setSavedPosts(res.data.results);

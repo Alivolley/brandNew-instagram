@@ -9,7 +9,7 @@ const useEditInfoSetting = () => {
       setEditReqLoading(true);
 
       axiosInstance
-         .put("edit/profile/", newInfo)
+         .put("accounts/edit/profile/", newInfo)
          .then((res) => {
             if (res.status === 200) {
                toast.success("Information changed successfully", {

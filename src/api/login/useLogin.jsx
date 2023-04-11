@@ -16,7 +16,7 @@ const useLogin = () => {
       };
 
       axiosInstance
-         .post("login/", newUser)
+         .post("auth/login/", newUser)
          .then((res) => {
             if (res.status === 200) {
                sessionStorage.clear();

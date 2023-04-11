@@ -8,7 +8,7 @@ const useDeleteProfilePhoto = () => {
       setDeleteLoading(true);
 
       axiosInstance
-         .delete("edit/profile_photo/")
+         .delete("accounts/edit/profile_photo/")
          .then((res) => {
             if (res.status === 200) {
                location.reload();
