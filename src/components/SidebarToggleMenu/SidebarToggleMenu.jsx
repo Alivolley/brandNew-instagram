@@ -7,12 +7,18 @@ import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import GroupIcon from "@mui/icons-material/Group";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 import MoreOptionsLeftMenu from "../Skeletons/MoreOptionsLeftMenu/MoreOptionsLeftMenu";
+import useLogout from "../../api/logout/useLogout";
 
 const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
    const { templateTheme, userInfos } = useContext(GeneralInfoContext);
    const toggleMenuRef = useRef();
+   const [logoutRequest, loading] = useLogout();
 
    useOnClickOutside(toggleMenuRef, closeMenu);
+
+   const logoutHandler = () => {
+      logoutRequest();
+   };
 
    return (
       <Wrapper isOpen={isOpen} templateTheme={templateTheme} ref={toggleMenuRef}>
@@ -41,7 +47,7 @@ const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
                </Icon>
             </LinkedItem>
 
-            <BottunItem>
+            <BottunItem onClick={logoutHandler}>
                <Text>Logout</Text>
             </BottunItem>
          </Links>

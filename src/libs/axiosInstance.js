@@ -19,7 +19,7 @@ axiosInstance.interceptors.response.use(
    async (error) => {
       console.log(error);
       const originalReq = error.config;
-      if (error.response.status === 401) {
+      if (error?.response?.data?.code === "token_not_valid") {
          try {
             const res = await axiosInstance.post("auth/login/refresh/", {
                refresh: refreshToken,
@@ -30,11 +30,11 @@ axiosInstance.interceptors.response.use(
          } catch (err) {
             return console.log(err);
          }
-      } else if (error.response.status === 410) {
+      } else if (error?.response?.status === 410) {
          Cookies.remove("accessToken");
          Cookies.remove("refreshToken");
-         sessionStorage.clear();
          location.href = "/login";
+         axiosInstance.interceptors.response.clear();
       } else {
          return Promise.reject(error);
       }
