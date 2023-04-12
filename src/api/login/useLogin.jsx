@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const useLogin = () => {
    const [loading, setLoading] = useState(false);
@@ -30,7 +31,20 @@ const useLogin = () => {
                navigate("/");
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            if (err?.response?.data?.detail === "No active account found with the given credentials") {
+               toast.error("Email or password is wrong", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            } else {
+               toast.error("Somthing went wrong", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            }
+         })
          .finally(() => setLoading(false));
    };
    return [loginRequest, loading];

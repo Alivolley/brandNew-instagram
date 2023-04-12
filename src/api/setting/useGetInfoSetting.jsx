@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const useGetInfoSetting = () => {
    const [loading, setLoading] = useState(true);
@@ -20,7 +21,13 @@ const useGetInfoSetting = () => {
                setProfilePhoto(res.data.profile_photo || "");
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => setLoading(false));
    };
 

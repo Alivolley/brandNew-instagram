@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import { toast } from "react-toastify";
 
 const useUserInfo = () => {
    const [loading, setLoading] = useState(true);
@@ -16,7 +17,13 @@ const useUserInfo = () => {
                setUserInfos(res.data);
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => setLoading(false));
    };
 

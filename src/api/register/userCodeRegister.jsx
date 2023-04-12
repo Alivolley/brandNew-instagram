@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const userCodeRegister = () => {
    const [loading, setLoading] = useState(false);
@@ -25,7 +26,20 @@ const userCodeRegister = () => {
                navigate("/");
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            if (err.response.status === 404) {
+               toast.error("The code is incorrect", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            } else {
+               toast.error("Somthing went wrong", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            }
+         })
          .finally(() => setLoading(false));
    };
 

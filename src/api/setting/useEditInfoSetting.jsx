@@ -19,7 +19,13 @@ const useEditInfoSetting = () => {
                location.reload();
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => setEditReqLoading(false));
    };
 

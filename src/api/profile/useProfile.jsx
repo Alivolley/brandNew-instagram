@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const useProfile = (username) => {
    const [loading, setLoading] = useState(true);
@@ -15,7 +16,13 @@ const useProfile = (username) => {
                setProfileInfos(res.data);
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => {
             setTimeout(() => {
                setLoading(false);

@@ -23,7 +23,21 @@ const useEditProfilePhoto = () => {
                location.reload();
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+
+            if (err.response.status === 400) {
+               toast.error("The maximum file size that can be uploaded is 500 KB", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            } else {
+               toast.error("Somthing went wrong", {
+                  autoClose: 5000,
+                  theme: "colored",
+               });
+            }
+         })
          .finally(() => setEditReqLoading(false));
    };
 

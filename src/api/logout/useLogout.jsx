@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const useLogout = () => {
    const [loading, setLoading] = useState(false);
@@ -21,7 +22,13 @@ const useLogout = () => {
                axiosInstance.interceptors.response.clear();
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => setLoading(false));
    };
 

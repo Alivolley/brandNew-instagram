@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
+import { toast } from "react-toastify";
 
 const useDeleteProfilePhoto = () => {
    const [deleteLoading, setDeleteLoading] = useState(false);
@@ -14,7 +15,13 @@ const useDeleteProfilePhoto = () => {
                location.reload();
             }
          })
-         .catch((err) => console.log(err))
+         .catch((err) => {
+            console.log(err);
+            toast.error("Somthing went wrong", {
+               autoClose: 5000,
+               theme: "colored",
+            });
+         })
          .finally(() => setDeleteLoading(false));
    };
 
