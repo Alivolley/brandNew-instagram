@@ -5,7 +5,6 @@ const useSavedPosts = () => {
    const [loading, setLoading] = useState(true);
    const [savedPosts, setSavedPosts] = useState([]);
    const [nextUrl, setNextUrl] = useState("");
-   const [totalObjects, setTotalObjects] = useState(0);
 
    const getSavedPostsRequest = () => {
       setLoading(true);
@@ -16,7 +15,6 @@ const useSavedPosts = () => {
             if (res.status === 200) {
                setSavedPosts(res.data.results);
                setNextUrl(res.data.next);
-               setTotalObjects(res.data.total_objects);
             }
          })
          .catch((err) => console.log(err))
@@ -38,6 +36,6 @@ const useSavedPosts = () => {
          .finally(() => setLoading(false));
    };
 
-   return [getSavedPostsRequest, getMoreSavedPosts, loading, savedPosts, nextUrl, totalObjects];
+   return [getSavedPostsRequest, getMoreSavedPosts, loading, savedPosts, nextUrl];
 };
 export default useSavedPosts;

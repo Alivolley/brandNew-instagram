@@ -16,7 +16,7 @@ const PostsCover = ({ detail }) => {
 
    return (
       <Wrapper containerHeight={containerHeight} onLoad={(e) => setContainerHeight(e.target.width)} ref={containerRef}>
-         <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file.extension !== "image" ? <IsVideoIcon /> : null}</IconWrapper>
+         <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file.extension === "video" ? <IsVideoIcon /> : null}</IconWrapper>
 
          {detail?.file.extension === "image" ? (
             <ImageCover src={`https://djangoinsta.pythonanywhere.com${detail?.file.page}`} />
