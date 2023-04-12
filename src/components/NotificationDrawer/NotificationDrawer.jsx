@@ -5,7 +5,7 @@ import NotificationItem from "../NotificationItem/NotificationItem";
 
 const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
    return (
-      <DrawerWrapper anchor="left" open={show} onClose={colseHandler}>
+      <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templateTheme={templateTheme}>
          <Container templateTheme={templateTheme}>
             <Title>Notifications</Title>
 
@@ -45,19 +45,17 @@ const DrawerWrapper = styled(Drawer)`
    & > .MuiBackdrop-root {
       background-color: transparent;
    }
+
+   .css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
+      background-color: ${({ templateTheme }) => templateTheme};
+      border-right: 0.1rem solid var(--border-color);
+      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+   }
 `;
 
 const Container = styled.div`
-   /* min-height: 100vh; */
-   /* height: 100%; */
    width: 30rem;
-   background-color: ${({ templateTheme }) => templateTheme};
-   border-right: 0.1rem solid var(--border-color);
    padding: 2.5rem;
-
-   h3 {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
-   }
 `;
 
 const Title = styled.h3`
