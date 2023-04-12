@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import HeaderSearchIcon from "../../assets/svgs/HeaderSearchIcon";
 import SearchItem from "../SearchItem/SearchItem";
+import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 
 const SearchDrawer = ({ show, colseHandler, templateTheme }) => {
    const [searchValue, setSearchValue] = useState("");
@@ -10,7 +11,13 @@ const SearchDrawer = ({ show, colseHandler, templateTheme }) => {
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>
          <Container templatetheme={templateTheme}>
-            <Title>Search</Title>
+            <Header>
+               <Title>Search</Title>
+
+               <IconClose onClick={colseHandler}>
+                  <CloseButtonIcon />
+               </IconClose>
+            </Header>
 
             <Wrapper templateTheme={templateTheme}>
                <Icon>
@@ -73,10 +80,25 @@ const Container = styled.div`
    padding: 2.5rem;
 `;
 
-const Title = styled.h3`
-   font-size: 2.5rem;
+const Header = styled.div`
+   display: flex;
+   justify-content: space-between;
    border-bottom: 0.1rem solid var(--border-color);
    padding-bottom: 2rem;
+`;
+
+const Title = styled.h3`
+   font-size: 2.5rem;
+`;
+
+const IconClose = styled.button`
+   background-color: transparent;
+   border: none;
+   cursor: pointer;
+
+   svg {
+      color: gray;
+   }
 `;
 
 const Wrapper = styled.div`

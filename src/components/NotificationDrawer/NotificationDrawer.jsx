@@ -2,12 +2,18 @@ import { Drawer } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import NotificationItem from "../NotificationItem/NotificationItem";
+import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 
 const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>
          <Container templatetheme={templateTheme}>
-            <Title>Notifications</Title>
+            <Header>
+               <Title>Notifications</Title>
+               <Icon onClick={colseHandler}>
+                  <CloseButtonIcon />
+               </Icon>
+            </Header>
 
             <NotifBody>
                <NotificationItem templateTheme={templateTheme} />
@@ -63,10 +69,25 @@ const Container = styled.div`
    padding: 2.5rem;
 `;
 
-const Title = styled.h3`
-   font-size: 2.5rem;
+const Header = styled.div`
+   display: flex;
+   justify-content: space-between;
    border-bottom: 0.1rem solid var(--border-color);
    padding-bottom: 2rem;
+`;
+
+const Title = styled.h3`
+   font-size: 2.5rem;
+`;
+
+const Icon = styled.button`
+   background-color: transparent;
+   border: none;
+   cursor: pointer;
+
+   svg {
+      color: gray;
+   }
 `;
 
 const NotifBody = styled.div`

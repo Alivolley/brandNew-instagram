@@ -52,10 +52,10 @@ export default HeaderSearchResult;
 
 const Wrapper = styled.div`
    position: absolute;
-   background-color: ${({ templateTheme }) => templateTheme};
    top: 100%;
    left: 0;
    right: 0;
+   background-color: ${({ templateTheme }) => templateTheme};
    border: 0.1rem solid var(--border-color);
    padding: 1rem;
    padding-top: 0;

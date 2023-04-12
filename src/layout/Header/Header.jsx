@@ -1,26 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import ActivityIcon from "../../assets/svgs/ActivityIcon";
 import InstagramText from "../../assets/svgs/InstagramText";
 import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import InstagramIcon from "../../assets/svgs/InstagramIcon";
+import HeaderNotification from "../../components/HeaderNotification/HeaderNotification";
 
 const Header = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
+   const [showNotifs, setShowNotifs] = useState(false);
+
    return (
       <Wrapper templateTheme={templateTheme}>
          <Logo to="/">
             <InstagramText />
          </Logo>
 
+         <InstagramIconWrapper to="/">
+            <InstagramIcon />
+         </InstagramIconWrapper>
+
          <RightGroup>
             <HeaderSearch templateTheme={templateTheme} />
 
             <BottunItem>
-               <Icon>
+               <Icon onClick={() => setShowNotifs(true)}>
                   <ActivityIcon />
                </Icon>
+               {showNotifs && <HeaderNotification templateTheme={templateTheme} colseHandler={() => setShowNotifs(false)} />}
             </BottunItem>
          </RightGroup>
       </Wrapper>
@@ -37,7 +46,7 @@ const Wrapper = styled.div`
    z-index: 5;
    display: flex;
    align-items: center;
-   padding: 1.5rem 2rem;
+   padding: 1.5rem 1rem;
    border-bottom: 0.1rem solid var(--border-color);
    background-color: ${({ templateTheme }) => templateTheme};
 
@@ -48,7 +57,13 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled(NavLink)`
-   @media (max-width: 420px) {
+   @media (max-width: 445px) {
+      display: none;
+   }
+`;
+
+const InstagramIconWrapper = styled(NavLink)`
+   @media (min-width: 445px) {
       display: none;
    }
 `;
@@ -59,11 +74,10 @@ const RightGroup = styled.div`
    margin-left: auto;
 `;
 
-const BottunItem = styled.button`
+const BottunItem = styled.div`
+   position: relative;
    display: flex;
    align-items: center;
-   border: none;
-   background-color: transparent;
    cursor: pointer;
 `;
 

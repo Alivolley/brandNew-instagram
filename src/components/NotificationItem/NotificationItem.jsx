@@ -38,16 +38,26 @@ const Image = styled.img`
    object-fit: contain;
    background-color: black;
    border: 0.1rem solid var(--border-color);
+
+   @media (max-width: 900px) {
+      width: 3rem;
+      height: 3rem;
+   }
 `;
 
 const Details = styled.div`
    display: flex;
+   align-items: center;
    gap: 0.7rem;
    margin-left: 1rem;
    max-width: 100%;
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+
+   @media (max-width: 900px) {
+      gap: 0.2rem;
+   }
 `;
 
 const UserName = styled(Link)`
@@ -55,6 +65,10 @@ const UserName = styled(Link)`
    font-weight: 600;
    font-size: 1.5rem;
    max-width: 100%;
+
+   @media (max-width: 900px) {
+      font-size: 1.3rem;
+   }
 `;
 
 const Explain = styled.p`
@@ -63,4 +77,8 @@ const Explain = styled.p`
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+
+   @media (max-width: 900px) {
+      font-size: 1.1rem;
+   }
 `;
