@@ -15,11 +15,13 @@ import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleMenu";
 import LeftMenuProfile from "../../components/Skeletons/LeftMenuProfile/LeftMenuProfile";
 import NotificationDrawer from "../../components/NotificationDrawer/NotificationDrawer";
+import SearchDrawer from "../../components/SearchDrawer/SearchDrawer";
 
 const LeftsideMenu = ({ userInfoLoading }) => {
    const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
    const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
    const [showNotifications, setShowNotifications] = useState(false);
+   const [showSearch, setShowSearch] = useState(false);
 
    const changeTheme = () => {
       const foundedTheme = localStorage.getItem("theme");
@@ -40,7 +42,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Home</Text>
             </LinkedItem>
 
-            <BottunItem>
+            <BottunItem onClick={() => setShowSearch(true)}>
                <Icon>
                   <SearchIcon />
                </Icon>
@@ -104,6 +106,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
          </MoreOptions>
 
          <NotificationDrawer show={showNotifications} colseHandler={() => setShowNotifications(false)} templateTheme={templateTheme} />
+         <SearchDrawer show={showSearch} colseHandler={() => setShowSearch(false)} templateTheme={templateTheme} />
       </Leftside>
    );
 };
