@@ -7,7 +7,7 @@ import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
 import FollowersModal from "../Modals/FollowersModal/FollowersModal";
 import FollowingsModal from "../Modals/FollowingsModal/FollowingsModal";
 
-const ProfileHeader = ({ templateTheme }) => {
+const ProfileHeader = ({ templateTheme, profileInfos }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
    const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
@@ -19,36 +19,36 @@ const ProfileHeader = ({ templateTheme }) => {
          <Grid container>
             <Grid item xs={12} sm={4}>
                <ImageWrapper onClick={() => setShowChangePhotoModal(true)}>
-                  <Image src={NoProfilePhoto} />
+                  <Image
+                     src={profileInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${profileInfos?.profile_photo}` : NoProfilePhoto}
+                  />
                </ImageWrapper>
             </Grid>
             <Grid item xs={12} sm={8}>
                <Discribtion>
                   <Title>
-                     <Username>ali_azghandi8</Username>
-                     <EditButton to="/setting">Edit Profile</EditButton>
+                     <Username>{profileInfos?.username}</Username>
+                     {profileInfos?.is_owner && <EditButton to="/setting">Edit Profile</EditButton>}
                   </Title>
 
                   <FollowersWrapper>
                      <PostsCounts>
-                        <CountHolder>7</CountHolder>
+                        <CountHolder>{profileInfos?.posts_count}</CountHolder>
                         posts
                      </PostsCounts>
                      <FollowersCounts onClick={() => setShowFollowersModal(true)}>
-                        <CountHolder>854</CountHolder>
+                        <CountHolder>{profileInfos?.followers_count}</CountHolder>
                         followers
                      </FollowersCounts>
                      <FollowingsCounts onClick={() => setShowFollowingsModal(true)}>
-                        <CountHolder>264</CountHolder>
+                        <CountHolder>{profileInfos?.following_count}</CountHolder>
                         following
                      </FollowingsCounts>
                   </FollowersWrapper>
 
                   <BioWrapper>
-                     <Name>ali agha</Name>
-                     <Bio>Lorem ipsum, dolor sit</Bio>
-                     <Bio>Lorem ipsum, dolor sit</Bio>
-                     <Bio>Lorem ipsum, dolor sit</Bio>
+                     <Name>{profileInfos?.name}</Name>
+                     <Bio>{profileInfos?.bio}</Bio>
                   </BioWrapper>
                </Discribtion>
             </Grid>
@@ -174,8 +174,13 @@ const BioWrapper = styled.div`
 const Name = styled.h4`
    font-weight: 600;
    font-size: 1.45rem;
+   width: 100%;
 `;
 
 const Bio = styled.pre`
    font-size: 1.45rem;
+   margin-top: 0.6rem;
+   line-height: 2.3rem;
+   width: 100%;
+   white-space: pre-line;
 `;

@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import HeaderSearchIcon from "./../../assets/svgs/HeaderSearchIcon";
+import HeaderSearchResult from "../HeaderSearchResult/HeaderSearchResult";
 
 const HeaderSearch = ({ templateTheme }) => {
    const [searchValue, setSearchValue] = useState("");
+   const [showResult, setShowResult] = useState(false);
 
    return (
       <Wrapper templateTheme={templateTheme}>
          <Icon>
             <HeaderSearchIcon />
          </Icon>
-         <Input type="text" placeholder="Search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+         <Input
+            type="text"
+            placeholder="Search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onFocus={() => setShowResult(true)}
+            onBlur={() => setShowResult(false)}
+         />
+         {showResult && <HeaderSearchResult />}
       </Wrapper>
    );
 };
@@ -18,6 +28,7 @@ const HeaderSearch = ({ templateTheme }) => {
 export default HeaderSearch;
 
 const Wrapper = styled.div`
+   position: relative;
    display: flex;
    align-items: center;
    gap: 1rem;
@@ -25,6 +36,10 @@ const Wrapper = styled.div`
    padding: 0.7rem 1.5rem;
    border-radius: 0.7rem;
    background-color: ${({ templateTheme }) => (templateTheme === "white" ? " rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
+
+   @media (max-width: 330px) {
+      width: 17rem;
+   }
 
    input {
       color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};

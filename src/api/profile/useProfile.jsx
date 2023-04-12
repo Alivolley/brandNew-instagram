@@ -11,13 +11,16 @@ const useProfile = (username) => {
       axiosInstance
          .get(`accounts/profile/${username}/`)
          .then((res) => {
-            console.log(res);
             if (res.status === 200) {
-               // setProfileInfos()
+               setProfileInfos(res.data);
             }
          })
          .catch((err) => console.log(err))
-         .finally(() => setLoading(false));
+         .finally(() => {
+            setTimeout(() => {
+               setLoading(false);
+            }, 5000);
+         });
    };
 
    return [profileDetailRequest, loading, profileInfos];

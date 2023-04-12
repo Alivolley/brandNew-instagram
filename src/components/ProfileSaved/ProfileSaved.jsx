@@ -24,6 +24,7 @@ const ProfileSaved = () => {
                ))}
             </Grid>
             {loading && <PostsProfile />}
+            {!loading && savedPosts.length === 0 && <NoPosts>No post</NoPosts>}
          </Wrapper>
       </InfiniteScroll>
    );
@@ -35,4 +36,9 @@ const Wrapper = styled.div`
    padding: 2rem;
    max-width: 100rem;
    margin: 0 auto;
+`;
+
+const NoPosts = styled.p`
+   color: gray;
+   text-align: center;
 `;

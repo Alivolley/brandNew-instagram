@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PostsTab from "../../assets/svgs/PostsTab";
 import SavedTab from "../../assets/svgs/SavedTab";
 
-const ProfileTabs = ({ templateTheme }) => {
+const ProfileTabs = ({ templateTheme, profileInfos }) => {
    const { username } = useParams();
 
    return (
@@ -13,10 +13,12 @@ const ProfileTabs = ({ templateTheme }) => {
             <PostsTab />
             POSTS
          </Tab>
-         <Tab to={`${username}/saved`}>
-            <SavedTab />
-            SAVED
-         </Tab>
+         {profileInfos?.is_owner && (
+            <Tab to={`${username}/saved`}>
+               <SavedTab />
+               SAVED
+            </Tab>
+         )}
       </Wrapper>
    );
 };

@@ -5,6 +5,7 @@ import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 import ProfileTabs from "../../components/ProfileTabs/ProfileTabs";
 import { Outlet, useParams } from "react-router-dom";
 import useProfile from "../../api/profile/useProfile";
+import ProfilesSkeleton from "../../components/Skeletons/ProfilesSkeleton/ProfilesSkeleton";
 
 const Profile = () => {
    const { username } = useParams();
@@ -17,9 +18,15 @@ const Profile = () => {
 
    return (
       <Wrapper templateTheme={templateTheme}>
-         <ProfileHeader templateTheme={templateTheme} />
-         <ProfileTabs templateTheme={templateTheme} />
-         <Outlet />
+         {!loading ? (
+            <>
+               <ProfileHeader templateTheme={templateTheme} profileInfos={profileInfos} />
+               <ProfileTabs templateTheme={templateTheme} profileInfos={profileInfos} />
+               <Outlet />
+            </>
+         ) : (
+            <ProfilesSkeleton />
+         )}
       </Wrapper>
    );
 };
