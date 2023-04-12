@@ -18,9 +18,16 @@ const HeaderSearch = ({ templateTheme }) => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onFocus={() => setShowResult(true)}
-            onBlur={() => setShowResult(false)}
+            onBlur={() => !searchValue && setShowResult(false)}
          />
-         {showResult && <HeaderSearchResult />}
+         {showResult && (
+            <HeaderSearchResult
+               templateTheme={templateTheme}
+               searchValue={searchValue}
+               setSearchValue={setSearchValue}
+               colseHandler={() => setShowResult(false)}
+            />
+         )}
       </Wrapper>
    );
 };
