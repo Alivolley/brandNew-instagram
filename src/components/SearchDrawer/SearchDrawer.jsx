@@ -56,6 +56,11 @@ const DrawerWrapper = styled(Drawer)`
       background-color: transparent;
    }
 
+   .MuiPaper-root,
+   .MuiPaper-elevation,
+   .MuiPaper-elevation16,
+   .MuiDrawer-paper,
+   .MuiDrawer-paperAnchorLeft,
    .css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
       background-color: ${({ templatetheme }) => templatetheme};
       border-right: 0.1rem solid var(--border-color);
