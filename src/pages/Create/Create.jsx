@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import CreatePostItem from "../../components/CreatePostItem/CreatePostItem";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
@@ -8,6 +8,7 @@ const Create = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
    const [chosenFiles, setChosenFiles] = useState([]);
    const [chosenFilesUrl, setChosenFilesUrl] = useState([]);
+   const inputRef = useRef();
 
    const manageFile = (e) => {
       const file = e.target.files[0];
@@ -15,15 +16,14 @@ const Create = () => {
 
       const objectUrl = URL.createObjectURL(file);
       objectUrl && setChosenFilesUrl((prev) => [...prev, { source: objectUrl, mainFile: file, extention: file.type }]);
+
+      inputRef.current.value = null;
    };
 
    const clearAll = () => {
       setChosenFiles([]);
       setChosenFilesUrl([]);
    };
-
-   console.log(chosenFiles);
-   console.log(chosenFilesUrl);
 
    return (
       <Wrapper templateTheme={templateTheme}>
@@ -45,7 +45,13 @@ const Create = () => {
             <ButtonsContainer>
                <InputWrapper>
                   <InputTitle>Choose file</InputTitle>
-                  <Input type="file" accept="image/*, video/*" disabled={chosenFiles.length === 10 ? true : false} onChange={manageFile} />
+                  <Input
+                     type="file"
+                     accept="image/*, video/*"
+                     disabled={chosenFiles.length === 10 ? true : false}
+                     onChange={manageFile}
+                     ref={inputRef}
+                  />
                </InputWrapper>
 
                <RemoveAllBtn onClick={clearAll} disabled={!chosenFiles.length ? true : false}>

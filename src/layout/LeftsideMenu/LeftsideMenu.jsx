@@ -56,12 +56,12 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Explore</Text>
             </LinkedItem>
 
-            <LinkedItem to="/direct">
+            {/* <LinkedItem to="/direct">
                <Icon>
                   <DirectIcon />
                </Icon>
                <Text>Messages</Text>
-            </LinkedItem>
+            </LinkedItem> */}
 
             <BottunItem onClick={() => setShowNotifications(true)}>
                <Icon>

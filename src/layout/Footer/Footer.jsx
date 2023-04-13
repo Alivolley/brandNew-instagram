@@ -39,11 +39,11 @@ const Footer = ({ userInfoLoading }) => {
             </Icon>
          </LinkedItem>
 
-         <LinkedItem to="/direct">
+         {/* <LinkedItem to="/direct">
             <Icon>
                <DirectIcon />
             </Icon>
-         </LinkedItem>
+         </LinkedItem> */}
 
          <BottunItem onClick={changeTheme}>
             <Icon>
