@@ -10,6 +10,7 @@ import Profile from "../pages/Profile/Profile";
 import ProfileSaved from "../components/ProfileSaved/ProfileSaved";
 import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
 import Explore from "../pages/Explore/Explore";
+import Create from "../pages/Create/Create";
 
 const Routes = [
    {
@@ -29,6 +30,7 @@ const Routes = [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
          { path: "explore", element: <Explore /> },
+         { path: "create", element: <Create /> },
          {
             path: "profile/",
             element: <Profile />,

@@ -70,7 +70,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                <Text>Notifications</Text>
             </BottunItem>
 
-            <LinkedItem to="/createPost">
+            <LinkedItem to="/create">
                <Icon>
                   <CreatePostIcon />
                </Icon>

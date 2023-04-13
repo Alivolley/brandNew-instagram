@@ -33,7 +33,7 @@ const Footer = ({ userInfoLoading }) => {
             </Icon>
          </LinkedItem>
 
-         <LinkedItem to="/createPost">
+         <LinkedItem to="/create">
             <Icon>
                <CreatePostIcon />
             </Icon>
