@@ -6,7 +6,7 @@ import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 const SearchItem = ({ detail, onClose, templateTheme }) => {
    return (
       <Wrapper templateTheme={templateTheme}>
-         <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.profile_photo}` : noProfile} />
+         <Image src={detail?.profile_photo ? detail?.profile_photo : noProfile} />
          <Details>
             <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
                {/* {detail?.username} */}

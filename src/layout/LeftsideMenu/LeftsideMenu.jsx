@@ -78,9 +78,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
             </LinkedItem>
             {!userInfoLoading ? (
                <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
-                  <ProfilePhoto
-                     src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userInfos?.profile_photo}` : NoProfilePhoto}
-                  />
+                  <ProfilePhoto src={userInfos?.profile_photo ? userInfos?.profile_photo : NoProfilePhoto} />
                   <Text>Profile</Text>
                </LinkedItem>
             ) : (

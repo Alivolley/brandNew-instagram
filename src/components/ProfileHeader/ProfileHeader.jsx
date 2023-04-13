@@ -14,14 +14,14 @@ const ProfileHeader = ({ templateTheme, profileInfos }) => {
    const [showFollowersModal, setShowFollowersModal] = useState(false);
    const [showFollowingsModal, setShowFollowingsModal] = useState(false);
 
+   // console.log(profileInfos);
+
    return (
       <Wrapper isMatch={isMatch} templateTheme={templateTheme}>
          <Grid container>
             <Grid item xs={12} sm={4}>
                <ImageWrapper onClick={() => setShowChangePhotoModal(true)}>
-                  <Image
-                     src={profileInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com${profileInfos?.profile_photo}` : NoProfilePhoto}
-                  />
+                  <Image src={profileInfos?.profile_photo ? profileInfos?.profile_photo : NoProfilePhoto} />
                </ImageWrapper>
             </Grid>
             <Grid item xs={12} sm={8}>
