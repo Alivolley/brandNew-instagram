@@ -20,7 +20,7 @@ const ProfileHeader = ({ templateTheme, profileInfos }) => {
       <Wrapper isMatch={isMatch} templateTheme={templateTheme}>
          <Grid container>
             <Grid item xs={12} sm={4}>
-               <ImageWrapper onClick={() => setShowChangePhotoModal(true)}>
+               <ImageWrapper onClick={() => profileInfos?.is_owner && setShowChangePhotoModal(true)}>
                   <Image
                      src={profileInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${profileInfos?.profile_photo}` : NoProfilePhoto}
                   />
