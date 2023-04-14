@@ -18,8 +18,8 @@ const useLogout = () => {
             if (res.status === 204) {
                Cookies.remove("accessToken");
                Cookies.remove("refreshToken");
-               location.href = "/login";
                axiosInstance.interceptors.response.clear();
+               location.href = "/login";
             }
          })
          .catch((err) => {

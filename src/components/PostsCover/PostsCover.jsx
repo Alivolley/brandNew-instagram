@@ -4,9 +4,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import MultyplyPosts from "./../../assets/svgs/MultyplyPosts";
 import IsVideoIcon from "./../../assets/svgs/IsVideoIcon";
+import ChosenPost from "../../pages/ChosenPost/ChosenPost";
 
 const PostsCover = ({ detail }) => {
    const [containerHeight, setContainerHeight] = useState();
+   const [showPost, setShowPost] = useState(false);
+   const [chosenDetail, setChosenDetail] = useState({});
    const containerRef = useRef();
 
    if (containerRef.current) {
@@ -17,25 +20,46 @@ const PostsCover = ({ detail }) => {
    // console.log(detail?.file.page);
 
    return (
-      <Wrapper containerHeight={containerHeight} onLoad={(e) => setContainerHeight(e.target.width)} ref={containerRef}>
-         <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file.extension === "video" ? <IsVideoIcon /> : null}</IconWrapper>
+      <>
+         <Wrapper
+            containerHeight={containerHeight}
+            onLoad={(e) => setContainerHeight(e.target.width)}
+            ref={containerRef}
+            onClick={() => {
+               setShowPost(true);
+               setChosenDetail(detail);
+            }}
+         >
+            <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file?.extension === "video" ? <IsVideoIcon /> : null}</IconWrapper>
 
-         {detail?.file.extension === "image" ? (
-            <ImageCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file.page}`} />
-         ) : (
-            <VideoCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file.page}`} />
+            {detail?.file?.extension === "image" ? (
+               <ImageCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} />
+            ) : (
+               <VideoCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} />
+            )}
+            <CoverShadow className="shadow-color">
+               <LikesCount>
+                  <FavoriteIcon fontSize="large" />
+                  {detail?.likes_count}
+               </LikesCount>
+               <CommentsCount>
+                  <ModeCommentIcon fontSize="large" />
+                  {detail?.comments_count}
+               </CommentsCount>
+            </CoverShadow>
+         </Wrapper>
+
+         {showPost && (
+            <ChosenPost
+               show={showPost}
+               handleClose={() => {
+                  setShowPost(false);
+                  setChosenDetail({});
+               }}
+               chosenDetail={chosenDetail}
+            />
          )}
-         <CoverShadow className="shadow-color">
-            <LikesCount>
-               <FavoriteIcon fontSize="large" />
-               {detail?.likes_count}
-            </LikesCount>
-            <CommentsCount>
-               <ModeCommentIcon fontSize="large" />
-               {detail?.comments_count}
-            </CommentsCount>
-         </CoverShadow>
-      </Wrapper>
+      </>
    );
 };
 

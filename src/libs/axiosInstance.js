@@ -20,21 +20,28 @@ axiosInstance.interceptors.response.use(
       console.log(error);
       const originalReq = error.config;
       if (error?.response?.data?.code === "token_not_valid") {
-         try {
-            const res = await axiosInstance.post("auth/login/refresh/", {
-               refresh: refreshToken,
-            });
-            Cookies.set("accessToken", res.data.access, { expires: 1 });
-            originalReq.headers.Authorization = `Bearer ${res.data.access}`;
-            return await axiosInstance(originalReq);
-         } catch (err) {
-            return console.log(err);
+         if (refreshToken) {
+            try {
+               const res = await axiosInstance.post("auth/login/refresh/", {
+                  refresh: refreshToken,
+               });
+               Cookies.set("accessToken", res.data.access, { expires: 1 });
+               originalReq.headers.Authorization = `Bearer ${res.data.access}`;
+               return await axiosInstance(originalReq);
+            } catch (err) {
+               return console.log(err);
+            }
+         } else {
+            Cookies.remove("accessToken");
+            Cookies.remove("refreshToken");
+            axiosInstance.interceptors.response.clear();
+            location.href = "/login";
          }
       } else if (error?.response?.status === 410) {
          Cookies.remove("accessToken");
          Cookies.remove("refreshToken");
-         location.href = "/login";
          axiosInstance.interceptors.response.clear();
+         location.href = "/login";
       } else {
          return Promise.reject(error);
       }
