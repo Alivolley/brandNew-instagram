@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SearchIcon from "../../assets/svgs/SearchIcon";
 import HomeIcon from "./../../assets/svgs/HomeIcon";
 import ExploreIcon from "./../../assets/svgs/ExploreIcon";
-import DirectIcon from "./../../assets/svgs/DirectIcon";
+// import DirectIcon from "./../../assets/svgs/DirectIcon";
 import ActivityIcon from "./../../assets/svgs/ActivityIcon";
 import CreatePostIcon from "./../../assets/svgs/CreatePostIcon";
 import InstagramText from "./../../assets/svgs/InstagramText";
@@ -78,7 +78,9 @@ const LeftsideMenu = ({ userInfoLoading }) => {
             </LinkedItem>
             {!userInfoLoading ? (
                <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
-                  <ProfilePhoto src={userInfos?.profile_photo ? userInfos?.profile_photo : NoProfilePhoto} />
+                  <ProfilePhoto
+                     src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${userInfos?.profile_photo}` : NoProfilePhoto}
+                  />
                   <Text>Profile</Text>
                </LinkedItem>
             ) : (

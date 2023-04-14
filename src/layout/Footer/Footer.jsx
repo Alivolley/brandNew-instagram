@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import CreatePostIcon from "../../assets/svgs/CreatePostIcon";
-import DirectIcon from "../../assets/svgs/DirectIcon";
+// import DirectIcon from "../../assets/svgs/DirectIcon";
 import ExploreIcon from "../../assets/svgs/ExploreIcon";
 import HomeIcon from "../../assets/svgs/HomeIcon";
 import ThemeChangeIcon from "../../assets/svgs/ThemeChangeIcon";
@@ -52,7 +52,7 @@ const Footer = ({ userInfoLoading }) => {
          </BottunItem>
          {!userInfoLoading ? (
             <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
-               <ProfilePhoto src={userInfos?.profile_photo ? userInfos.profile_photo : NoProfilePhoto} />
+               <ProfilePhoto src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${userInfos.profile_photo}` : NoProfilePhoto} />
             </LinkedItem>
          ) : (
             <FooterProfile />
