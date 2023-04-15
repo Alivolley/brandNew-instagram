@@ -2,25 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import testPhoto from "./../../assets/Images/testPhoto.png";
+import testPhoto from "./../../assets/Images/long.png";
+import testPhoto2 from "./../../assets/Images/csm.jpg";
+import testPhoto3 from "./../../assets/Images/NoProfilePhoto.jpg";
+import testPhoto4 from "./../../assets/Images/testPhoto.png";
+import testPhoto5 from "./../../assets/Images/gfdfdg.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const ChosenPostSileds = () => {
+const ChosenPostSileds = ({ setContainerHeight }) => {
    return (
       <SwiperContainer slidesPerView={1} modules={[Navigation, Pagination]} navigation pagination>
          <SwiperSlideContainer>
-            <img src={testPhoto} />
+            {({ isActive }) => (isActive ? <img src={testPhoto} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
          </SwiperSlideContainer>
          <SwiperSlideContainer>
-            <img src={testPhoto} />
+            {({ isActive }) => (isActive ? <img src={testPhoto2} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
          </SwiperSlideContainer>
          <SwiperSlideContainer>
-            <img src={testPhoto} />
+            {({ isActive }) => (isActive ? <img src={testPhoto3} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
          </SwiperSlideContainer>
          <SwiperSlideContainer>
-            <img src={testPhoto} />
+            {({ isActive }) => (isActive ? <img src={testPhoto4} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
+         </SwiperSlideContainer>
+         <SwiperSlideContainer>
+            {({ isActive }) => (isActive ? <img src={testPhoto5} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
          </SwiperSlideContainer>
       </SwiperContainer>
    );
@@ -29,8 +36,12 @@ const ChosenPostSileds = () => {
 export default ChosenPostSileds;
 
 const SwiperContainer = styled(Swiper)`
-   height: 100%;
    width: 100%;
+   max-height: 90vh;
+
+   @media (max-width: 900px) {
+      height: 45vh;
+   }
 
    .swiper-button-next,
    .swiper-button-prev {
@@ -64,12 +75,15 @@ const SwiperContainer = styled(Swiper)`
 `;
 
 const SwiperSlideContainer = styled(SwiperSlide)`
-   height: 100%;
-   width: 100%;
+   max-width: 100%;
+   max-height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 
    img {
-      height: 100%;
-      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
       object-position: center center;
    }

@@ -15,3 +15,9 @@ html {
    font-family: "Segoe UI" !important;
    font-size: 1.6rem;
 }
+
+@media all and (max-width: 900px) {
+   * {
+      cursor: default !important;
+   }
+}

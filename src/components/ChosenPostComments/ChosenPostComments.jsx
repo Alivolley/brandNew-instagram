@@ -13,7 +13,7 @@ import CommentItem from "../CommentItem/CommentItem";
 import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 
-const ChosenPostComments = ({ templateTheme }) => {
+const ChosenPostComments = ({ templateTheme, containerHeight }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
    const inputRef = useRef();
@@ -22,7 +22,7 @@ const ChosenPostComments = ({ templateTheme }) => {
    useOnClickOutside(emojiRef, () => setShowEmojies(false));
 
    return (
-      <Wrapper>
+      <Wrapper templateTheme={templateTheme} containerHeight={containerHeight}>
          <Header>
             <HeaderImage src={testPhoto} />
             <HeaderUsername to={`/`}>ali-azghandi</HeaderUsername>
@@ -107,11 +107,18 @@ const ChosenPostComments = ({ templateTheme }) => {
 export default ChosenPostComments;
 
 const Wrapper = styled.div`
+   background-color: ${({ templateTheme }) => templateTheme};
    position: relative;
-   height: inherit;
-   width: 55rem;
+   height: ${({ containerHeight }) => (containerHeight ? `${containerHeight}px` : "50rem")};
+   width: 100%;
+   max-height: 90vh;
    overflow: auto;
+   box-sizing: border-box;
    border-left: 0.1rem solid var(--border-color);
+
+   @media (max-width: 900px) {
+      height: 45vh;
+   }
 `;
 
 const Header = styled.div`
@@ -131,6 +138,7 @@ const HeaderImage = styled.img`
    height: 3.2rem;
    border-radius: 50%;
    object-fit: contain;
+   object-position: center center;
    background-color: black;
    border-bottom: 0.1rem solid var(--border-color);
 `;
@@ -221,7 +229,11 @@ const Input = styled.input`
    border: none;
    outline: none;
    background-color: transparent;
-   width: 50rem;
+   width: 18rem;
+
+   @media (max-width: 900px) {
+      width: 12rem;
+   }
 `;
 
 const PostButton = styled(LoadingButton)`
