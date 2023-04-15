@@ -2,33 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import testPhoto from "./../../assets/Images/long.png";
-import testPhoto2 from "./../../assets/Images/csm.jpg";
-import testPhoto3 from "./../../assets/Images/NoProfilePhoto.jpg";
-import testPhoto4 from "./../../assets/Images/testPhoto.png";
-import testPhoto5 from "./../../assets/Images/gfdfdg.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import PostVideo from "../PostVideo/PostVideo";
 
-const ChosenPostSileds = ({ setContainerHeight }) => {
+const ChosenPostSileds = ({ setContainerHeight, medias }) => {
+   // console.log(medias);
+
    return (
       <SwiperContainer slidesPerView={1} modules={[Navigation, Pagination]} navigation pagination>
-         <SwiperSlideContainer>
-            {({ isActive }) => (isActive ? <img src={testPhoto} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
-         </SwiperSlideContainer>
-         <SwiperSlideContainer>
-            {({ isActive }) => (isActive ? <img src={testPhoto2} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
-         </SwiperSlideContainer>
-         <SwiperSlideContainer>
-            {({ isActive }) => (isActive ? <img src={testPhoto3} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
-         </SwiperSlideContainer>
-         <SwiperSlideContainer>
-            {({ isActive }) => (isActive ? <img src={testPhoto4} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
-         </SwiperSlideContainer>
-         <SwiperSlideContainer>
-            {({ isActive }) => (isActive ? <img src={testPhoto5} onLoad={(e) => setContainerHeight(e.target.height)} /> : <div> some </div>)}
-         </SwiperSlideContainer>
+         {medias?.map((media) => (
+            <SwiperSlideContainer key={media?.id}>
+               {({ isActive }) =>
+                  isActive &&
+                  (media?.extension === "video" ? (
+                     <PostVideo videoSource={media?.page} setContainerHeight={setContainerHeight} />
+                  ) : (
+                     <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} onLoad={(e) => setContainerHeight(e.target.height)} />
+                  ))
+               }
+            </SwiperSlideContainer>
+         ))}
       </SwiperContainer>
    );
 };
@@ -80,11 +75,11 @@ const SwiperSlideContainer = styled(SwiperSlide)`
    display: flex;
    align-items: center;
    justify-content: center;
+`;
 
-   img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      object-position: center center;
-   }
+const Image = styled.img`
+   max-width: 100%;
+   max-height: 100%;
+   object-fit: contain;
+   object-position: center center;
 `;

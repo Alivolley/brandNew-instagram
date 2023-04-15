@@ -2,18 +2,17 @@ import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
-const useProfile = (username) => {
-   const [loading, setLoading] = useState(true);
-   const [profileInfos, setProfileInfos] = useState({});
+const useDeletePost = (postId) => {
+   const [deleteLoading, setDeleteLoading] = useState(false);
 
-   const profileDetailRequest = () => {
-      setLoading(true);
+   const deletePostRequest = () => {
+      setDeleteLoading(true);
 
       axiosInstance
-         .get(`accounts/profile/${username}/`)
+         .delete(`post/delete/${postId}/`)
          .then((res) => {
             if (res.status === 200) {
-               setProfileInfos(res.data);
+               location.reload();
             }
          })
          .catch((err) => {
@@ -23,9 +22,9 @@ const useProfile = (username) => {
                theme: "colored",
             });
          })
-         .finally(() => setLoading(false));
+         .finally(() => setDeleteLoading(false));
    };
 
-   return [profileDetailRequest, loading, profileInfos];
+   return [deletePostRequest, deleteLoading];
 };
-export default useProfile;
+export default useDeletePost;

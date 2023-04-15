@@ -35,7 +35,7 @@ const PostsCover = ({ detail }) => {
             {detail?.file?.extension === "image" ? (
                <ImageCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} />
             ) : (
-               <VideoCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} />
+               <VideoCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} preload="metadata" />
             )}
             <CoverShadow className="shadow-color">
                <LikesCount>

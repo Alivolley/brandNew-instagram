@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import testPhoto from "./../../assets/Images/testPhoto.png";
+import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import AddComment from "../../assets/svgs/AddComment";
 import SavePost from "../../assets/svgs/SavePost";
 import LikeIcon from "../../assets/svgs/LikeIcon";
@@ -12,61 +12,65 @@ import { LoadingButton } from "@mui/lab";
 import CommentItem from "../CommentItem/CommentItem";
 import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
+import useDeletePost from "../../api/deletePost/useDeletePost";
 
-const ChosenPostComments = ({ templateTheme, containerHeight }) => {
+const ChosenPostComments = ({ templateTheme, containerHeight, postDetail }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
+   const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
    const inputRef = useRef();
    const emojiRef = useRef();
 
    useOnClickOutside(emojiRef, () => setShowEmojies(false));
 
+   // console.log(postDetail);
+
+   const deletePostHandler = () => {
+      deletePostRequest();
+   };
+
    return (
       <Wrapper templateTheme={templateTheme} containerHeight={containerHeight}>
          <Header>
-            <HeaderImage src={testPhoto} />
-            <HeaderUsername to={`/`}>ali-azghandi</HeaderUsername>
-            <HeaderIcon>some</HeaderIcon>
+            <HeaderImage
+               src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
+            />
+            <HeaderUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</HeaderUsername>
+
+            {postDetail?.user?.username === postDetail?.auth_username && (
+               <HeaderIcon variant="text" color="error" loading={deleteLoading} onClick={deletePostHandler}>
+                  Delete post
+               </HeaderIcon>
+            )}
          </Header>
 
          <Body>
             <Caption>
                <CaptionHeader>
-                  <CaptionImage src={testPhoto} />
-                  <CaptionUsername to={`/`}>ali-azghandi</CaptionUsername>
+                  <CaptionImage
+                     src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
+                  />
+                  <CaptionUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</CaptionUsername>
                </CaptionHeader>
-               <CaptionText>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad ex inventore fugit, odit ea, nihil a ab, unde alias quia officia. Nobis
-                  totam quis iste cumque saepe tempore aspernatur minus.
-               </CaptionText>
+               <CaptionText>{postDetail?.caption}</CaptionText>
             </Caption>
 
             <CommentsSection>
-               <CommentItem />
-               <CommentItem />
-               <CommentItem />
-               <CommentItem />
-               <CommentItem />
-               <CommentItem />
-               <CommentItem />
+               {postDetail?.comments?.map((comment) => (
+                  <CommentItem key={comment.id} detail={comment} />
+               ))}
             </CommentsSection>
          </Body>
 
          <Footer>
             <FooterIcons>
-               <LikeIconWrapper>
-                  <LikeIcon />
-                  {/* <LikeIconFilled /> */}
-               </LikeIconWrapper>
+               <LikeIconWrapper>{postDetail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
                <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
                   <AddComment />
                </CommentIconWrapper>
 
-               <SaveIconsWrapper>
-                  <SavePost />
-                  {/* <SavePostFilled /> */}
-               </SaveIconsWrapper>
+               <SaveIconsWrapper>{postDetail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
             </FooterIcons>
             <CommentSection>
                <EmojiIcon onClick={() => setShowEmojies(true)}>
@@ -149,8 +153,11 @@ const HeaderUsername = styled(Link)`
    font-size: 1.3rem;
 `;
 
-const HeaderIcon = styled.div`
-   margin-left: auto;
+const HeaderIcon = styled(LoadingButton)`
+   margin-left: auto !important;
+   padding: 0 !important;
+   text-transform: none !important;
+   font-size: 1rem !important;
    cursor: pointer;
 `;
 

@@ -1,18 +1,25 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import ChosenPostComments from "../../components/ChosenPostComments/ChosenPostComments";
 import ChosenPostSileds from "../../components/ChosenPostSileds/ChosenPostSileds";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
+import useChosenPost from "../../api/chosenPost/useChosenPost";
+import ChosenModalSkelton from "../../components/Skeletons/ChosenModalSkelton/ChosenModalSkelton";
 
 const ChosenPost = ({ show, handleClose, chosenDetail }) => {
+   const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id);
    const [containerHeight, setContainerHeight] = useState();
 
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
    const { templateTheme } = useContext(GeneralInfoContext);
+
+   useEffect(() => {
+      postDetailRequest();
+   }, []);
 
    return (
       <Modal
@@ -20,19 +27,20 @@ const ChosenPost = ({ show, handleClose, chosenDetail }) => {
          onClose={handleClose}
          sx={{
             backdropFilter: "brightness(60%)",
-            // display: "flex",
-            // alignItems: "center",
-            // justifyContent: "center",
             padding: isMatch ? "5rem 1.5rem" : "3rem 15rem",
          }}
       >
          <Wrapper templateTheme={templateTheme}>
             <Grid container>
                <Grid item xs={12} md={6}>
-                  <ChosenPostSileds setContainerHeight={setContainerHeight} />
+                  {loading ? <ChosenModalSkelton /> : <ChosenPostSileds setContainerHeight={setContainerHeight} medias={postDetail?.files} />}
                </Grid>
                <Grid item xs={12} md={6}>
-                  <ChosenPostComments templateTheme={templateTheme} containerHeight={containerHeight} />
+                  {loading ? (
+                     <ChosenModalSkelton />
+                  ) : (
+                     <ChosenPostComments templateTheme={templateTheme} containerHeight={containerHeight} postDetail={postDetail} />
+                  )}
                </Grid>
             </Grid>
             <CloseButton onClick={handleClose}>

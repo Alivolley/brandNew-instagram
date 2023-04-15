@@ -1,32 +1,29 @@
 import React from "react";
-import testPhoto from "./../../assets/Images/NoProfilePhoto.jpg";
+import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-const CommentItem = () => {
+const CommentItem = ({ detail }) => {
    return (
       <Wrapper>
          <Header>
-            <HeaderImage src={testPhoto} />
-            <HeaderUsername to={`/`}>ali-azghandi</HeaderUsername>
-            <HeaderIcon>
-               <DeleteForeverIcon />
-            </HeaderIcon>
+            <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+            <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
+            {detail?.can_delete && (
+               <HeaderIcon onClick={() => console.log(detail.id)}>
+                  <DeleteForeverIcon />
+               </HeaderIcon>
+            )}
          </Header>
-         <Text>Lorem ipsum dolor sit amet consectetur</Text>
+         <Text>{detail?.body}</Text>
       </Wrapper>
    );
 };
 
 export default CommentItem;
 
-const Wrapper = styled.div`
-   /* display: flex;
-   fe
-   align-items: center;
-   gap: 1rem; */
-`;
+const Wrapper = styled.div``;
 
 const Header = styled.div`
    display: flex;

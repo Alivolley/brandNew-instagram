@@ -2,18 +2,18 @@ import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
-const useProfile = (username) => {
+const useChosenPost = (postId) => {
    const [loading, setLoading] = useState(true);
-   const [profileInfos, setProfileInfos] = useState({});
+   const [postDetail, setPostDetail] = useState({});
 
-   const profileDetailRequest = () => {
+   const postDetailRequest = () => {
       setLoading(true);
 
       axiosInstance
-         .get(`accounts/profile/${username}/`)
+         .get(`post/detail/${postId}/`)
          .then((res) => {
             if (res.status === 200) {
-               setProfileInfos(res.data);
+               setPostDetail(res.data);
             }
          })
          .catch((err) => {
@@ -26,6 +26,6 @@ const useProfile = (username) => {
          .finally(() => setLoading(false));
    };
 
-   return [profileDetailRequest, loading, profileInfos];
+   return [postDetailRequest, loading, postDetail];
 };
-export default useProfile;
+export default useChosenPost;
