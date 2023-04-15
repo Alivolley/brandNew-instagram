@@ -1,13 +1,17 @@
-import { Grid } from "@mui/material";
+import { Backdrop, CircularProgress, Grid } from "@mui/material";
 import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import CreatePostItem from "../../components/CreatePostItem/CreatePostItem";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import { toast } from "react-toastify";
+import useCreatePost from "../../api/createPost/useCreatePost";
 
 const Create = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
+   const [sendPostRequest, loading] = useCreatePost();
    const [chosenFiles, setChosenFiles] = useState([]);
    const [chosenFilesUrl, setChosenFilesUrl] = useState([]);
+   const [captionValue, setCaptionValue] = useState("");
    const inputRef = useRef();
 
    const manageFile = (e) => {
@@ -23,6 +27,22 @@ const Create = () => {
    const clearAll = () => {
       setChosenFiles([]);
       setChosenFilesUrl([]);
+   };
+
+   const sendData = () => {
+      if (chosenFiles.length && captionValue) {
+         let formData = new FormData();
+
+         chosenFiles.forEach((file) => formData.append("files", file));
+         formData.append("caption", captionValue);
+
+         sendPostRequest(formData);
+      } else {
+         toast.warning("Select files and write a caption", {
+            autoClose: 5000,
+            theme: "colored",
+         });
+      }
    };
 
    return (
@@ -47,7 +67,7 @@ const Create = () => {
                   <InputTitle>Choose file</InputTitle>
                   <Input
                      type="file"
-                     accept="image/*, video/*"
+                     accept="image/jpg, image/jpeg, image/png, video/mkv, video/mp4, video/avi"
                      disabled={chosenFiles.length === 10 ? true : false}
                      onChange={manageFile}
                      ref={inputRef}
@@ -61,10 +81,14 @@ const Create = () => {
          </ChoosePost>
 
          <CaptionPart>
-            <Textarea placeholder="Caption"></Textarea>
+            <Textarea placeholder="Caption" value={captionValue} onChange={(e) => setCaptionValue(e.target.value)}></Textarea>
 
-            <SendButton>Post</SendButton>
+            <SendButton onClick={sendData}>Post</SendButton>
          </CaptionPart>
+
+         <Backdrop open={loading}>
+            <CircularProgress color="inherit" />
+         </Backdrop>
       </Wrapper>
    );
 };
