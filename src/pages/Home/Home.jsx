@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import HomePost from "../../components/HomePost/HomePost";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import SuggestionItem from "../../components/SuggestionItem/SuggestionItem";
 
 const Home = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -16,10 +17,17 @@ const Home = () => {
             <HomePost />
             <HomePost />
          </Posts>
-         <Suggestion>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur minus veniam quod in animi atque, error, sit repellendus
-            necessitatibus suscipit sequi fugiat eligendi sapiente nesciunt eveniet! At rem aliquid voluptas!
-         </Suggestion>
+
+         <SuggestionWrapper>
+            <SuggestionTitle>Suggestions for you</SuggestionTitle>
+            <SuggestionBody>
+               <SuggestionItem />
+               <SuggestionItem />
+               <SuggestionItem />
+               <SuggestionItem />
+               <SuggestionItem />
+            </SuggestionBody>
+         </SuggestionWrapper>
       </Wrapper>
    );
 };
@@ -49,9 +57,25 @@ const Posts = styled.section`
    }
 `;
 
-const Suggestion = styled.section`
-   width: 20rem;
+const SuggestionWrapper = styled.section`
+   width: 25rem;
+   margin-top: 3rem;
+
    @media (max-width: 1200px) {
       display: none;
    }
+`;
+
+const SuggestionTitle = styled.p`
+   font-size: 1.3rem;
+   color: gray;
+   font-weight: 700;
+   margin-bottom: 3rem;
+`;
+
+const SuggestionBody = styled.div`
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
 `;
