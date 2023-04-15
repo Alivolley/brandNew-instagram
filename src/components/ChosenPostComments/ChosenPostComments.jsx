@@ -140,7 +140,7 @@ const HeaderImage = styled.img`
    object-fit: contain;
    object-position: center center;
    background-color: black;
-   border-bottom: 0.1rem solid var(--border-color);
+   border: 0.1rem solid var(--border-color);
 `;
 
 const HeaderUsername = styled(Link)`

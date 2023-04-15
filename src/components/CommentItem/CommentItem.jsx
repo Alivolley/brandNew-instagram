@@ -40,7 +40,7 @@ const HeaderImage = styled.img`
    border-radius: 50%;
    object-fit: contain;
    background-color: black;
-   border-bottom: 0.1rem solid var(--border-color);
+   border: 0.1rem solid var(--border-color);
 `;
 
 const HeaderUsername = styled(Link)`
