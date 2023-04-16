@@ -20,6 +20,8 @@ const HomePost = ({ detail }) => {
    const [showPost, setShowPost] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
 
+   console.log(detail);
+
    return (
       <Wrapper>
          <Header>
@@ -35,7 +37,7 @@ const HomePost = ({ detail }) => {
                            media?.extension === "video" ? (
                               <HomeVideo videoSource={media?.page} />
                            ) : (
-                              <Image src={`${media?.page}`} />
+                              <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} />
                            )
                         ) : (
                            <ChosenModalSkelton />
