@@ -1,12 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import testPhoto from "./../../assets/Images/long.png";
-import testPhoto2 from "./../../assets/Images/csm.jpg";
-import testPhoto3 from "./../../assets/Images/NoProfilePhoto.jpg";
-import testPhoto4 from "./../../assets/Images/testPhoto.png";
-import testPhoto5 from "./../../assets/Images/gfdfdg.png";
+import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,48 +12,78 @@ import LikeIconFilled from "../../assets/svgs/LikeIconFilled";
 import AddComment from "../../assets/svgs/AddComment";
 import SavePost from "../../assets/svgs/SavePost";
 import SavePostFilled from "../../assets/svgs/SavePostFilled";
+import HomeVideo from "../HomeVideo/HomeVideo";
+import ChosenModalSkelton from "../Skeletons/ChosenModalSkelton/ChosenModalSkelton";
+import ChosenPost from "../../pages/ChosenPost/ChosenPost";
 
-const HomePost = () => {
+const HomePost = ({ detail }) => {
+   const [showPost, setShowPost] = useState(false);
+   const [chosenDetail, setChosenDetail] = useState({});
+
    return (
       <Wrapper>
          <Header>
-            <HeaderImage src={testPhoto4} />
-            <HeaderUsername>javad_googool</HeaderUsername>
+            <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+            <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
          </Header>
          <Body>
             <SwiperContainer slidesPerView={1} modules={[Navigation, Pagination]} navigation pagination>
-               <SwiperSlideContainer>{({ isActive }) => (isActive ? <img src={testPhoto2} /> : <div> some </div>)}</SwiperSlideContainer>
-               <SwiperSlideContainer>{({ isActive }) => (isActive ? <img src={testPhoto} /> : <div> some </div>)}</SwiperSlideContainer>
-               <SwiperSlideContainer>{({ isActive }) => (isActive ? <img src={testPhoto3} /> : <div> some </div>)}</SwiperSlideContainer>
-               <SwiperSlideContainer>{({ isActive }) => (isActive ? <img src={testPhoto4} /> : <div> some </div>)}</SwiperSlideContainer>
-               <SwiperSlideContainer>{({ isActive }) => (isActive ? <img src={testPhoto5} /> : <div> some </div>)}</SwiperSlideContainer>
+               {detail?.files.map((media) => (
+                  <SwiperSlideContainer key={media?.id}>
+                     {({ isActive }) =>
+                        isActive ? (
+                           media?.extension === "video" ? (
+                              <HomeVideo videoSource={media?.page} />
+                           ) : (
+                              <Image src={`${media?.page}`} />
+                           )
+                        ) : (
+                           <ChosenModalSkelton />
+                        )
+                     }
+                  </SwiperSlideContainer>
+               ))}
             </SwiperContainer>
          </Body>
 
          <FooterIcons>
-            <LikeIconWrapper>
-               <LikeIcon />
-               {/* <LikeIconFilled /> */}
-            </LikeIconWrapper>
+            <LikeIconWrapper>{detail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
-            <CommentIconWrapper>
+            <CommentIconWrapper
+               onClick={() => {
+                  setShowPost(true);
+                  setChosenDetail(detail);
+               }}
+            >
                <AddComment />
             </CommentIconWrapper>
 
-            <SaveIconsWrapper>
-               <SavePost />
-               {/* <SavePostFilled /> */}
-            </SaveIconsWrapper>
+            <SaveIconsWrapper>{detail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
          </FooterIcons>
 
-         <LikesCount>12,215 likes</LikesCount>
+         <LikesCount>{detail?.likes_count.toLocaleString()} likes</LikesCount>
 
-         <Caption>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat voluptates corrupti recusandae, magnam consequatur, vitae cupiditate
-            quam eligendi odit ratione natus minima ullam laborum incidunt, debitis sunt fugiat alias eaque!
-         </Caption>
+         <Caption>{detail?.caption}</Caption>
 
-         <ViewAllButton>View all 8 comments</ViewAllButton>
+         <ViewAllButton
+            onClick={() => {
+               setShowPost(true);
+               setChosenDetail(detail);
+            }}
+         >
+            View all {detail?.comments_count} comments
+         </ViewAllButton>
+
+         {showPost && (
+            <ChosenPost
+               show={showPost}
+               handleClose={() => {
+                  setShowPost(false);
+                  setChosenDetail({});
+               }}
+               chosenDetail={chosenDetail}
+            />
+         )}
       </Wrapper>
    );
 };
@@ -133,14 +159,14 @@ const SwiperContainer = styled(Swiper)`
 
 const SwiperSlideContainer = styled(SwiperSlide)`
    width: 100%;
+`;
 
-   img {
-      width: 100%;
-      max-height: 60rem;
-      object-fit: contain;
-      object-position: center center;
-      border-radius: 0.5rem;
-   }
+const Image = styled.img`
+   width: 100%;
+   max-height: 60rem;
+   object-fit: contain;
+   object-position: center center;
+   border-radius: 0.5rem;
 `;
 
 const FooterIcons = styled.div`
@@ -180,7 +206,7 @@ const ViewAllButton = styled.button`
    width: fit-content;
    font-size: 1.2rem;
    font-weight: 700;
-   color: gray;
+   color: gray !important;
    margin-top: 2rem;
    cursor: pointer;
 `;

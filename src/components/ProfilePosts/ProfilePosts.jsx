@@ -60,7 +60,6 @@ const NoPosts = styled.p`
 
 const AddButton = styled.button`
    display: block;
-   width: fit-content;
    margin: 0 auto;
    border: none;
    background-color: transparent;

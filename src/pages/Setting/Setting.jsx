@@ -2,7 +2,7 @@ import React from "react";
 import ChangeInfo from "../../components/ChangeInfo/ChangeInfo";
 import styled from "styled-components";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Backdrop, CircularProgress, useMediaQuery, useTheme } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import useLogout from "../../api/logout/useLogout";
 
@@ -26,6 +26,10 @@ const Setting = () => {
                </LogoutButton>
             </Container>
          )}
+
+         <Backdrop open={loading}>
+            <CircularProgress color="inherit" />
+         </Backdrop>
       </Wrapper>
    );
 };
