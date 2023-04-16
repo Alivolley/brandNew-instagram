@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PostVideo from "../PostVideo/PostVideo";
 
-const ChosenPostSileds = ({ setContainerHeight, medias }) => {
+const ChosenPostSileds = ({ medias }) => {
    // console.log(medias);
 
    return (
@@ -17,9 +17,9 @@ const ChosenPostSileds = ({ setContainerHeight, medias }) => {
                {({ isActive }) =>
                   isActive &&
                   (media?.extension === "video" ? (
-                     <PostVideo videoSource={media?.page} setContainerHeight={setContainerHeight} />
+                     <PostVideo videoSource={media?.page} />
                   ) : (
-                     <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} onLoad={(e) => setContainerHeight(e.target.height)} />
+                     <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} />
                   ))
                }
             </SwiperSlideContainer>
@@ -32,7 +32,7 @@ export default ChosenPostSileds;
 
 const SwiperContainer = styled(Swiper)`
    width: 100%;
-   max-height: 90vh;
+   height: 100%;
 
    @media (max-width: 900px) {
       height: 45vh;
@@ -70,8 +70,8 @@ const SwiperContainer = styled(Swiper)`
 `;
 
 const SwiperSlideContainer = styled(SwiperSlide)`
-   max-width: 100%;
-   max-height: 100%;
+   width: 100%;
+   height: 100%;
    display: flex;
    align-items: center;
    justify-content: center;

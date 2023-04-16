@@ -1,11 +1,16 @@
-import { Skeleton, useMediaQuery, useTheme } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import React from "react";
 
 const ChosenModalSkelton = () => {
-   const theme = useTheme();
-   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-
-   return <Skeleton variant="rectangular" width="100%" height={isMatch ? "45vh" : 500} sx={{ backgroundColor: "#80808083" }} animation="pulse" />;
+   return (
+      <Skeleton
+         variant="rectangular"
+         width="100%"
+         height="100%"
+         sx={{ backgroundColor: "#80808083", border: "0.1rem solid var(--border-color)" }}
+         animation="pulse"
+      />
+   );
 };
 
 export default ChosenModalSkelton;

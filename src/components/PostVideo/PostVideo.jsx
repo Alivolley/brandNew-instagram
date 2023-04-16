@@ -1,14 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const PostVideo = ({ videoSource, setContainerHeight }) => {
-   return (
-      <Video
-         src={`https://djangoinsta.pythonanywhere.com${videoSource}`}
-         onLoadStart={(e) => setContainerHeight(e.target.height)}
-         preload="metadata"
-      />
-   );
+const PostVideo = ({ videoSource }) => {
+   return <Video src={`https://djangoinsta.pythonanywhere.com${videoSource}`} preload="metadata" />;
 };
 
 export default PostVideo;

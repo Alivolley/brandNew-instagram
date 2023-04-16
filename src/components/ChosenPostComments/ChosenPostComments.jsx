@@ -14,7 +14,7 @@ import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 import useDeletePost from "../../api/deletePost/useDeletePost";
 
-const ChosenPostComments = ({ templateTheme, containerHeight, postDetail }) => {
+const ChosenPostComments = ({ templateTheme, postDetail }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
    const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
@@ -30,7 +30,7 @@ const ChosenPostComments = ({ templateTheme, containerHeight, postDetail }) => {
    };
 
    return (
-      <Wrapper templateTheme={templateTheme} containerHeight={containerHeight}>
+      <Wrapper templateTheme={templateTheme}>
          <Header>
             <HeaderImage
                src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
@@ -113,15 +113,13 @@ export default ChosenPostComments;
 const Wrapper = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
    position: relative;
-   height: ${({ containerHeight }) => (containerHeight ? `${containerHeight}px` : "50rem")};
+   height: 100%;
    width: 100%;
-   max-height: 90vh;
-   overflow: auto;
-   box-sizing: border-box;
    border-left: 0.1rem solid var(--border-color);
 
    @media (max-width: 900px) {
-      height: 45vh;
+      border-top: 0.1rem solid var(--border-color);
+      border-left: none;
    }
 `;
 

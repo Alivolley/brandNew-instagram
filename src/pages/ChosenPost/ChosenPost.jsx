@@ -1,6 +1,5 @@
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import React, { useContext, useEffect, useState } from "react";
+import { Grid, useTheme, useMediaQuery } from "@mui/material";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import ChosenPostComments from "../../components/ChosenPostComments/ChosenPostComments";
@@ -8,58 +7,76 @@ import ChosenPostSileds from "../../components/ChosenPostSileds/ChosenPostSileds
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 import useChosenPost from "../../api/chosenPost/useChosenPost";
 import ChosenModalSkelton from "../../components/Skeletons/ChosenModalSkelton/ChosenModalSkelton";
+import useOnClickOutside from "../../hooks/useOnclickOutside";
 
-const ChosenPost = ({ show, handleClose, chosenDetail }) => {
+const ChosenPost = ({ handleClose, chosenDetail }) => {
    const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id);
-   const [containerHeight, setContainerHeight] = useState();
-
+   const outSideRef = useRef();
    const theme = useTheme();
-   const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
+   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+
+   useOnClickOutside(outSideRef, handleClose);
    const { templateTheme } = useContext(GeneralInfoContext);
 
    useEffect(() => {
       postDetailRequest();
+      document.body.style.overflow = "hidden";
+
+      return () => {
+         document.body.style.overflow = "visible";
+      };
    }, []);
 
    return (
-      <Modal
-         open={show}
-         onClose={handleClose}
-         sx={{
-            backdropFilter: "brightness(60%)",
-            padding: isMatch ? "5rem 1.5rem" : "3rem 15rem",
-         }}
-      >
-         <Wrapper templateTheme={templateTheme}>
-            <Grid container>
-               <Grid item xs={12} md={6}>
-                  {loading ? <ChosenModalSkelton /> : <ChosenPostSileds setContainerHeight={setContainerHeight} medias={postDetail?.files} />}
+      <Container>
+         <Thunk>
+            <Wrapper templateTheme={templateTheme} ref={outSideRef}>
+               <Grid container sx={{ height: "100%" }}>
+                  <Grid item xs={12} md={6} height={isMatch ? "45vh" : "100%"}>
+                     {loading ? <ChosenModalSkelton /> : <ChosenPostSileds medias={postDetail?.files} />}
+                  </Grid>
+                  <Grid item xs={12} md={6} height={isMatch ? "45vh" : "100%"}>
+                     {loading ? <ChosenModalSkelton /> : <ChosenPostComments templateTheme={templateTheme} postDetail={postDetail} />}
+                  </Grid>
                </Grid>
-               <Grid item xs={12} md={6}>
-                  {loading ? (
-                     <ChosenModalSkelton />
-                  ) : (
-                     <ChosenPostComments templateTheme={templateTheme} containerHeight={containerHeight} postDetail={postDetail} />
-                  )}
-               </Grid>
-            </Grid>
-            <CloseButton onClick={handleClose}>
-               <CloseButtonIcon />
-            </CloseButton>
-         </Wrapper>
-      </Modal>
+            </Wrapper>
+         </Thunk>
+
+         <CloseButton onClick={handleClose}>
+            <CloseButtonIcon />
+         </CloseButton>
+      </Container>
    );
 };
 
 export default ChosenPost;
 
+const Container = styled.div`
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+`;
+
+const Thunk = styled.div`
+   background-color: rgba(58, 58, 58, 0.6);
+   width: 100%;
+   height: 100%;
+   padding: 7rem 13rem;
+   box-sizing: border-box;
+
+   @media (max-width: 900px) {
+      padding: 5rem 2rem;
+   }
+`;
+
 const Wrapper = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
    color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
-   outline: none;
-   /* height: 100%; */
-   display: flex;
-   align-items: center;
+   width: 100%;
+   height: 100%;
 
    * {
       color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
