@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Grid } from "@mui/material";
 import PostsCover from "../../components/PostsCover/PostsCover";
-import useExplore from "../../api/Explore/useExplore";
+import useExplore from "../../api/explore/useExplore";
 import PostsProfile from "../../components/Skeletons/PostsProfile/PostsProfile";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
