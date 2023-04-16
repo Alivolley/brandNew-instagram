@@ -20,7 +20,7 @@ const HomePost = ({ detail }) => {
    const [showPost, setShowPost] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
 
-   console.log(detail);
+   // console.log(detail);
 
    return (
       <Wrapper>
