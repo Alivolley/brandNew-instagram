@@ -8,9 +8,15 @@ const HomeVideo = ({ videoSource }) => {
 export default HomeVideo;
 
 const Wrapper = styled.video`
+   position: relative;
    width: 100%;
-   max-height: 60rem;
-   object-fit: contain;
-   object-position: center center;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    border-radius: 0.5rem;
+
+   * {
+      fill: ${({ templateTheme }) => templateTheme};
+   }
 `;

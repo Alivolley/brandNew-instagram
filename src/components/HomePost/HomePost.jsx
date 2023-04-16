@@ -123,10 +123,16 @@ const HeaderUsername = styled(Link)`
 
 const Body = styled.div`
    width: 100%;
+   height: 50rem;
+
+   @media (max-width: 900px) {
+      height: 30rem;
+   }
 `;
 
 const SwiperContainer = styled(Swiper)`
    width: 100%;
+   height: 100%;
 
    .swiper-button-next,
    .swiper-button-prev {
@@ -161,11 +167,15 @@ const SwiperContainer = styled(Swiper)`
 
 const SwiperSlideContainer = styled(SwiperSlide)`
    width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 `;
 
 const Image = styled.img`
-   width: 100%;
-   max-height: 60rem;
+   max-width: 100%;
+   max-height: 100%;
    object-fit: contain;
    object-position: center center;
    border-radius: 0.5rem;
