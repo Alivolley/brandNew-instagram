@@ -5,13 +5,17 @@ import { toast } from "react-toastify";
 const useCreatePost = () => {
    const [loading, setLoading] = useState(false);
 
-   const sendPostRequest = (newPost) => {
+   const sendPostRequest = (newPost, setPrecent) => {
       setLoading(true);
 
       axiosInstance
          .post("post/create/", newPost, {
             headers: {
                "Content-Type": "multipart/form-data",
+            },
+
+            onUploadProgress: (progressEvent) => {
+               setPrecent(Math.floor(progressEvent.progress * 100));
             },
          })
          .then((res) => {

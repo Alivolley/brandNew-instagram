@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, Grid } from "@mui/material";
+import { Backdrop, Grid } from "@mui/material";
 import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import CreatePostItem from "../../components/CreatePostItem/CreatePostItem";
@@ -12,6 +12,7 @@ const Create = () => {
    const [chosenFiles, setChosenFiles] = useState([]);
    const [chosenFilesUrl, setChosenFilesUrl] = useState([]);
    const [captionValue, setCaptionValue] = useState("");
+   const [precent, setPrecent] = useState(0);
    const inputRef = useRef();
 
    const manageFile = (e) => {
@@ -36,7 +37,7 @@ const Create = () => {
          chosenFiles.forEach((file) => formData.append("files", file));
          formData.append("caption", captionValue);
 
-         sendPostRequest(formData);
+         sendPostRequest(formData, setPrecent);
       } else {
          toast.warning("Select files and write a caption", {
             autoClose: 5000,
@@ -67,7 +68,7 @@ const Create = () => {
                   <InputTitle>Choose file</InputTitle>
                   <Input
                      type="file"
-                     accept="image/jpg, image/jpeg, image/png, video/mkv, video/mp4, video/avi"
+                     accept="image/jpg, image/jpeg, image/png, video/mkv, video/mp4, video/avi, video/mkv"
                      disabled={chosenFiles.length === 10 ? true : false}
                      onChange={manageFile}
                      ref={inputRef}
@@ -87,7 +88,11 @@ const Create = () => {
          </CaptionPart>
 
          <Backdrop open={loading}>
-            <CircularProgress color="inherit" />
+            <ProgressContainer>
+               {precent}%
+               <Progress value={precent} max={100} />
+               100%
+            </ProgressContainer>
          </Backdrop>
       </Wrapper>
    );
@@ -210,4 +215,21 @@ const SendButton = styled.button`
    font-weight: 600;
    font-size: 1.6rem;
    cursor: pointer;
+`;
+
+const ProgressContainer = styled.div`
+   display: flex;
+   justify-content: center;
+   gap: 2rem;
+   align-items: center;
+   font-size: 1.4rem;
+   font-weight: 700;
+   background-color: inherit;
+   width: fit-content;
+   padding: 2rem;
+   border-radius: 2rem;
+`;
+
+const Progress = styled.progress`
+   height: 5rem;
 `;
