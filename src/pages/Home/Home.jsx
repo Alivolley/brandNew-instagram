@@ -67,10 +67,26 @@ const Posts = styled.section`
    display: flex;
    flex-direction: column;
    gap: 2rem;
-   width: 50rem;
+   width: 29rem;
 
-   @media (max-width: 600px) {
-      width: 30rem;
+   @media (min-width: 350px) {
+      width: 32rem;
+   }
+
+   @media (min-width: 400px) {
+      width: 35rem;
+   }
+
+   @media (min-width: 430px) {
+      width: 38rem;
+   }
+
+   @media (min-width: 460px) {
+      width: 41rem;
+   }
+
+   @media (min-width: 600px) {
+      width: 50rem;
    }
 `;
 
