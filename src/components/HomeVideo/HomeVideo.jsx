@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import VolumeOffIcon from "../../assets/svgs/VolumeOffIcon";
@@ -9,16 +9,38 @@ const HomeVideo = ({ videoSource }) => {
    const { templateTheme } = useContext(GeneralInfoContext);
    const [isMute, setIsMute] = useState(false);
    const [isPlaying, setIsPlaying] = useState(false);
+   const [onClickPlay, setOnClickPlay] = useState(false);
    const videoRef = useRef();
 
-   const pauseHandler = (e) => {
-      e.target.pause();
-      setIsPlaying(false);
-   };
+   useEffect(() => {
+      let options = {
+         rootMargin: "0px",
+         threshold: [1],
+      };
+
+      let handlePlay = (entries) => {
+         entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+               onClickPlay && playHandler();
+            } else {
+               !onClickPlay && pauseHandler();
+            }
+         });
+      };
+
+      let observer = new IntersectionObserver(handlePlay, options);
+
+      observer.observe(videoRef?.current);
+   });
 
    const playHandler = () => {
-      videoRef.current.play();
+      videoRef?.current?.play();
       setIsPlaying(true);
+   };
+
+   const pauseHandler = () => {
+      videoRef?.current?.pause();
+      setIsPlaying(false);
    };
 
    return (
@@ -29,13 +51,22 @@ const HomeVideo = ({ videoSource }) => {
             ref={videoRef}
             muted={isMute}
             loop
-            onClick={pauseHandler}
+            autoPlay
+            onClick={() => {
+               pauseHandler();
+               setOnClickPlay(false);
+            }}
          />
 
          <SoundIcon onClick={() => setIsMute((prev) => !prev)}>{isMute ? <VolumeOffIcon /> : <VolumeUpIcon />}</SoundIcon>
 
          {!isPlaying && (
-            <Cover onClick={playHandler}>
+            <Cover
+               onClick={() => {
+                  playHandler();
+                  setOnClickPlay(true);
+               }}
+            >
                <PlayArrowRoundedIcon fontSize="inherit" sx={{ cursor: "pointer" }} />
             </Cover>
          )}
