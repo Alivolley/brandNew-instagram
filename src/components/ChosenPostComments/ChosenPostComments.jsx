@@ -13,10 +13,12 @@ import CommentItem from "../CommentItem/CommentItem";
 import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 import useDeletePost from "../../api/deletePost/useDeletePost";
+import { Button, Dialog } from "@mui/material";
 
 const ChosenPostComments = ({ templateTheme, postDetail }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
+   const [showDeletModal, setShowDeletModal] = useState(false);
    const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
    const inputRef = useRef();
    const emojiRef = useRef();
@@ -26,85 +28,104 @@ const ChosenPostComments = ({ templateTheme, postDetail }) => {
    // console.log(postDetail);
 
    const deletePostHandler = () => {
+      setShowDeletModal(false);
       deletePostRequest();
    };
 
    return (
-      <Wrapper templateTheme={templateTheme}>
-         <Header>
-            <HeaderImage
-               src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
-            />
-            <HeaderUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</HeaderUsername>
-
-            {postDetail?.user?.username === postDetail?.auth_username && (
-               <HeaderIcon variant="text" color="error" loading={deleteLoading} onClick={deletePostHandler}>
-                  Delete post
-               </HeaderIcon>
-            )}
-         </Header>
-
-         <Body>
-            <Caption>
-               <CaptionHeader>
-                  <CaptionImage
-                     src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
-                  />
-                  <CaptionUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</CaptionUsername>
-               </CaptionHeader>
-               <CaptionText>{postDetail?.caption}</CaptionText>
-            </Caption>
-
-            <CommentsSection>
-               {postDetail?.comments?.map((comment) => (
-                  <CommentItem key={comment.id} detail={comment} />
-               ))}
-            </CommentsSection>
-         </Body>
-
-         <Footer>
-            <FooterIcons>
-               <LikeIconWrapper>{postDetail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
-
-               <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
-                  <AddComment />
-               </CommentIconWrapper>
-
-               <SaveIconsWrapper>{postDetail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
-            </FooterIcons>
-            <CommentSection>
-               <EmojiIcon onClick={() => setShowEmojies(true)}>
-                  <SentimentSatisfiedAltIcon fontSize="inherit" />
-               </EmojiIcon>
-
-               <Input
-                  type="text"
-                  placeholder="Add a comment..."
-                  ref={inputRef}
-                  value={commentValue}
-                  onChange={(e) => setCommentValue(e.target.value)}
+      <>
+         <Wrapper templateTheme={templateTheme}>
+            <Header>
+               <HeaderImage
+                  src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
                />
+               <HeaderUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</HeaderUsername>
 
-               <PostButton variant="text" size="small" loading={false} type="submit">
-                  Post
-               </PostButton>
-
-               {showEmojies && (
-                  <EmojiWrapper ref={emojiRef}>
-                     <EmojiPicker
-                        width="100%"
-                        height="100%"
-                        theme={templateTheme === "white" ? "light" : "dark"}
-                        skinTonesDisabled={true}
-                        searchDisabled={true}
-                        suggestedEmojisMode="recent"
-                        onEmojiClick={(emo) => setCommentValue((prev) => prev.concat(emo.emoji))}
-                     />
-                  </EmojiWrapper>
+               {postDetail?.user?.username === postDetail?.auth_username && (
+                  <HeaderIcon variant="text" color="error" loading={deleteLoading} onClick={() => setShowDeletModal(true)}>
+                     Delete post
+                  </HeaderIcon>
                )}
-            </CommentSection>
-         </Footer>
-      </Wrapper>
+            </Header>
+
+            <Body>
+               <Caption>
+                  <CaptionHeader>
+                     <CaptionImage
+                        src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
+                     />
+                     <CaptionUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</CaptionUsername>
+                  </CaptionHeader>
+                  <CaptionText>{postDetail?.caption}</CaptionText>
+               </Caption>
+
+               <CommentsSection>
+                  {postDetail?.comments?.map((comment) => (
+                     <CommentItem key={comment.id} detail={comment} />
+                  ))}
+               </CommentsSection>
+            </Body>
+
+            <Footer>
+               <FooterIcons>
+                  <LikeIconWrapper>{postDetail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
+
+                  <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
+                     <AddComment />
+                  </CommentIconWrapper>
+
+                  <SaveIconsWrapper>{postDetail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
+               </FooterIcons>
+               <CommentSection>
+                  <EmojiIcon onClick={() => setShowEmojies(true)}>
+                     <SentimentSatisfiedAltIcon fontSize="inherit" />
+                  </EmojiIcon>
+
+                  <Input
+                     type="text"
+                     placeholder="Add a comment..."
+                     ref={inputRef}
+                     value={commentValue}
+                     onChange={(e) => setCommentValue(e.target.value)}
+                  />
+
+                  <PostButton variant="text" size="small" loading={false} type="submit">
+                     Post
+                  </PostButton>
+
+                  {showEmojies && (
+                     <EmojiWrapper ref={emojiRef}>
+                        <EmojiPicker
+                           width="100%"
+                           height="100%"
+                           theme={templateTheme === "white" ? "light" : "dark"}
+                           skinTonesDisabled={true}
+                           searchDisabled={true}
+                           suggestedEmojisMode="recent"
+                           onEmojiClick={(emo) => setCommentValue((prev) => prev.concat(emo.emoji))}
+                        />
+                     </EmojiWrapper>
+                  )}
+               </CommentSection>
+            </Footer>
+         </Wrapper>
+
+         {showDeletModal && (
+            <DeleteModal>
+               <DeleteModalBody templateTheme={templateTheme}>
+                  <DeleteModalTitle>Are you sure about delete ?</DeleteModalTitle>
+                  <DeleteModalButtons>
+                     <DeleteModalConfirm variant="contained" color="info" onClick={deletePostHandler}>
+                        Delete
+                     </DeleteModalConfirm>
+                     <DeleteModalCancel variant="contained" color="error" onClick={() => setShowDeletModal(false)}>
+                        Cancel
+                     </DeleteModalCancel>
+                  </DeleteModalButtons>
+               </DeleteModalBody>
+            </DeleteModal>
+         )}
+      </>
    );
 };
 
@@ -262,4 +283,44 @@ const CaptionUsername = styled(HeaderUsername)``;
 
 const CaptionText = styled.p`
    font-size: 1.4rem;
+`;
+
+const DeleteModal = styled.div`
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 11;
+   background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const DeleteModalBody = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2rem;
+   background-color: ${({ templateTheme }) => templateTheme};
+   padding: 2rem;
+   border-radius: 1rem;
+`;
+
+const DeleteModalTitle = styled.p``;
+
+const DeleteModalButtons = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 2rem;
+`;
+
+const DeleteModalConfirm = styled(Button)`
+   font-size: 1.1rem !important;
+`;
+
+const DeleteModalCancel = styled(Button)`
+   font-size: 1.1rem !important;
 `;

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
 import FollowersModal from "../Modals/FollowersModal/FollowersModal";
 import FollowingsModal from "../Modals/FollowingsModal/FollowingsModal";
+import { LoadingButton } from "@mui/lab";
 
 const ProfileHeader = ({ templateTheme, profileInfos }) => {
    const theme = useTheme();
@@ -31,6 +32,16 @@ const ProfileHeader = ({ templateTheme, profileInfos }) => {
                   <Title>
                      <Username>{profileInfos?.username}</Username>
                      {profileInfos?.is_owner && <EditButton to="/setting">Edit Profile</EditButton>}
+                     {!profileInfos?.is_owner &&
+                        (profileInfos?.is_following ? (
+                           <UnFollowButton loading={false} variant="contained" color="inherit" size="small">
+                              UnFollow
+                           </UnFollowButton>
+                        ) : (
+                           <FollowButton loading={false} variant="contained" size="small">
+                              Follow
+                           </FollowButton>
+                        ))}
                   </Title>
 
                   <FollowersWrapper>
@@ -138,6 +149,16 @@ const EditButton = styled(Link)`
    @media (max-width: 600px) {
       font-size: 1.3rem;
    }
+`;
+
+const FollowButton = styled(LoadingButton)`
+   text-transform: none !important;
+   font-size: 1.4rem !important;
+`;
+
+const UnFollowButton = styled(LoadingButton)`
+   text-transform: none !important;
+   font-size: 1.4rem !important;
 `;
 
 const FollowersWrapper = styled.div`

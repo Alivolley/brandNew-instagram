@@ -69,7 +69,7 @@ const Posts = styled.section`
    width: 50rem;
 
    @media (max-width: 600px) {
-      width: 28rem;
+      width: 30rem;
    }
 `;
 
