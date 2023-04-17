@@ -32,10 +32,10 @@ const ChosenPost = ({ handleClose, chosenDetail }) => {
          <Thunk>
             <Wrapper templateTheme={templateTheme} ref={outSideRef}>
                <Grid container sx={{ height: "100%" }}>
-                  <Grid item xs={12} md={6} height={isMatch ? "45vh" : "100%"}>
+                  <Grid item xs={12} md={6} height={isMatch ? "50%" : "100%"}>
                      {loading ? <ChosenModalSkelton /> : <ChosenPostSileds medias={postDetail?.files} />}
                   </Grid>
-                  <Grid item xs={12} md={6} height={isMatch ? "45vh" : "100%"}>
+                  <Grid item xs={12} md={6} height={isMatch ? "50%" : "100%"}>
                      {loading ? <ChosenModalSkelton /> : <ChosenPostComments templateTheme={templateTheme} postDetail={postDetail} />}
                   </Grid>
                </Grid>

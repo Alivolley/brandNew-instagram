@@ -23,7 +23,7 @@ const useSearch = () => {
       setAllSearchedUser([]);
 
       axiosInstance
-         .get(`post/search/${username}/`, {
+         .get(`accounts/search/${username}/`, {
             cancelToken: new axios.CancelToken((c) => (cancel = c)),
          })
          .then((res) => {
