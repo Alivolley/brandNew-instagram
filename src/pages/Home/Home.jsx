@@ -36,6 +36,7 @@ const Home = () => {
 
          <SuggestionWrapper>
             <SuggestionTitle>Suggestions for you</SuggestionTitle>
+
             <SuggestionBody>
                <SuggestionItem />
                <SuggestionItem />
