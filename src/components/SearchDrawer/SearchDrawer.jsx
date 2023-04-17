@@ -4,9 +4,19 @@ import styled from "styled-components";
 import HeaderSearchIcon from "../../assets/svgs/HeaderSearchIcon";
 import SearchItem from "../SearchItem/SearchItem";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
+import useSearch from "../../api/search/useSearch";
+import SearchSkeleton from "../Skeletons/SearchSkeleton/SearchSkeleton";
 
 const SearchDrawer = ({ show, colseHandler, templateTheme }) => {
    const [searchValue, setSearchValue] = useState("");
+   const [searchRequest, loading, allSearchedUser] = useSearch();
+
+   const onChangeHandler = (e) => {
+      setSearchValue(e.target.value);
+      if (e.target.value) {
+         searchRequest(e.target.value);
+      }
+   };
 
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>
@@ -23,33 +33,17 @@ const SearchDrawer = ({ show, colseHandler, templateTheme }) => {
                <Icon>
                   <HeaderSearchIcon />
                </Icon>
-               <Input type="text" placeholder="Search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+               <Input type="text" placeholder="Search" value={searchValue} onChange={onChangeHandler} />
             </Wrapper>
 
             <SearchBody>
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
-               <SearchItem templateTheme={templateTheme} />
+               {allSearchedUser?.map((user) => (
+                  <SearchItem templateTheme={templateTheme} key={user.username} detail={user} onClose={colseHandler} />
+               ))}
+
+               {loading && <SearchSkeleton />}
+               {!loading && allSearchedUser.length === 0 && searchValue && <NoPosts>No such user found</NoPosts>}
+               {!loading && !searchValue && <NoPosts>Please type some information</NoPosts>}
             </SearchBody>
          </Container>
       </DrawerWrapper>
@@ -129,10 +123,15 @@ const Input = styled.input`
 `;
 
 const SearchBody = styled.div`
-   margin-top: 6rem;
+   margin-top: 2rem;
    padding-top: 3rem;
    display: flex;
    flex-direction: column;
    gap: 2.5rem;
-   /* border-top: 0.1rem solid var(--border-color); */
+`;
+
+const NoPosts = styled.p`
+   text-align: center;
+   font-weight: 700;
+   opacity: 0.7;
 `;

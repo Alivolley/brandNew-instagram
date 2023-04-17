@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import HeaderSearchIcon from "./../../assets/svgs/HeaderSearchIcon";
 import HeaderSearchResult from "../HeaderSearchResult/HeaderSearchResult";
+import useSearch from "../../api/search/useSearch";
 
 const HeaderSearch = ({ templateTheme }) => {
    const [searchValue, setSearchValue] = useState("");
    const [showResult, setShowResult] = useState(false);
+   const [searchRequest, loading, allSearchedUser] = useSearch();
+
+   const onChangeHandler = (e) => {
+      setSearchValue(e.target.value);
+      if (e.target.value) {
+         searchRequest(e.target.value);
+      }
+   };
 
    return (
       <Wrapper templateTheme={templateTheme}>
@@ -16,7 +25,7 @@ const HeaderSearch = ({ templateTheme }) => {
             type="text"
             placeholder="Search"
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={onChangeHandler}
             onFocus={() => setShowResult(true)}
             onBlur={() => !searchValue && setShowResult(false)}
          />
@@ -24,8 +33,9 @@ const HeaderSearch = ({ templateTheme }) => {
             <HeaderSearchResult
                templateTheme={templateTheme}
                searchValue={searchValue}
-               setSearchValue={setSearchValue}
-               colseHandler={() => setShowResult(false)}
+               allSearchedUser={allSearchedUser}
+               loading={loading}
+               closeHandler={() => setShowResult(false)}
             />
          )}
       </Wrapper>

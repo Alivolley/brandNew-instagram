@@ -2,47 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import SearchItem from "../SearchItem/SearchItem";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
+import SearchSkeleton from "../Skeletons/SearchSkeleton/SearchSkeleton";
 
-const HeaderSearchResult = ({ templateTheme, searchValue, setSearchValue, colseHandler }) => {
+const HeaderSearchResult = ({ templateTheme, searchValue, allSearchedUser, loading, closeHandler }) => {
    return (
       <Wrapper templateTheme={templateTheme}>
          <BodyTitle templateTheme={templateTheme}>
             Results
-            <Icon onClick={colseHandler}>
+            <Icon onClick={closeHandler}>
                <CloseButtonIcon />
             </Icon>
          </BodyTitle>
 
-         {!searchValue && <NoResult>Type a username</NoResult>}
          <ResultBody>
-            {/* <SearchItem detail={} onClose={colseHandler} templateTheme={templateTheme}/> */}
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {allSearchedUser?.map((user) => (
+               <SearchItem key={user?.username} detail={user} onClose={closeHandler} templateTheme={templateTheme} />
+            ))}
+
+            {loading && <SearchSkeleton />}
+            {!loading && allSearchedUser.length === 0 && searchValue && <NoResult>No such user found</NoResult>}
+            {!loading && !searchValue && <NoResult>Type a username</NoResult>}
          </ResultBody>
       </Wrapper>
    );
