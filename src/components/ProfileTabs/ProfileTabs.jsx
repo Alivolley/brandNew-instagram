@@ -37,6 +37,11 @@ const Wrapper = styled.div`
       color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
       fill: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
    }
+
+   @media (max-width: 600px) {
+      margin-top: 5rem;
+      margin-bottom: 4rem;
+   }
 `;
 
 const Tab = styled(NavLink)`

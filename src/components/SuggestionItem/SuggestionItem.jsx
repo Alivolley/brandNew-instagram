@@ -10,13 +10,11 @@ const SuggestionItem = ({ detail, onClose }) => {
          <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
          <Details>
             <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
-               {/* {detail?.username} */}
-               ali-azghandi
+               {detail?.username}
             </UserName>
-            <Name>
-               {/* {detail?.name} */}
-               ali agha
-            </Name>
+            {/* <Name>
+               {detail?.name} 
+            </Name> */}
          </Details>
          <RemoveButton variant="text" color="info" size="small" loading={false}>
             Follow

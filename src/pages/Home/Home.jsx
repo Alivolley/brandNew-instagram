@@ -6,16 +6,23 @@ import SuggestionItem from "../../components/SuggestionItem/SuggestionItem";
 import useHome from "../../api/home/useHome";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import HomePostsSkeleton from "../../components/Skeletons/HomePostsSkeleton/HomePostsSkeleton";
+import { useMediaQuery, useTheme } from "@mui/material";
+import useSuggestions from "../../api/suggestions/useSuggestions";
+import SuggestionsSkeleton from "../../components/Skeletons/SuggestionsSkeleton/SuggestionsSkeleton";
 
 const Home = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
+   const theme = useTheme();
+   const isMatch = useMediaQuery(theme.breakpoints.up("lg"));
    const [getHomePostsRequest, getMoreHomePosts, loading, allHomePosts, nextUrl] = useHome();
+   const [getSuggestionsRequest, suggestionsloading, allSuggestionsPosts] = useSuggestions();
 
    useEffect(() => {
       getHomePostsRequest();
+      getSuggestionsRequest();
    }, []);
 
-   // console.log(allHomePosts);
+   // console.log(allSuggestionsPosts);
 
    return (
       <Wrapper templateTheme={templateTheme}>
@@ -34,17 +41,19 @@ const Home = () => {
             )}
          </Posts>
 
-         <SuggestionWrapper>
-            <SuggestionTitle>Suggestions for you</SuggestionTitle>
+         {isMatch && (
+            <SuggestionWrapper>
+               <SuggestionTitle>Suggestions for you</SuggestionTitle>
 
-            <SuggestionBody>
-               <SuggestionItem />
-               <SuggestionItem />
-               <SuggestionItem />
-               <SuggestionItem />
-               <SuggestionItem />
-            </SuggestionBody>
-         </SuggestionWrapper>
+               <SuggestionBody>
+                  {allSuggestionsPosts?.map((post) => (
+                     <SuggestionItem key={post?.username} detail={post} />
+                  ))}
+
+                  {suggestionsloading && <SuggestionsSkeleton />}
+               </SuggestionBody>
+            </SuggestionWrapper>
+         )}
       </Wrapper>
    );
 };
@@ -93,10 +102,6 @@ const Posts = styled.section`
 const SuggestionWrapper = styled.section`
    width: 25rem;
    margin-top: 3rem;
-
-   @media (max-width: 1200px) {
-      display: none;
-   }
 `;
 
 const SuggestionTitle = styled.p`
