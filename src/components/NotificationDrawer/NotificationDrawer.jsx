@@ -1,10 +1,17 @@
 import { Drawer } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import NotificationItem from "../NotificationItem/NotificationItem";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
+import useActivities from "../../api/activities/useActivities";
 
 const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
+   const [getActivitiesRequest, loading, allActivities] = useActivities();
+
+   useEffect(() => {
+      show && getActivitiesRequest();
+   }, [show]);
+
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>
          <Container templatetheme={templateTheme}>

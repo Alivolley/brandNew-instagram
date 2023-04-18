@@ -12,9 +12,12 @@ const SuggestionItem = ({ detail, onClose }) => {
             <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
                {detail?.username}
             </UserName>
-            {/* <Name>
-               {detail?.name} 
-            </Name> */}
+
+            {detail?.followed_by?.length ? (
+               <Name>{`Followed by ${detail?.followed_by[0]?.username} and ${detail?.followed_by.length} more`}</Name>
+            ) : (
+               <Name>Has followed you</Name>
+            )}
          </Details>
          <RemoveButton variant="text" color="info" size="small" loading={false}>
             Follow

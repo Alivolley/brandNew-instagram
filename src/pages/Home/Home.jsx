@@ -19,7 +19,7 @@ const Home = () => {
 
    useEffect(() => {
       getHomePostsRequest();
-      getSuggestionsRequest();
+      isMatch && getSuggestionsRequest();
    }, []);
 
    // console.log(allSuggestionsPosts);
@@ -50,7 +50,7 @@ const Home = () => {
                      <SuggestionItem key={post?.username} detail={post} />
                   ))}
 
-                  {suggestionsloading && <SuggestionsSkeleton />}
+                  {suggestionsloading && !allSuggestionsPosts.length && <SuggestionsSkeleton />}
                </SuggestionBody>
             </SuggestionWrapper>
          )}
@@ -100,7 +100,7 @@ const Posts = styled.section`
 `;
 
 const SuggestionWrapper = styled.section`
-   width: 25rem;
+   width: 30rem;
    margin-top: 3rem;
 `;
 
