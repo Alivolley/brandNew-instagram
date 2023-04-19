@@ -15,16 +15,39 @@ import SavePostFilled from "../../assets/svgs/SavePostFilled";
 import HomeVideo from "../HomeVideo/HomeVideo";
 import ChosenModalSkelton from "../Skeletons/ChosenModalSkelton/ChosenModalSkelton";
 import ChosenPost from "../../pages/ChosenPost/ChosenPost";
+import useLike from "../../api/like/useLike";
+import useSave from "../../api/save/useSave";
 
 const HomePost = ({ detail }) => {
+   const [hasLiked, setHasLiked] = useState(detail?.has_like);
+   const [hasSaved, setHasSaved] = useState(detail?.has_save);
+   const [likesNumber, setLikesNumber] = useState(detail?.likes_count);
+
    const [showPost, setShowPost] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
+   const [likeRequest] = useLike();
+   const [saveRequest] = useSave();
 
    // console.log(detail);
 
    const showPostHandler = () => {
       setShowPost(true);
       setChosenDetail(detail);
+   };
+
+   const likeHandler = () => {
+      setHasLiked((prev) => {
+         setLikesNumber((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
+
+         return !prev;
+      });
+
+      likeRequest(detail.id);
+   };
+
+   const saveHandler = () => {
+      setHasSaved((prev) => !prev);
+      saveRequest(detail.id);
    };
 
    return (
@@ -54,16 +77,16 @@ const HomePost = ({ detail }) => {
          </Body>
 
          <FooterIcons>
-            <LikeIconWrapper>{detail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
+            <LikeIconWrapper onClick={likeHandler}>{hasLiked ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
             <CommentIconWrapper onClick={showPostHandler}>
                <AddComment />
             </CommentIconWrapper>
 
-            <SaveIconsWrapper>{detail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
+            <SaveIconsWrapper onClick={saveHandler}>{hasSaved ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
          </FooterIcons>
 
-         <LikesCount>{detail?.likes_count.toLocaleString()} likes</LikesCount>
+         <LikesCount>{likesNumber.toLocaleString()} likes</LikesCount>
 
          <Caption>{detail?.caption}</Caption>
 
@@ -71,12 +94,14 @@ const HomePost = ({ detail }) => {
 
          {showPost && (
             <ChosenPost
-               show={showPost}
                handleClose={() => {
                   setShowPost(false);
                   setChosenDetail({});
                }}
                chosenDetail={chosenDetail}
+               setHasLikedHome={setHasLiked}
+               setHasSavedHome={setHasSaved}
+               setLikesNumberHome={setLikesNumber}
             />
          )}
       </Wrapper>

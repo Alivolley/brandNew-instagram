@@ -2,15 +2,11 @@ import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
 const useLike = () => {
-   const likeRequest = (postId, reloadRequest) => {
+   const likeRequest = (postId) => {
       axiosInstance
          .post(`post/like/${postId}/`)
-         .then((res) => {
-            if (res.status === 201) {
-               reloadRequest();
-            } else if (res.status === 204) {
-               reloadRequest();
-            }
+         .then(() => {
+            //
          })
          .catch((err) => {
             console.log(err);

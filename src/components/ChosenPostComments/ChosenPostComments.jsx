@@ -19,7 +19,18 @@ import useCreateComment from "../../api/comment/useCreateComment";
 import useLike from "../../api/like/useLike";
 import useSave from "../../api/save/useSave";
 
-const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasLiked, setHasLiked, hasSaved, setHasSaved }) => {
+const ChosenPostComments = ({
+   templateTheme,
+   postDetail,
+   postDetailRequest,
+   hasLiked,
+   setHasLiked,
+   hasSaved,
+   setHasSaved,
+   setHasLikedHome,
+   setHasSavedHome,
+   setLikesNumberHome,
+}) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
    const [showDeletModal, setShowDeletModal] = useState(false);
@@ -53,12 +64,19 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasL
 
    const likeHandler = () => {
       setHasLiked((prev) => !prev);
-      likeRequest(postDetail.id, postDetailRequest);
+      setHasLikedHome &&
+         setHasLikedHome((prev) => {
+            setLikesNumberHome((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
+            return !prev;
+         });
+
+      likeRequest(postDetail.id);
    };
 
    const saveHandler = () => {
       setHasSaved((prev) => !prev);
-      saveRequest(postDetail.id, postDetailRequest);
+      setHasSavedHome && setHasSavedHome((prev) => !prev);
+      saveRequest(postDetail.id);
    };
 
    return (

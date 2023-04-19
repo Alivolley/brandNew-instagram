@@ -2,14 +2,11 @@ import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
 const useSave = () => {
-   const saveRequest = (postId, reloadRequest) => {
+   const saveRequest = (postId) => {
       axiosInstance
          .post(`post/save/${postId}/`)
-         .then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-               reloadRequest();
-            }
+         .then(() => {
+            //
          })
          .catch((err) => {
             console.log(err);
