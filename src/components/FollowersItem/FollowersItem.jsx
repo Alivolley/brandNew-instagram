@@ -1,20 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
-import { LoadingButton } from "@mui/lab";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import useFollow from "../../api/follow/useFollow";
+import { Button } from "@mui/material";
 
-const FollowersItem = ({ detail, onClose, profileInfos, getFollowersRequest }) => {
+const FollowersItem = ({ detail, onClose, profileInfos }) => {
+   const [isFollowing, setIsFollowing] = useState(detail?.is_following);
    const { userInfos } = useContext(GeneralInfoContext);
-   const [followRequest, loading] = useFollow();
+   const [followRequest] = useFollow();
 
-   console.log(detail);
+   // console.log(detail);
 
    const followHandler = () => {
-      // console.log(detail.id);
-      followRequest(detail.id, getFollowersRequest);
+      setIsFollowing((prev) => !prev);
+      followRequest(detail.user_id);
    };
 
    return (
@@ -28,18 +29,18 @@ const FollowersItem = ({ detail, onClose, profileInfos, getFollowersRequest }) =
          </Details>
 
          {profileInfos?.is_owner && (
-            <RemoveButton variant="contained" color="info" size="small" loading={false}>
+            <RemoveButton variant="contained" color="info" size="small">
                Remove
             </RemoveButton>
          )}
 
          {userInfos?.username !== detail?.username &&
-            (!profileInfos?.is_owner && detail?.is_following ? (
-               <UnfollowButton variant="contained" color="inherit" size="small" loading={loading} onClick={followHandler}>
+            (!profileInfos?.is_owner && isFollowing ? (
+               <UnfollowButton variant="contained" color="inherit" size="small" onClick={followHandler}>
                   Unfollow
                </UnfollowButton>
-            ) : !profileInfos?.is_owner && !detail?.is_following ? (
-               <FollowButton variant="contained" color="info" size="small" loading={loading} onClick={followHandler}>
+            ) : !profileInfos?.is_owner && !isFollowing ? (
+               <FollowButton variant="contained" color="info" size="small" onClick={followHandler}>
                   Follow
                </FollowButton>
             ) : null)}
@@ -92,19 +93,19 @@ const Name = styled.p`
    text-overflow: ellipsis;
 `;
 
-const RemoveButton = styled(LoadingButton)`
+const RemoveButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
 `;
 
-const UnfollowButton = styled(LoadingButton)`
+const UnfollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
 `;
 
-const FollowButton = styled(LoadingButton)`
+const FollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;

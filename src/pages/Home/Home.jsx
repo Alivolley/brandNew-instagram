@@ -47,10 +47,10 @@ const Home = () => {
 
                <SuggestionBody>
                   {allSuggestionsPosts?.map((post) => (
-                     <SuggestionItem key={post?.username} detail={post} getSuggestionsRequest={getSuggestionsRequest} />
+                     <SuggestionItem key={post?.username} detail={post} />
                   ))}
 
-                  {suggestionsloading && !allSuggestionsPosts.length && <SuggestionsSkeleton />}
+                  {suggestionsloading && <SuggestionsSkeleton />}
                </SuggestionBody>
             </SuggestionWrapper>
          )}

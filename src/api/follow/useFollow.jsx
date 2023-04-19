@@ -10,19 +10,19 @@ const useFollow = () => {
 
       axiosInstance
          .post(`accounts/follow/${userId}/`)
-         .then(async (res) => {
-            if (res.status === 201) {
-               toast.success("You have followd this user", {
+         .then((res) => {
+            if (res.status === 201 && reloadRequest) {
+               toast.success("You followd this user", {
                   autoClose: 5000,
                   theme: "colored",
                });
-               await reloadRequest();
-            } else if (res.status === 204) {
+               reloadRequest();
+            } else if (res.status === 204 && reloadRequest) {
                toast.success("You have unfollowd this user", {
                   autoClose: 5000,
                   theme: "colored",
                });
-               await reloadRequest();
+               reloadRequest();
             }
          })
          .catch((err) => {

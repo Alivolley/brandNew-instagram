@@ -1,16 +1,18 @@
-import { LoadingButton } from "@mui/lab";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import useFollow from "../../api/follow/useFollow";
+import { Button } from "@mui/material";
 
-const SuggestionItem = ({ detail, onClose, getSuggestionsRequest }) => {
-   const [followRequest, loading] = useFollow();
-   // console.log(detail);
+const SuggestionItem = ({ detail, onClose }) => {
+   const [isFollowing, setIsFollowing] = useState(false);
 
-   const followUser = () => {
-      followRequest(detail.id, getSuggestionsRequest);
+   const [followRequest] = useFollow();
+
+   const followHandler = () => {
+      setIsFollowing((prev) => !prev);
+      followRequest(detail.id);
    };
 
    return (
@@ -27,8 +29,8 @@ const SuggestionItem = ({ detail, onClose, getSuggestionsRequest }) => {
                <Name>Has followed you</Name>
             )}
          </Details>
-         <FollowButton variant="text" color="info" size="small" loading={loading} onClick={followUser}>
-            Follow
+         <FollowButton variant="text" color={isFollowing ? "error" : "info"} size="small" onClick={followHandler}>
+            {isFollowing ? "Unfollow" : "Follow"}
          </FollowButton>
       </Wrapper>
    );
@@ -79,7 +81,7 @@ const Name = styled.p`
    text-overflow: ellipsis;
 `;
 
-const FollowButton = styled(LoadingButton)`
+const FollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.1rem !important;
    text-transform: none !important;

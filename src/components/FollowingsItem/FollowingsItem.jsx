@@ -1,12 +1,20 @@
-import { LoadingButton } from "@mui/lab";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import useFollow from "../../api/follow/useFollow";
+import { Button } from "@mui/material";
 
 const FollowingsItem = ({ detail, onClose }) => {
+   const [isFollowing, setIsFollowing] = useState(detail?.is_following);
    const { userInfos } = useContext(GeneralInfoContext);
+   const [followRequest] = useFollow();
+
+   const followHandler = () => {
+      setIsFollowing((prev) => !prev);
+      followRequest(detail.user_id);
+   };
 
    // console.log(detail?.is_following);
 
@@ -21,12 +29,12 @@ const FollowingsItem = ({ detail, onClose }) => {
          </Details>
 
          {userInfos?.username !== detail?.username &&
-            (detail?.is_following ? (
-               <UnfollowButton variant="contained" color="inherit" size="small" loading={false}>
+            (isFollowing ? (
+               <UnfollowButton variant="contained" color="inherit" size="small" onClick={followHandler}>
                   Unfollow
                </UnfollowButton>
             ) : (
-               <FollowButton variant="contained" color="info" size="small" loading={false}>
+               <FollowButton variant="contained" color="info" size="small" onClick={followHandler}>
                   Follow
                </FollowButton>
             ))}
@@ -79,13 +87,13 @@ const Name = styled.p`
    text-overflow: ellipsis;
 `;
 
-const UnfollowButton = styled(LoadingButton)`
+const UnfollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
 `;
 
-const FollowButton = styled(LoadingButton)`
+const FollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
