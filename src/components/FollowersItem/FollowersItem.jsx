@@ -5,17 +5,25 @@ import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import useFollow from "../../api/follow/useFollow";
 import { Button } from "@mui/material";
+import useRemoveFollower from "../../api/removeFollower/useRemoveFollower";
 
 const FollowersItem = ({ detail, onClose, profileInfos }) => {
    const [isFollowing, setIsFollowing] = useState(detail?.is_following);
+   const [isRemoved, setIsRemoved] = useState(false);
    const { userInfos } = useContext(GeneralInfoContext);
    const [followRequest] = useFollow();
+   const [removeRequest] = useRemoveFollower();
 
    // console.log(detail);
 
    const followHandler = () => {
       setIsFollowing((prev) => !prev);
       followRequest(detail.user_id);
+   };
+
+   const removeHandler = () => {
+      setIsRemoved((prev) => !prev);
+      removeRequest(detail.user_id);
    };
 
    return (
@@ -28,11 +36,16 @@ const FollowersItem = ({ detail, onClose, profileInfos }) => {
             <Name>{detail?.name}</Name>
          </Details>
 
-         {profileInfos?.is_owner && (
-            <RemoveButton variant="contained" color="info" size="small">
-               Remove
-            </RemoveButton>
-         )}
+         {profileInfos?.is_owner &&
+            (isRemoved ? (
+               <RemovedButton variant="contained" color="inherit" size="small">
+                  Removed
+               </RemovedButton>
+            ) : (
+               <RemoveButton variant="contained" color="info" size="small" onClick={removeHandler}>
+                  Remove
+               </RemoveButton>
+            ))}
 
          {userInfos?.username !== detail?.username &&
             (!profileInfos?.is_owner && isFollowing ? (
@@ -97,6 +110,13 @@ const RemoveButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
+`;
+
+const RemovedButton = styled(Button)`
+   margin-left: auto !important;
+   font-size: 1.4rem !important;
+   text-transform: none !important;
+   color: black !important;
 `;
 
 const UnfollowButton = styled(Button)`
