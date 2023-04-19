@@ -1,10 +1,13 @@
 import { LoadingButton } from "@mui/lab";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 
 const FollowingsItem = ({ detail, onClose }) => {
+   const { userInfos } = useContext(GeneralInfoContext);
+
    // console.log(detail?.is_following);
 
    return (
@@ -17,15 +20,16 @@ const FollowingsItem = ({ detail, onClose }) => {
             <Name>{detail?.name}</Name>
          </Details>
 
-         {detail?.is_following ? (
-            <UnfollowButton variant="contained" color="info" size="small" loading={false}>
-               Unfollow
-            </UnfollowButton>
-         ) : (
-            <FollowButton variant="contained" color="info" size="small" loading={false}>
-               Follow
-            </FollowButton>
-         )}
+         {userInfos?.username !== detail?.username &&
+            (detail?.is_following ? (
+               <UnfollowButton variant="contained" color="inherit" size="small" loading={false}>
+                  Unfollow
+               </UnfollowButton>
+            ) : (
+               <FollowButton variant="contained" color="info" size="small" loading={false}>
+                  Follow
+               </FollowButton>
+            ))}
       </Wrapper>
    );
 };

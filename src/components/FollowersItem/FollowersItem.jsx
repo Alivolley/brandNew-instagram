@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import { LoadingButton } from "@mui/lab";
+import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import useFollow from "../../api/follow/useFollow";
 
-const FollowersItem = ({ detail, onClose, profileInfos }) => {
-   // console.log(detail?.is_following);
+const FollowersItem = ({ detail, onClose, profileInfos, getFollowersRequest }) => {
+   const { userInfos } = useContext(GeneralInfoContext);
+   const [followRequest, loading] = useFollow();
+
+   console.log(detail);
+
+   const followHandler = () => {
+      // console.log(detail.id);
+      followRequest(detail.id, getFollowersRequest);
+   };
 
    return (
       <Wrapper>
@@ -23,15 +33,16 @@ const FollowersItem = ({ detail, onClose, profileInfos }) => {
             </RemoveButton>
          )}
 
-         {!profileInfos?.is_owner && detail?.is_following ? (
-            <UnfollowButton variant="contained" color="info" size="small" loading={false}>
-               Unfollow
-            </UnfollowButton>
-         ) : !profileInfos?.is_owner && !detail?.is_following ? (
-            <FollowButton variant="contained" color="info" size="small" loading={false}>
-               Follow
-            </FollowButton>
-         ) : null}
+         {userInfos?.username !== detail?.username &&
+            (!profileInfos?.is_owner && detail?.is_following ? (
+               <UnfollowButton variant="contained" color="inherit" size="small" loading={loading} onClick={followHandler}>
+                  Unfollow
+               </UnfollowButton>
+            ) : !profileInfos?.is_owner && !detail?.is_following ? (
+               <FollowButton variant="contained" color="info" size="small" loading={loading} onClick={followHandler}>
+                  Follow
+               </FollowButton>
+            ) : null)}
       </Wrapper>
    );
 };

@@ -16,14 +16,16 @@ import useDeletePost from "../../api/deletePost/useDeletePost";
 import { Button } from "@mui/material";
 import useFollow from "../../api/follow/useFollow";
 import useCreateComment from "../../api/comment/useCreateComment";
+import useLike from "../../api/like/useLike";
 
-const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) => {
+const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasLiked, setHasLiked, hasSaved, setHasSaved }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
    const [showDeletModal, setShowDeletModal] = useState(false);
    const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
    const [followRequest, loading] = useFollow();
    const [createCommentRequest, creatCommentLoading] = useCreateComment();
+   const [likeRequest] = useLike();
    const inputRef = useRef();
    const emojiRef = useRef();
 
@@ -47,6 +49,15 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
       }
    };
 
+   const likeHandler = () => {
+      setHasLiked((prev) => !prev);
+      likeRequest(postDetail.id, postDetailRequest);
+   };
+
+   const saveHandler = () => {
+      setHasSaved((prev) => !prev);
+   };
+
    return (
       <>
          <Wrapper templateTheme={templateTheme}>
@@ -62,15 +73,16 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
                   </HeaderIcon>
                )}
 
-               {postDetail?.is_following ? (
-                  <FollowButton variant="text" color="error" size="small" loading={loading} onClick={followUser}>
-                     Unfollow
-                  </FollowButton>
-               ) : (
-                  <FollowButton variant="text" color="info" size="small" loading={loading} onClick={followUser}>
-                     Follow
-                  </FollowButton>
-               )}
+               {postDetail?.user?.username !== postDetail?.auth_username &&
+                  (postDetail?.is_following ? (
+                     <FollowButton variant="text" color="error" size="small" loading={loading} onClick={followUser}>
+                        Unfollow
+                     </FollowButton>
+                  ) : (
+                     <FollowButton variant="text" color="info" size="small" loading={loading} onClick={followUser}>
+                        Follow
+                     </FollowButton>
+                  ))}
             </Header>
 
             <Body>
@@ -93,13 +105,13 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
 
             <Footer>
                <FooterIcons>
-                  <LikeIconWrapper>{postDetail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
+                  <LikeIconWrapper onClick={likeHandler}>{hasLiked ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
                   <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
                      <AddComment />
                   </CommentIconWrapper>
 
-                  <SaveIconsWrapper>{postDetail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
+                  <SaveIconsWrapper onClick={saveHandler}>{hasSaved ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
                </FooterIcons>
 
                <CommentSection onSubmit={createCommentHandler}>

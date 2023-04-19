@@ -1,5 +1,5 @@
 import { Grid, useTheme, useMediaQuery } from "@mui/material";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import ChosenPostComments from "../../components/ChosenPostComments/ChosenPostComments";
@@ -10,7 +10,10 @@ import ChosenModalSkelton from "../../components/Skeletons/ChosenModalSkelton/Ch
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 
 const ChosenPost = ({ handleClose, chosenDetail }) => {
-   const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id);
+   const [hasLiked, setHasLiked] = useState(false);
+   const [hasSaved, setHasSaved] = useState(false);
+
+   const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id, setHasLiked, setHasSaved);
    const outSideRef = useRef();
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -20,6 +23,7 @@ const ChosenPost = ({ handleClose, chosenDetail }) => {
 
    useEffect(() => {
       postDetailRequest();
+
       document.body.style.overflow = "hidden";
 
       return () => {
@@ -39,7 +43,15 @@ const ChosenPost = ({ handleClose, chosenDetail }) => {
                      {loading ? (
                         <ChosenModalSkelton />
                      ) : (
-                        <ChosenPostComments templateTheme={templateTheme} postDetail={postDetail} postDetailRequest={postDetailRequest} />
+                        <ChosenPostComments
+                           templateTheme={templateTheme}
+                           postDetail={postDetail}
+                           postDetailRequest={postDetailRequest}
+                           hasLiked={hasLiked}
+                           setHasLiked={setHasLiked}
+                           hasSaved={hasSaved}
+                           setHasSaved={setHasSaved}
+                        />
                      )}
                   </Grid>
                </Grid>

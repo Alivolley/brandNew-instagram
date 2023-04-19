@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
-const useChosenPost = (postId) => {
+const useChosenPost = (postId, setHasLiked, setHasSaved) => {
    const [loading, setLoading] = useState(true);
    const [postDetail, setPostDetail] = useState({});
 
@@ -14,6 +14,8 @@ const useChosenPost = (postId) => {
          .then((res) => {
             if (res.status === 200) {
                setPostDetail(res.data);
+               setHasLiked(res.data.has_like);
+               setHasSaved(res.data.has_save);
             }
          })
          .catch((err) => {

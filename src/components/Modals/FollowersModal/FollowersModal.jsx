@@ -28,7 +28,13 @@ const FollowersModal = ({ show, handleClose, templateTheme, profileInfos }) => {
             </Header>
             <ModlaBody>
                {followersData.map((follower) => (
-                  <FollowersItem key={follower.id} detail={follower} onClose={handleClose} profileInfos={profileInfos} />
+                  <FollowersItem
+                     key={follower.id}
+                     detail={follower}
+                     onClose={handleClose}
+                     profileInfos={profileInfos}
+                     getFollowersRequest={getFollowersRequest}
+                  />
                ))}
 
                {loading && <FollowersItemLoading />}
