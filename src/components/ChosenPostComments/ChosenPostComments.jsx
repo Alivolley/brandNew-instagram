@@ -17,6 +17,7 @@ import { Button } from "@mui/material";
 import useFollow from "../../api/follow/useFollow";
 import useCreateComment from "../../api/comment/useCreateComment";
 import useLike from "../../api/like/useLike";
+import useSave from "../../api/save/useSave";
 
 const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasLiked, setHasLiked, hasSaved, setHasSaved }) => {
    const [commentValue, setCommentValue] = useState("");
@@ -26,6 +27,7 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasL
    const [followRequest, loading] = useFollow();
    const [createCommentRequest, creatCommentLoading] = useCreateComment();
    const [likeRequest] = useLike();
+   const [saveRequest] = useSave();
    const inputRef = useRef();
    const emojiRef = useRef();
 
@@ -56,6 +58,7 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest, hasL
 
    const saveHandler = () => {
       setHasSaved((prev) => !prev);
+      saveRequest(postDetail.id, postDetailRequest);
    };
 
    return (
