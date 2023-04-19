@@ -11,6 +11,8 @@ const CommentItem = ({ detail, templateTheme, postDetailRequest }) => {
    const [showDeletModal, setShowDeletModal] = useState(false);
    const [deleteCommentRequest, deleteLoading] = useDeleteComment(detail.id, postDetailRequest);
 
+   // console.log(detail);
+
    return (
       <>
          <Wrapper>
@@ -24,6 +26,7 @@ const CommentItem = ({ detail, templateTheme, postDetailRequest }) => {
                )}
             </Header>
             <Text>{detail?.body}</Text>
+            <TimeText>{detail?.created} ago</TimeText>
          </Wrapper>
 
          {showDeletModal && (
@@ -82,6 +85,12 @@ const HeaderIcon = styled.div`
 
 const Text = styled.p`
    font-size: 1.4rem;
+`;
+
+const TimeText = styled.p`
+   font-size: 0.9rem;
+   color: gray;
+   margin-top: 0.4rem;
 `;
 
 const DeleteModal = styled.div`

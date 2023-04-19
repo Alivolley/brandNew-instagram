@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const accessToken = Cookies.get("accessToken");
 const refreshToken = Cookies.get("refreshToken");
@@ -42,6 +43,11 @@ axiosInstance.interceptors.response.use(
          Cookies.remove("refreshToken");
          axiosInstance.interceptors.response.clear();
          location.href = "/login";
+      } else if (error?.response?.status === 500) {
+         toast.error("500 Internal Server Error", {
+            autoClose: 5000,
+            theme: "colored",
+         });
       } else {
          return Promise.reject(error);
       }
