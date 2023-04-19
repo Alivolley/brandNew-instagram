@@ -1,23 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Button } from "@mui/material";
+import useDeleteComment from "../../api/comment/useDeleteComment";
+import { LoadingButton } from "@mui/lab";
 
-const CommentItem = ({ detail }) => {
+const CommentItem = ({ detail, templateTheme, postDetailRequest }) => {
+   const [showDeletModal, setShowDeletModal] = useState(false);
+   const [deleteCommentRequest, deleteLoading] = useDeleteComment(detail.id, postDetailRequest);
+
    return (
-      <Wrapper>
-         <Header>
-            <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
-            <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
-            {detail?.can_delete && (
-               <HeaderIcon onClick={() => console.log(detail.id)}>
-                  <DeleteForeverIcon />
-               </HeaderIcon>
-            )}
-         </Header>
-         <Text>{detail?.body}</Text>
-      </Wrapper>
+      <>
+         <Wrapper>
+            <Header>
+               <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+               <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
+               {detail?.can_delete && (
+                  <HeaderIcon onClick={() => setShowDeletModal(true)}>
+                     <DeleteForeverIcon />
+                  </HeaderIcon>
+               )}
+            </Header>
+            <Text>{detail?.body}</Text>
+         </Wrapper>
+
+         {showDeletModal && (
+            <DeleteModal>
+               <DeleteModalBody templateTheme={templateTheme}>
+                  <DeleteModalTitle>Are you sure about delete ?</DeleteModalTitle>
+                  <DeleteModalButtons>
+                     <DeleteModalConfirm
+                        variant="contained"
+                        color="info"
+                        onClick={() => deleteCommentRequest(setShowDeletModal)}
+                        loading={deleteLoading}
+                     >
+                        Delete
+                     </DeleteModalConfirm>
+                     <DeleteModalCancel variant="contained" color="error" onClick={() => setShowDeletModal(false)}>
+                        Cancel
+                     </DeleteModalCancel>
+                  </DeleteModalButtons>
+               </DeleteModalBody>
+            </DeleteModal>
+         )}
+      </>
    );
 };
 
@@ -53,4 +82,44 @@ const HeaderIcon = styled.div`
 
 const Text = styled.p`
    font-size: 1.4rem;
+`;
+
+const DeleteModal = styled.div`
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 11;
+   background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const DeleteModalBody = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2rem;
+   background-color: ${({ templateTheme }) => templateTheme};
+   padding: 2rem;
+   border-radius: 1rem;
+`;
+
+const DeleteModalTitle = styled.p``;
+
+const DeleteModalButtons = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 2rem;
+`;
+
+const DeleteModalConfirm = styled(LoadingButton)`
+   font-size: 1.1rem !important;
+`;
+
+const DeleteModalCancel = styled(Button)`
+   font-size: 1.1rem !important;
 `;

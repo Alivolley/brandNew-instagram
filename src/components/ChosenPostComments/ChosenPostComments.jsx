@@ -86,7 +86,7 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
 
                <CommentsSection>
                   {postDetail?.comments?.map((comment) => (
-                     <CommentItem key={comment.id} detail={comment} />
+                     <CommentItem key={comment.id} detail={comment} templateTheme={templateTheme} postDetailRequest={postDetailRequest} />
                   ))}
                </CommentsSection>
             </Body>
