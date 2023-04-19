@@ -32,7 +32,8 @@ const HomePost = ({ detail }) => {
    const [doubleClickLikeRequest] = useDoubleClickLike();
    const [saveRequest] = useSave();
 
-   // console.log(showLikeCover);
+   let lastTouchTime = 0;
+   let touchTimeout;
 
    const showPostHandler = () => {
       setShowPost(true);
@@ -42,7 +43,7 @@ const HomePost = ({ detail }) => {
    const likeHandler = () => {
       setHasLiked((prev) => {
          setLikesNumber((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
-
+         prev ? setFunctionDidRun(false) : setFunctionDidRun(true);
          return !prev;
       });
 
@@ -74,6 +75,21 @@ const HomePost = ({ detail }) => {
       }, 500);
    };
 
+   function handleTouchStart() {
+      const now = new Date().getTime();
+      const timeSinceLastTouch = now - lastTouchTime;
+      if (timeSinceLastTouch < 250 && timeSinceLastTouch > 0) {
+         // Double touch detected
+         clearTimeout(touchTimeout);
+         // Do something here, such as toggle a menu or zoom in on an image
+         doubleClickHandler();
+      }
+      lastTouchTime = now;
+      touchTimeout = setTimeout(() => {
+         clearTimeout(touchTimeout);
+      }, 250);
+   }
+
    return (
       <Wrapper>
          <Header>
@@ -89,7 +105,11 @@ const HomePost = ({ detail }) => {
                            media?.extension === "video" ? (
                               !showPost && <HomeVideo videoSource={media?.page} />
                            ) : (
-                              <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} onDoubleClick={doubleClickHandler} ondouble />
+                              <Image
+                                 src={`https://djangoinsta.pythonanywhere.com${media?.page}`}
+                                 onDoubleClick={doubleClickHandler}
+                                 onTouchStart={handleTouchStart}
+                              />
                            )
                         ) : (
                            <ChosenModalSkelton />
