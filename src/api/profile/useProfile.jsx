@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../libs/axiosInstance";
 import { toast } from "react-toastify";
 
@@ -6,9 +6,11 @@ const useProfile = (username) => {
    const [loading, setLoading] = useState(true);
    const [profileInfos, setProfileInfos] = useState({});
 
-   const profileDetailRequest = () => {
-      // setLoading(true);
+   useEffect(() => {
+      setLoading(true);
+   }, [username]);
 
+   const profileDetailRequest = () => {
       axiosInstance
          .get(`accounts/profile/${username}/`)
          .then((res) => {

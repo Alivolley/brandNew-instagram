@@ -8,7 +8,7 @@ import useFollowers from "../../../api/followers/useFollowers";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import FollowersItemLoading from "../../Skeletons/FollowersItem/FollowersItemLoading";
 
-const FollowersModal = ({ show, handleClose, templateTheme }) => {
+const FollowersModal = ({ show, handleClose, templateTheme, profileInfos }) => {
    const { username } = useParams();
    const [getFollowersRequest, getMoreFollowers, loading, followersData, nextUrl] = useFollowers(username);
 
@@ -28,7 +28,7 @@ const FollowersModal = ({ show, handleClose, templateTheme }) => {
             </Header>
             <ModlaBody>
                {followersData.map((follower) => (
-                  <FollowersItem key={follower.id} detail={follower} onClose={handleClose} />
+                  <FollowersItem key={follower.id} detail={follower} onClose={handleClose} profileInfos={profileInfos} />
                ))}
 
                {loading && <FollowersItemLoading />}

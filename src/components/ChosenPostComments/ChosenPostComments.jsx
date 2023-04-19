@@ -15,6 +15,7 @@ import useOnClickOutside from "../../hooks/useOnclickOutside";
 import useDeletePost from "../../api/deletePost/useDeletePost";
 import { Button } from "@mui/material";
 import useFollow from "../../api/follow/useFollow";
+import useCreateComment from "../../api/comment/useCreateComment";
 
 const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) => {
    const [commentValue, setCommentValue] = useState("");
@@ -22,6 +23,7 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
    const [showDeletModal, setShowDeletModal] = useState(false);
    const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
    const [followRequest, loading] = useFollow();
+   const [createCommentRequest, creatCommentLoading] = useCreateComment();
    const inputRef = useRef();
    const emojiRef = useRef();
 
@@ -36,6 +38,13 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
 
    const followUser = () => {
       followRequest(postDetail?.user?.id, postDetailRequest);
+   };
+
+   const createCommentHandler = (e) => {
+      e.preventDefault();
+      if (commentValue) {
+         createCommentRequest(commentValue, postDetail?.id, setCommentValue, postDetailRequest);
+      }
    };
 
    return (
@@ -92,7 +101,8 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
 
                   <SaveIconsWrapper>{postDetail?.has_save ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
                </FooterIcons>
-               <CommentSection>
+
+               <CommentSection onSubmit={createCommentHandler}>
                   <EmojiIcon onClick={() => setShowEmojies(true)}>
                      <SentimentSatisfiedAltIcon fontSize="inherit" />
                   </EmojiIcon>
@@ -105,7 +115,7 @@ const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) =>
                      onChange={(e) => setCommentValue(e.target.value)}
                   />
 
-                  <PostButton variant="text" size="small" loading={false} type="submit">
+                  <PostButton variant="text" size="small" loading={creatCommentLoading} type="submit">
                      Post
                   </PostButton>
 
@@ -277,11 +287,7 @@ const Input = styled.input`
    border: none;
    outline: none;
    background-color: transparent;
-   width: 18rem;
-
-   @media (max-width: 900px) {
-      width: 12rem;
-   }
+   width: 100%;
 `;
 
 const PostButton = styled(LoadingButton)`

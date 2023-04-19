@@ -17,7 +17,7 @@ const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) =>
    const [showFollowingsModal, setShowFollowingsModal] = useState(false);
    const [followRequest, loading] = useFollow();
 
-   console.log(profileInfos);
+   // console.log(profileInfos);
 
    const followUser = () => {
       followRequest(profileInfos?.id, profileDetailRequest);
@@ -80,7 +80,12 @@ const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) =>
             isMatch={isMatch}
          />
          {showFollowersModal && (
-            <FollowersModal show={showFollowersModal} handleClose={() => setShowFollowersModal(false)} templateTheme={templateTheme} />
+            <FollowersModal
+               show={showFollowersModal}
+               handleClose={() => setShowFollowersModal(false)}
+               templateTheme={templateTheme}
+               profileInfos={profileInfos}
+            />
          )}
          {showFollowingsModal && (
             <FollowingsModal show={showFollowingsModal} handleClose={() => setShowFollowingsModal(false)} templateTheme={templateTheme} />
@@ -161,12 +166,20 @@ const FollowButton = styled(LoadingButton)`
    text-transform: none !important;
    font-size: 1.4rem !important;
    color: white !important;
+
+   &:disabled {
+      color: rgba(0, 0, 0, 0) !important;
+   }
 `;
 
 const UnFollowButton = styled(LoadingButton)`
    text-transform: none !important;
    font-size: 1.4rem !important;
    color: black !important;
+
+   &:disabled {
+      color: rgba(0, 0, 0, 0) !important;
+   }
 `;
 
 const FollowersWrapper = styled.div`

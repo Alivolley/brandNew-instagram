@@ -4,7 +4,9 @@ import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import { LoadingButton } from "@mui/lab";
 
-const FollowersItem = ({ detail, onClose }) => {
+const FollowersItem = ({ detail, onClose, profileInfos }) => {
+   // console.log(detail?.is_following);
+
    return (
       <Wrapper>
          <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
@@ -14,9 +16,22 @@ const FollowersItem = ({ detail, onClose }) => {
             </UserName>
             <Name>{detail?.name}</Name>
          </Details>
-         <RemoveButton variant="contained" color="info" size="small" loading={false}>
-            Remove
-         </RemoveButton>
+
+         {profileInfos?.is_owner && (
+            <RemoveButton variant="contained" color="info" size="small" loading={false}>
+               Remove
+            </RemoveButton>
+         )}
+
+         {!profileInfos?.is_owner && detail?.is_following ? (
+            <UnfollowButton variant="contained" color="info" size="small" loading={false}>
+               Unfollow
+            </UnfollowButton>
+         ) : !profileInfos?.is_owner && !detail?.is_following ? (
+            <FollowButton variant="contained" color="info" size="small" loading={false}>
+               Follow
+            </FollowButton>
+         ) : null}
       </Wrapper>
    );
 };
@@ -67,6 +82,18 @@ const Name = styled.p`
 `;
 
 const RemoveButton = styled(LoadingButton)`
+   margin-left: auto !important;
+   font-size: 1.4rem !important;
+   text-transform: none !important;
+`;
+
+const UnfollowButton = styled(LoadingButton)`
+   margin-left: auto !important;
+   font-size: 1.4rem !important;
+   text-transform: none !important;
+`;
+
+const FollowButton = styled(LoadingButton)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;

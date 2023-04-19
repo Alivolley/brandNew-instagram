@@ -5,6 +5,8 @@ import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 
 const FollowingsItem = ({ detail, onClose }) => {
+   // console.log(detail?.is_following);
+
    return (
       <Wrapper>
          <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
@@ -14,9 +16,16 @@ const FollowingsItem = ({ detail, onClose }) => {
             </UserName>
             <Name>{detail?.name}</Name>
          </Details>
-         <RemoveButton variant="contained" color="info" size="small" loading={false}>
-            Unfollow
-         </RemoveButton>
+
+         {detail?.is_following ? (
+            <UnfollowButton variant="contained" color="info" size="small" loading={false}>
+               Unfollow
+            </UnfollowButton>
+         ) : (
+            <FollowButton variant="contained" color="info" size="small" loading={false}>
+               Follow
+            </FollowButton>
+         )}
       </Wrapper>
    );
 };
@@ -66,7 +75,13 @@ const Name = styled.p`
    text-overflow: ellipsis;
 `;
 
-const RemoveButton = styled(LoadingButton)`
+const UnfollowButton = styled(LoadingButton)`
+   margin-left: auto !important;
+   font-size: 1.4rem !important;
+   text-transform: none !important;
+`;
+
+const FollowButton = styled(LoadingButton)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
