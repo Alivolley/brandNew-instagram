@@ -20,7 +20,7 @@ const Profile = () => {
       <Wrapper templateTheme={templateTheme}>
          {!loading ? (
             <>
-               <ProfileHeader templateTheme={templateTheme} profileInfos={profileInfos} />
+               <ProfileHeader templateTheme={templateTheme} profileInfos={profileInfos} profileDetailRequest={profileDetailRequest} />
                <ProfileTabs templateTheme={templateTheme} profileInfos={profileInfos} />
                <Outlet />
             </>

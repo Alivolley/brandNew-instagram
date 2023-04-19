@@ -36,7 +36,11 @@ const ChosenPost = ({ handleClose, chosenDetail }) => {
                      {loading ? <ChosenModalSkelton /> : <ChosenPostSileds medias={postDetail?.files} />}
                   </Grid>
                   <Grid item xs={12} md={6} height={isMatch ? "50%" : "100%"}>
-                     {loading ? <ChosenModalSkelton /> : <ChosenPostComments templateTheme={templateTheme} postDetail={postDetail} />}
+                     {loading ? (
+                        <ChosenModalSkelton />
+                     ) : (
+                        <ChosenPostComments templateTheme={templateTheme} postDetail={postDetail} postDetailRequest={postDetailRequest} />
+                     )}
                   </Grid>
                </Grid>
             </Wrapper>

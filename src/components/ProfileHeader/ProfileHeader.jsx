@@ -7,15 +7,21 @@ import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
 import FollowersModal from "../Modals/FollowersModal/FollowersModal";
 import FollowingsModal from "../Modals/FollowingsModal/FollowingsModal";
 import { LoadingButton } from "@mui/lab";
+import useFollow from "../../api/follow/useFollow";
 
-const ProfileHeader = ({ templateTheme, profileInfos }) => {
+const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) => {
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
    const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
    const [showFollowersModal, setShowFollowersModal] = useState(false);
    const [showFollowingsModal, setShowFollowingsModal] = useState(false);
+   const [followRequest, loading] = useFollow();
 
-   // console.log(profileInfos);
+   console.log(profileInfos);
+
+   const followUser = () => {
+      followRequest(profileInfos?.id, profileDetailRequest);
+   };
 
    return (
       <Wrapper isMatch={isMatch} templateTheme={templateTheme}>
@@ -34,11 +40,11 @@ const ProfileHeader = ({ templateTheme, profileInfos }) => {
                      {profileInfos?.is_owner && <EditButton to="/setting">Edit Profile</EditButton>}
                      {!profileInfos?.is_owner &&
                         (profileInfos?.is_following ? (
-                           <UnFollowButton loading={false} variant="contained" color="inherit" size="small">
+                           <UnFollowButton loading={loading} variant="contained" color="inherit" size="small" onClick={followUser}>
                               UnFollow
                            </UnFollowButton>
                         ) : (
-                           <FollowButton loading={false} variant="contained" size="small">
+                           <FollowButton loading={loading} variant="contained" size="small" onClick={followUser}>
                               Follow
                            </FollowButton>
                         ))}
@@ -154,11 +160,13 @@ const EditButton = styled(Link)`
 const FollowButton = styled(LoadingButton)`
    text-transform: none !important;
    font-size: 1.4rem !important;
+   color: white !important;
 `;
 
 const UnFollowButton = styled(LoadingButton)`
    text-transform: none !important;
    font-size: 1.4rem !important;
+   color: black !important;
 `;
 
 const FollowersWrapper = styled.div`

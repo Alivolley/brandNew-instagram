@@ -13,13 +13,15 @@ import CommentItem from "../CommentItem/CommentItem";
 import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 import useDeletePost from "../../api/deletePost/useDeletePost";
-import { Button, Dialog } from "@mui/material";
+import { Button } from "@mui/material";
+import useFollow from "../../api/follow/useFollow";
 
-const ChosenPostComments = ({ templateTheme, postDetail }) => {
+const ChosenPostComments = ({ templateTheme, postDetail, postDetailRequest }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
    const [showDeletModal, setShowDeletModal] = useState(false);
    const [deletePostRequest, deleteLoading] = useDeletePost(postDetail.id);
+   const [followRequest, loading] = useFollow();
    const inputRef = useRef();
    const emojiRef = useRef();
 
@@ -30,6 +32,10 @@ const ChosenPostComments = ({ templateTheme, postDetail }) => {
    const deletePostHandler = () => {
       setShowDeletModal(false);
       deletePostRequest();
+   };
+
+   const followUser = () => {
+      followRequest(postDetail?.user?.id, postDetailRequest);
    };
 
    return (
@@ -45,6 +51,16 @@ const ChosenPostComments = ({ templateTheme, postDetail }) => {
                   <HeaderIcon variant="text" color="error" loading={deleteLoading} onClick={() => setShowDeletModal(true)}>
                      Delete post
                   </HeaderIcon>
+               )}
+
+               {postDetail?.is_following ? (
+                  <FollowButton variant="text" color="error" size="small" loading={loading} onClick={followUser}>
+                     Unfollow
+                  </FollowButton>
+               ) : (
+                  <FollowButton variant="text" color="info" size="small" loading={loading} onClick={followUser}>
+                     Follow
+                  </FollowButton>
                )}
             </Header>
 
@@ -178,6 +194,12 @@ const HeaderIcon = styled(LoadingButton)`
    text-transform: none !important;
    font-size: 1rem !important;
    cursor: pointer;
+`;
+
+const FollowButton = styled(LoadingButton)`
+   margin-left: auto !important;
+   font-size: 1.1rem !important;
+   text-transform: none !important;
 `;
 
 const Body = styled.div`

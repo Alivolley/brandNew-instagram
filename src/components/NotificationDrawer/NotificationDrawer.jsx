@@ -6,11 +6,13 @@ import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 import useActivities from "../../api/activities/useActivities";
 
 const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
-   const [getActivitiesRequest, loading, allActivities] = useActivities();
+   const [getActivitiesRequest, getMoreActivities, loading, allActivities, nextUrl] = useActivities();
 
    useEffect(() => {
       show && getActivitiesRequest();
    }, [show]);
+
+   console.log(allActivities);
 
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>

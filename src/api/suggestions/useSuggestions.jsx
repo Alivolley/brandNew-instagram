@@ -8,6 +8,7 @@ const useSuggestions = () => {
 
    const getSuggestionsRequest = () => {
       setSuggestionsLoading(true);
+      setAllSuggestionsPosts([]);
 
       axiosInstance
          .get(`accounts/suggestion/`)

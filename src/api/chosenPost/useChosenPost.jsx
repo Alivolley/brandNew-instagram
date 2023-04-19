@@ -7,7 +7,7 @@ const useChosenPost = (postId) => {
    const [postDetail, setPostDetail] = useState({});
 
    const postDetailRequest = () => {
-      setLoading(true);
+      // setLoading(true);
 
       axiosInstance
          .get(`post/detail/${postId}/`)

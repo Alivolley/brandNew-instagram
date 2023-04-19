@@ -7,7 +7,7 @@ const useProfile = (username) => {
    const [profileInfos, setProfileInfos] = useState({});
 
    const profileDetailRequest = () => {
-      setLoading(true);
+      // setLoading(true);
 
       axiosInstance
          .get(`accounts/profile/${username}/`)

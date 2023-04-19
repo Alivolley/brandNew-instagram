@@ -3,8 +3,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
+import useFollow from "../../api/follow/useFollow";
 
-const SuggestionItem = ({ detail, onClose }) => {
+const SuggestionItem = ({ detail, onClose, getSuggestionsRequest }) => {
+   const [followRequest, loading] = useFollow();
+   // console.log(detail);
+
+   const followUser = () => {
+      followRequest(detail.id, getSuggestionsRequest);
+   };
+
    return (
       <Wrapper>
          <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
@@ -19,9 +27,9 @@ const SuggestionItem = ({ detail, onClose }) => {
                <Name>Has followed you</Name>
             )}
          </Details>
-         <RemoveButton variant="text" color="info" size="small" loading={false}>
+         <FollowButton variant="text" color="info" size="small" loading={loading} onClick={followUser}>
             Follow
-         </RemoveButton>
+         </FollowButton>
       </Wrapper>
    );
 };
@@ -71,7 +79,7 @@ const Name = styled.p`
    text-overflow: ellipsis;
 `;
 
-const RemoveButton = styled(LoadingButton)`
+const FollowButton = styled(LoadingButton)`
    margin-left: auto !important;
    font-size: 1.1rem !important;
    text-transform: none !important;
