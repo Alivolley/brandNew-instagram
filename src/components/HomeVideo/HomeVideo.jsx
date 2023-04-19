@@ -51,7 +51,6 @@ const HomeVideo = ({ videoSource }) => {
             ref={videoRef}
             muted={isMute}
             loop
-            autoPlay
             onClick={() => {
                pauseHandler();
                setOnClickPlay(false);

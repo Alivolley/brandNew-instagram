@@ -22,6 +22,11 @@ const HomePost = ({ detail }) => {
 
    // console.log(detail);
 
+   const showPostHandler = () => {
+      setShowPost(true);
+      setChosenDetail(detail);
+   };
+
    return (
       <Wrapper>
          <Header>
@@ -35,7 +40,7 @@ const HomePost = ({ detail }) => {
                      {({ isActive }) =>
                         isActive ? (
                            media?.extension === "video" ? (
-                              <HomeVideo videoSource={media?.page} />
+                              !showPost && <HomeVideo videoSource={media?.page} />
                            ) : (
                               <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} />
                            )
@@ -51,12 +56,7 @@ const HomePost = ({ detail }) => {
          <FooterIcons>
             <LikeIconWrapper>{detail?.has_like ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
-            <CommentIconWrapper
-               onClick={() => {
-                  setShowPost(true);
-                  setChosenDetail(detail);
-               }}
-            >
+            <CommentIconWrapper onClick={showPostHandler}>
                <AddComment />
             </CommentIconWrapper>
 
@@ -67,14 +67,7 @@ const HomePost = ({ detail }) => {
 
          <Caption>{detail?.caption}</Caption>
 
-         <ViewAllButton
-            onClick={() => {
-               setShowPost(true);
-               setChosenDetail(detail);
-            }}
-         >
-            View all {detail?.comments_count} comments
-         </ViewAllButton>
+         <ViewAllButton onClick={showPostHandler}>View all {detail?.comments_count} comments</ViewAllButton>
 
          {showPost && (
             <ChosenPost
