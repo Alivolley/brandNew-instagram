@@ -1,13 +1,21 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import NotificationItem from "../NotificationItem/NotificationItem";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
+import useActivities from "../../api/activities/useActivities";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import NotificationSkeleton from "../Skeletons/NotificationSkeleton/NotificationSkeleton";
 
 const HeaderNotification = ({ templateTheme, colseHandler }) => {
+   const [getActivitiesRequest, getMoreActivities, loading, allActivities, nextUrl] = useActivities();
    const toggleMenuRef = useRef();
 
    useOnClickOutside(toggleMenuRef, colseHandler);
+
+   useEffect(() => {
+      getActivitiesRequest();
+   }, []);
 
    return (
       <Wrapper templateTheme={templateTheme} ref={toggleMenuRef}>
@@ -18,36 +26,19 @@ const HeaderNotification = ({ templateTheme, colseHandler }) => {
             </Icon>
          </BodyTitle>
 
-         {/* <NoResult>No recent activity</NoResult> */}
          <ResultBody>
-            {/* <NotificationItem detail={} onClose={colseHandler} templateTheme={templateTheme}/> */}
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
+            {allActivities?.map((item, index) => (
+               <NotificationItem key={index} detail={item} onClose={colseHandler} templateTheme={templateTheme} />
+            ))}
+
+            {!loading && !allActivities?.length && <NoResult>No recent activity</NoResult>}
+            {loading && <NotificationSkeleton />}
+
+            {!loading && nextUrl && (
+               <AddButton onClick={getMoreActivities} templateTheme={templateTheme}>
+                  <ControlPointIcon color="inherit" fontSize="inherit" />
+               </AddButton>
+            )}
          </ResultBody>
       </Wrapper>
    );
@@ -103,4 +94,16 @@ const NoResult = styled.p`
    text-align: center;
    font-size: 1.4rem;
    color: gray;
+`;
+
+const AddButton = styled.button`
+   display: block;
+   margin: 0 auto;
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+   width: fit-content;
+   margin: 0 auto;
+   font-size: 2rem;
+   color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
 `;

@@ -6,16 +6,11 @@ import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 const NotificationItem = ({ detail, onClose, templateTheme }) => {
    return (
       <Wrapper templateTheme={templateTheme}>
-         <Image src={detail?.profile_photo ? detail?.profile_photo : noProfile} />
+         <Image src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
          <Details>
-            <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
-               {/* {detail?.username} */}
-               ali azghandi
+            <UserName to={`/profile/${detail?.user?.username}/posts`} onClick={onClose}>
+               {detail?.text}
             </UserName>
-            <Explain>
-               {/* {detail?.name} */}
-               starts following you
-            </Explain>
          </Details>
       </Wrapper>
    );
@@ -63,15 +58,6 @@ const Details = styled.div`
 const UserName = styled(Link)`
    text-decoration: none;
    font-weight: 600;
-   font-size: 1.5rem;
-   max-width: 100%;
-
-   @media (max-width: 900px) {
-      font-size: 1.3rem;
-   }
-`;
-
-const Explain = styled.p`
    font-size: 1.4rem;
    max-width: 100%;
    white-space: nowrap;
@@ -79,6 +65,6 @@ const Explain = styled.p`
    text-overflow: ellipsis;
 
    @media (max-width: 900px) {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
    }
 `;

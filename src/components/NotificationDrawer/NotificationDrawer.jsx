@@ -4,6 +4,8 @@ import styled from "styled-components";
 import NotificationItem from "../NotificationItem/NotificationItem";
 import CloseButtonIcon from "../../assets/svgs/CloseButtonIcon";
 import useActivities from "../../api/activities/useActivities";
+import NotificationSkeleton from "../Skeletons/NotificationSkeleton/NotificationSkeleton";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
    const [getActivitiesRequest, getMoreActivities, loading, allActivities, nextUrl] = useActivities();
@@ -12,7 +14,7 @@ const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
       show && getActivitiesRequest();
    }, [show]);
 
-   console.log(allActivities);
+   // console.log(allActivities);
 
    return (
       <DrawerWrapper anchor="left" open={show} onClose={colseHandler} templatetheme={templateTheme}>
@@ -25,29 +27,18 @@ const NotificationDrawer = ({ show, colseHandler, templateTheme }) => {
             </Header>
 
             <NotifBody>
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               {/* <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} />
-               <NotificationItem templateTheme={templateTheme} /> */}
+               {allActivities?.map((notif, index) => (
+                  <NotificationItem key={index} detail={notif} onClose={colseHandler} templateTheme={templateTheme} />
+               ))}
+
+               {!loading && !allActivities?.length && <NoPosts>No recent activity</NoPosts>}
+               {loading && <NotificationSkeleton />}
+
+               {!loading && nextUrl && (
+                  <AddButton onClick={getMoreActivities} templateTheme={templateTheme}>
+                     <ControlPointIcon color="inherit" fontSize="inherit" />
+                  </AddButton>
+               )}
             </NotifBody>
          </Container>
       </DrawerWrapper>
@@ -104,4 +95,26 @@ const NotifBody = styled.div`
    display: flex;
    flex-direction: column;
    gap: 2rem;
+`;
+
+const NoPosts = styled.p`
+   text-align: center;
+   font-weight: 700;
+   opacity: 0.7;
+`;
+
+const AddButton = styled.button`
+   display: block;
+   margin: 0 auto;
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+   width: fit-content;
+   margin: 0 auto;
+   font-size: 4.5rem;
+   color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+
+   @media (max-width: 400px) {
+      font-size: 3rem;
+   }
 `;
