@@ -213,6 +213,14 @@ const CountHolder = styled.span`
 const BioWrapper = styled.div`
    display: flex;
    flex-direction: column;
+
+   @media (max-width: 600px) {
+      width: 30rem;
+   }
+
+   @media (max-width: 400px) {
+      width: 25rem;
+   }
 `;
 
 const Name = styled.h4`

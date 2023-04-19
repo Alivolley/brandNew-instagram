@@ -26,7 +26,7 @@ const CommentItem = ({ detail, templateTheme, postDetailRequest }) => {
                )}
             </Header>
             <Text>{detail?.body}</Text>
-            <TimeText>{detail?.created} ago</TimeText>
+            <TimeText>{detail?.created === "right now" ? detail?.created : `${detail?.created} ago`}</TimeText>
          </Wrapper>
 
          {showDeletModal && (
