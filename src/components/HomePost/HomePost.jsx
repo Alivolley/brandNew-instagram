@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
@@ -17,6 +17,7 @@ import ChosenModalSkelton from "../Skeletons/ChosenModalSkelton/ChosenModalSkelt
 import ChosenPost from "../../pages/ChosenPost/ChosenPost";
 import useLike from "../../api/like/useLike";
 import useSave from "../../api/save/useSave";
+import useDoubleClickLike from "../../api/doubleClickLike/useDoubleClickLike";
 
 const HomePost = ({ detail }) => {
    const [hasLiked, setHasLiked] = useState(detail?.has_like);
@@ -24,11 +25,14 @@ const HomePost = ({ detail }) => {
    const [likesNumber, setLikesNumber] = useState(detail?.likes_count);
 
    const [showPost, setShowPost] = useState(false);
+   const [showLikeCover, setShowLikeCover] = useState(false);
+   const [functionDidRun, setFunctionDidRun] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
    const [likeRequest] = useLike();
+   const [doubleClickLikeRequest] = useDoubleClickLike();
    const [saveRequest] = useSave();
 
-   // console.log(detail);
+   // console.log(showLikeCover);
 
    const showPostHandler = () => {
       setShowPost(true);
@@ -50,6 +54,26 @@ const HomePost = ({ detail }) => {
       saveRequest(detail.id);
    };
 
+   const doubleClickHandler = () => {
+      if (!functionDidRun) {
+         setFunctionDidRun(true);
+         setLikesNumber((prev) => prev + 1);
+         sendDblRequest();
+      } else {
+         sendDblRequest();
+      }
+   };
+
+   const sendDblRequest = () => {
+      setShowLikeCover(true);
+      setHasLiked(true);
+      doubleClickLikeRequest(detail.id);
+
+      setTimeout(() => {
+         setShowLikeCover(false);
+      }, 500);
+   };
+
    return (
       <Wrapper>
          <Header>
@@ -65,7 +89,7 @@ const HomePost = ({ detail }) => {
                            media?.extension === "video" ? (
                               !showPost && <HomeVideo videoSource={media?.page} />
                            ) : (
-                              <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} />
+                              <Image src={`https://djangoinsta.pythonanywhere.com${media?.page}`} onDoubleClick={doubleClickHandler} ondouble />
                            )
                         ) : (
                            <ChosenModalSkelton />
@@ -73,6 +97,13 @@ const HomePost = ({ detail }) => {
                      }
                   </SwiperSlideContainer>
                ))}
+               {showLikeCover && (
+                  <LikeCover>
+                     <LikeIconCover showLikeCover={showLikeCover}>
+                        <LikeIconFilled />
+                     </LikeIconCover>
+                  </LikeCover>
+               )}
             </SwiperContainer>
          </Body>
 
@@ -149,6 +180,7 @@ const Body = styled.div`
 `;
 
 const SwiperContainer = styled(Swiper)`
+   position: relative;
    width: 100%;
    height: 100%;
 
@@ -189,6 +221,38 @@ const SwiperSlideContainer = styled(SwiperSlide)`
    display: flex;
    align-items: center;
    justify-content: center;
+`;
+
+const LikeCover = styled.div`
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 11;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+`;
+
+const LikeIconCover = styled.div`
+   opacity: 0.7;
+   transform: scale(0);
+
+   ${({ showLikeCover }) =>
+      showLikeCover &&
+      css`
+         animation: ${scaler} 0.5s;
+      `}
+`;
+
+const scaler = keyframes`
+   to {
+      transform: scale(10);
+      opacity: 0;
+
+   }
+
 `;
 
 const Image = styled.img`
