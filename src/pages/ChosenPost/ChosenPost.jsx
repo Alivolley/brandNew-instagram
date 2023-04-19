@@ -9,7 +9,7 @@ import useChosenPost from "../../api/chosenPost/useChosenPost";
 import ChosenModalSkelton from "../../components/Skeletons/ChosenModalSkelton/ChosenModalSkelton";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
 
-const ChosenPost = ({ handleClose, chosenDetail, setHasLikedHome, setHasSavedHome, setLikesNumberHome }) => {
+const ChosenPost = ({ handleClose, chosenDetail, setHasLikedHome, setHasSavedHome, setLikesNumberHome, setFunctionDidRun }) => {
    const [hasLiked, setHasLiked] = useState(false);
    const [hasSaved, setHasSaved] = useState(false);
 
@@ -54,6 +54,7 @@ const ChosenPost = ({ handleClose, chosenDetail, setHasLikedHome, setHasSavedHom
                            setHasLikedHome={setHasLikedHome}
                            setHasSavedHome={setHasSavedHome}
                            setLikesNumberHome={setLikesNumberHome}
+                           setFunctionDidRun={setFunctionDidRun}
                         />
                      )}
                   </Grid>

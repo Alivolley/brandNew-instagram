@@ -56,7 +56,7 @@ const HomePost = ({ detail }) => {
    };
 
    const doubleClickHandler = () => {
-      if (!functionDidRun) {
+      if (!functionDidRun && !hasLiked) {
          setFunctionDidRun(true);
          setLikesNumber((prev) => prev + 1);
          sendDblRequest();
@@ -153,6 +153,7 @@ const HomePost = ({ detail }) => {
                setHasLikedHome={setHasLiked}
                setHasSavedHome={setHasSaved}
                setLikesNumberHome={setLikesNumber}
+               setFunctionDidRun={setFunctionDidRun}
             />
          )}
       </Wrapper>

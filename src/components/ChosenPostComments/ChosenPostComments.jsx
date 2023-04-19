@@ -30,6 +30,7 @@ const ChosenPostComments = ({
    setHasLikedHome,
    setHasSavedHome,
    setLikesNumberHome,
+   setFunctionDidRun,
 }) => {
    const [commentValue, setCommentValue] = useState("");
    const [showEmojies, setShowEmojies] = useState(false);
@@ -67,6 +68,8 @@ const ChosenPostComments = ({
       setHasLikedHome &&
          setHasLikedHome((prev) => {
             setLikesNumberHome((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
+            prev ? setFunctionDidRun(false) : setFunctionDidRun(true);
+
             return !prev;
          });
 
