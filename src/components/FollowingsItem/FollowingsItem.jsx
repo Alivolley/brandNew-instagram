@@ -20,7 +20,9 @@ const FollowingsItem = ({ detail, onClose }) => {
 
    return (
       <Wrapper>
-         <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
+         <ImageWrapper to={`/profile/${detail?.username}/posts`}>
+            <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
+         </ImageWrapper>
          <Details>
             <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
                {detail?.username}
@@ -49,9 +51,20 @@ const Wrapper = styled.div`
    align-items: center;
 `;
 
-const Image = styled.img`
+const ImageWrapper = styled(Link)`
    width: 4.4rem;
    height: 4.4rem;
+   text-decoration: none;
+
+   @media (max-width: 900px) {
+      width: 4rem;
+      height: 4rem;
+   }
+`;
+
+const Image = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;

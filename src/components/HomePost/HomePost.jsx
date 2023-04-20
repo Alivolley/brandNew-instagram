@@ -93,7 +93,9 @@ const HomePost = ({ detail }) => {
    return (
       <Wrapper>
          <Header>
-            <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+            <HeaderImageWrapper to={`/profile/${detail?.user?.username}/posts`}>
+               <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+            </HeaderImageWrapper>
             <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
          </Header>
          <Body>
@@ -176,9 +178,15 @@ const Header = styled.div`
    margin-bottom: 1rem;
 `;
 
-const HeaderImage = styled.img`
+const HeaderImageWrapper = styled(Link)`
    width: 3.2rem;
    height: 3.2rem;
+   text-decoration: none;
+`;
+
+const HeaderImage = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;

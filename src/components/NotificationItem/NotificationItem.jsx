@@ -6,7 +6,9 @@ import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 const NotificationItem = ({ detail, onClose, templateTheme }) => {
    return (
       <Wrapper templateTheme={templateTheme}>
-         <Image src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+         <ImageWrapper to={`/profile/${detail?.user?.username}/posts`}>
+            <Image src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+         </ImageWrapper>
          <Details>
             <UserName to={`/profile/${detail?.user?.username}/posts`} onClick={onClose}>
                {detail?.text}
@@ -26,18 +28,24 @@ const Wrapper = styled.div`
    }
 `;
 
-const Image = styled.img`
+const ImageWrapper = styled(Link)`
    width: 4.4rem;
    height: 4.4rem;
-   border-radius: 50%;
-   object-fit: contain;
-   background-color: black;
-   border: 0.1rem solid var(--border-color);
+   text-decoration: none;
 
    @media (max-width: 900px) {
       width: 3rem;
       height: 3rem;
    }
+`;
+
+const Image = styled.img`
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   object-fit: contain;
+   background-color: black;
+   border: 0.1rem solid var(--border-color);
 `;
 
 const Details = styled.div`

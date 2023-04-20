@@ -17,7 +17,11 @@ const CommentItem = ({ detail, templateTheme, postDetailRequest }) => {
       <>
          <Wrapper>
             <Header>
-               <HeaderImage src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
+               <HeaderImageWrapper to={`/profile/${detail?.user?.username}/posts`}>
+                  <HeaderImage
+                     src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile}
+                  />
+               </HeaderImageWrapper>
                <HeaderUsername to={`/profile/${detail?.user?.username}/posts`}>{detail?.user?.username}</HeaderUsername>
                {detail?.can_delete && (
                   <HeaderIcon onClick={() => setShowDeletModal(true)}>
@@ -63,9 +67,15 @@ const Header = styled.div`
    gap: 1rem;
 `;
 
-const HeaderImage = styled.img`
+const HeaderImageWrapper = styled(Link)`
    width: 3.2rem;
    height: 3.2rem;
+   text-decoration: none;
+`;
+
+const HeaderImage = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;

@@ -17,7 +17,9 @@ const SuggestionItem = ({ detail, onClose }) => {
 
    return (
       <Wrapper>
-         <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
+         <ImageWrapper to={`/profile/${detail?.username}/posts`}>
+            <Image src={detail?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${detail?.profile_photo}` : noProfile} />
+         </ImageWrapper>
          <Details>
             <UserName to={`/profile/${detail?.username}/posts`} onClick={onClose}>
                {detail?.username}
@@ -43,9 +45,15 @@ const Wrapper = styled.div`
    align-items: center;
 `;
 
-const Image = styled.img`
+const ImageWrapper = styled(Link)`
    width: 3.1rem;
    height: 3.1rem;
+   text-decoration: none;
+`;
+
+const Image = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;

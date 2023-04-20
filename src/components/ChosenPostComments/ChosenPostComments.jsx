@@ -86,9 +86,11 @@ const ChosenPostComments = ({
       <>
          <Wrapper templateTheme={templateTheme}>
             <Header>
-               <HeaderImage
-                  src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
-               />
+               <HeaderImageWrapper to={`/profile/${postDetail?.user?.username}/posts`}>
+                  <HeaderImage
+                     src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
+                  />
+               </HeaderImageWrapper>
                <HeaderUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</HeaderUsername>
 
                {postDetail?.user?.username === postDetail?.auth_username && (
@@ -112,9 +114,13 @@ const ChosenPostComments = ({
             <Body>
                <Caption>
                   <CaptionHeader>
-                     <CaptionImage
-                        src={postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile}
-                     />
+                     <CaptionImageWrapper to={`/profile/${postDetail?.user?.username}/posts`}>
+                        <CaptionImage
+                           src={
+                              postDetail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${postDetail?.user?.profile_photo}` : noProfile
+                           }
+                        />
+                     </CaptionImageWrapper>
                      <CaptionUsername to={`/profile/${postDetail?.user?.username}/posts`}>{postDetail?.user?.username}</CaptionUsername>
                   </CaptionHeader>
                   <CaptionText>{postDetail?.caption}</CaptionText>
@@ -218,9 +224,15 @@ const Header = styled.div`
    border-bottom: 0.1rem solid var(--border-color);
 `;
 
-const HeaderImage = styled.img`
+const HeaderImageWrapper = styled(Link)`
+   text-decoration: none;
    width: 3.2rem;
    height: 3.2rem;
+`;
+
+const HeaderImage = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    object-position: center center;
@@ -340,6 +352,8 @@ const CaptionHeader = styled.div`
    align-items: center;
    gap: 1rem;
 `;
+
+const CaptionImageWrapper = styled(HeaderImageWrapper)``;
 
 const CaptionImage = styled(HeaderImage)``;
 
