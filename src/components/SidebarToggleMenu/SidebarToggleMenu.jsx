@@ -9,7 +9,7 @@ import useOnClickOutside from "../../hooks/useOnclickOutside";
 import MoreOptionsLeftMenu from "../Skeletons/MoreOptionsLeftMenu/MoreOptionsLeftMenu";
 import useLogout from "../../api/logout/useLogout";
 
-const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
+const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading, setLogoutLoading }) => {
    const { templateTheme, userInfos } = useContext(GeneralInfoContext);
    const toggleMenuRef = useRef();
    const [logoutRequest, loading] = useLogout();
@@ -17,7 +17,7 @@ const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading }) => {
    useOnClickOutside(toggleMenuRef, closeMenu);
 
    const logoutHandler = () => {
-      logoutRequest();
+      logoutRequest(setLogoutLoading);
    };
 
    return (

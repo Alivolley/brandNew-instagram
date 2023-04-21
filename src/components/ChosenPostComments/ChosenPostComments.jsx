@@ -27,6 +27,8 @@ const ChosenPostComments = ({
    setHasLiked,
    hasSaved,
    setHasSaved,
+   likesNumber,
+   setLikesNumber,
    setHasLikedHome,
    setHasSavedHome,
    setLikesNumberHome,
@@ -64,7 +66,11 @@ const ChosenPostComments = ({
    };
 
    const likeHandler = () => {
-      setHasLiked((prev) => !prev);
+      setHasLiked((prev) => {
+         setLikesNumber((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
+         return !prev;
+      });
+
       setHasLikedHome &&
          setHasLikedHome((prev) => {
             setLikesNumberHome((prevNum) => (prev ? prevNum - 1 : prevNum + 1));
@@ -135,13 +141,16 @@ const ChosenPostComments = ({
 
             <Footer>
                <FooterIcons>
-                  <LikeIconWrapper onClick={likeHandler}>{hasLiked ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
+                  <FooterIconsBody>
+                     <LikeIconWrapper onClick={likeHandler}>{hasLiked ? <LikeIconFilled /> : <LikeIcon />}</LikeIconWrapper>
 
-                  <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
-                     <AddComment />
-                  </CommentIconWrapper>
+                     <CommentIconWrapper onClick={() => inputRef?.current?.focus()}>
+                        <AddComment />
+                     </CommentIconWrapper>
 
-                  <SaveIconsWrapper onClick={saveHandler}>{hasSaved ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
+                     <SaveIconsWrapper onClick={saveHandler}>{hasSaved ? <SavePostFilled /> : <SavePost />}</SaveIconsWrapper>
+                  </FooterIconsBody>
+                  <LikesCount>{likesNumber.toLocaleString()} likes</LikesCount>
                </FooterIcons>
 
                <CommentSection onSubmit={createCommentHandler}>
@@ -265,7 +274,7 @@ const Body = styled.div`
    top: 6.4rem;
    left: 0;
    right: 0;
-   bottom: 12rem;
+   bottom: 14rem;
    overflow: auto;
    padding: 1.5rem;
 `;
@@ -286,10 +295,13 @@ const Footer = styled.div`
 `;
 
 const FooterIcons = styled.div`
+   padding: 1.5rem;
+`;
+
+const FooterIconsBody = styled.div`
    display: flex;
    align-items: center;
    gap: 1.5rem;
-   padding: 1.5rem;
 
    svg {
       cursor: pointer;
@@ -297,6 +309,12 @@ const FooterIcons = styled.div`
 `;
 
 const LikeIconWrapper = styled.div``;
+
+const LikesCount = styled.p`
+   font-size: 1.2rem;
+   margin-top: 0.5rem;
+   font-weight: 600;
+`;
 
 const CommentIconWrapper = styled.div``;
 

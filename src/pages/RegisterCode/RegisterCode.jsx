@@ -35,9 +35,7 @@ const RegisterCode = () => {
             <Logo templateTheme={templateTheme}>
                <RegisterInstagramText />
             </Logo>
-            <Title>
-               Sign up to see photos and videos <br /> from your friends.
-            </Title>
+            <Title>We have send a code to your email</Title>
 
             <Form onSubmit={signUpHandler}>
                <Item templateTheme={templateTheme}>

@@ -52,6 +52,7 @@ const Home = () => {
 
                   {suggestionsloading && <SuggestionsSkeleton />}
                </SuggestionBody>
+               <SuggestionFooter>Lorem ipsum dolor sit amet consectetur adipisicing elit</SuggestionFooter>
             </SuggestionWrapper>
          )}
       </Wrapper>
@@ -116,6 +117,16 @@ const SuggestionBody = styled.div`
    display: flex;
    flex-direction: column;
    gap: 2rem;
+`;
+
+const SuggestionFooter = styled.div`
+   padding: 2rem;
+   font-size: 1.2rem;
+   color: gray;
+   font-weight: 600;
+   line-height: 2.5rem;
+   margin-top: 2rem;
+   text-align: center;
 `;
 
 const AddButton = styled.button`

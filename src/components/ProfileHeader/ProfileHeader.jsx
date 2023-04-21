@@ -169,6 +169,7 @@ const FollowButton = styled(LoadingButton)`
 
    &:disabled {
       color: rgba(0, 0, 0, 0) !important;
+      background-color: #e0e0e0 !important;
    }
 `;
 
@@ -179,6 +180,7 @@ const UnFollowButton = styled(LoadingButton)`
 
    &:disabled {
       color: rgba(0, 0, 0, 0) !important;
+      background-color: #e0e0e0 !important;
    }
 `;
 

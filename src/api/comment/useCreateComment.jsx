@@ -14,10 +14,6 @@ const useCreateComment = () => {
          })
          .then((res) => {
             if (res.status === 201) {
-               toast.success("Comment added successfully", {
-                  autoClose: 5000,
-                  theme: "colored",
-               });
                setCommentValue("");
                postDetailRequest();
             }

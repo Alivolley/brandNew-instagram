@@ -90,6 +90,8 @@ const HomePost = ({ detail }) => {
       }, 250);
    }
 
+   // console.log(detail);
+
    return (
       <Wrapper>
          <Header>
@@ -144,6 +146,7 @@ const HomePost = ({ detail }) => {
          <Caption>{detail?.caption}</Caption>
 
          <ViewAllButton onClick={showPostHandler}>View all {detail?.comments_count} comments</ViewAllButton>
+         <TimeText>{detail?.created === "right now" ? detail?.created : `${detail?.created} ago`}</TimeText>
 
          {showPost && (
             <ChosenPost
@@ -154,6 +157,7 @@ const HomePost = ({ detail }) => {
                chosenDetail={chosenDetail}
                setHasLikedHome={setHasLiked}
                setHasSavedHome={setHasSaved}
+               likesNumberHome={likesNumber}
                setLikesNumberHome={setLikesNumber}
                setFunctionDidRun={setFunctionDidRun}
             />
@@ -332,4 +336,11 @@ const ViewAllButton = styled.button`
    color: gray !important;
    margin-top: 2rem;
    cursor: pointer;
+`;
+
+const TimeText = styled.p`
+   font-size: 0.9rem;
+   color: gray;
+   margin-top: 1rem;
+   /* font-weight: 700; */
 `;

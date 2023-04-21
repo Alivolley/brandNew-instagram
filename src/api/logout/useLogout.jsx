@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 const useLogout = () => {
    const [loading, setLoading] = useState(false);
 
-   const logoutRequest = () => {
+   const logoutRequest = (setLogoutLoading) => {
       setLoading(true);
+      setLogoutLoading && setLogoutLoading(true);
 
       axiosInstance
          .post(`auth/logout/`, {
@@ -29,7 +30,10 @@ const useLogout = () => {
                theme: "colored",
             });
          })
-         .finally(() => setLoading(false));
+         .finally(() => {
+            setLoading(false);
+            setLogoutLoading(false);
+         });
    };
 
    return [logoutRequest, loading];

@@ -28,7 +28,7 @@ const Setting = () => {
          )}
 
          <Backdrop open={loading}>
-            <CircularProgress color="inherit" />
+            <CircularProgress color="primary" />
          </Backdrop>
       </Wrapper>
    );

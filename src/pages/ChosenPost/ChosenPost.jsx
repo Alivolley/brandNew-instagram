@@ -12,8 +12,9 @@ import useOnClickOutside from "../../hooks/useOnclickOutside";
 const ChosenPost = ({ handleClose, chosenDetail, setHasLikedHome, setHasSavedHome, setLikesNumberHome, setFunctionDidRun }) => {
    const [hasLiked, setHasLiked] = useState(false);
    const [hasSaved, setHasSaved] = useState(false);
+   const [likesNumber, setLikesNumber] = useState(0);
 
-   const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id, setHasLiked, setHasSaved);
+   const [postDetailRequest, loading, postDetail] = useChosenPost(chosenDetail.id, setHasLiked, setHasSaved, setLikesNumber);
    const outSideRef = useRef();
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -51,6 +52,8 @@ const ChosenPost = ({ handleClose, chosenDetail, setHasLikedHome, setHasSavedHom
                            setHasLiked={setHasLiked}
                            hasSaved={hasSaved}
                            setHasSaved={setHasSaved}
+                           likesNumber={likesNumber}
+                           setLikesNumber={setLikesNumber}
                            setHasLikedHome={setHasLikedHome}
                            setHasSavedHome={setHasSavedHome}
                            setLikesNumberHome={setLikesNumberHome}

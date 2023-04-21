@@ -16,12 +16,14 @@ import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleM
 import LeftMenuProfile from "../../components/Skeletons/LeftMenuProfile/LeftMenuProfile";
 import NotificationDrawer from "../../components/NotificationDrawer/NotificationDrawer";
 import SearchDrawer from "../../components/SearchDrawer/SearchDrawer";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const LeftsideMenu = ({ userInfoLoading }) => {
    const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
    const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
    const [showNotifications, setShowNotifications] = useState(false);
    const [showSearch, setShowSearch] = useState(false);
+   const [logoutLoading, setLogoutLoading] = useState(false);
 
    const changeTheme = () => {
       const foundedTheme = localStorage.getItem("theme");
@@ -30,84 +32,94 @@ const LeftsideMenu = ({ userInfoLoading }) => {
    };
 
    return (
-      <Leftside templateTheme={templateTheme}>
-         <Logo to="/">
-            <InstagramText />
-         </Logo>
-         <Links>
-            <LinkedItem to="/">
-               <Icon>
-                  <HomeIcon />
-               </Icon>
-               <Text>Home</Text>
-            </LinkedItem>
+      <>
+         <Leftside templateTheme={templateTheme}>
+            <Logo to="/">
+               <InstagramText />
+            </Logo>
+            <Links>
+               <LinkedItem to="/">
+                  <Icon>
+                     <HomeIcon />
+                  </Icon>
+                  <Text>Home</Text>
+               </LinkedItem>
 
-            <BottunItem onClick={() => setShowSearch(true)}>
-               <Icon>
-                  <SearchIcon />
-               </Icon>
-               <Text>Search</Text>
-            </BottunItem>
+               <BottunItem onClick={() => setShowSearch(true)}>
+                  <Icon>
+                     <SearchIcon />
+                  </Icon>
+                  <Text>Search</Text>
+               </BottunItem>
 
-            <LinkedItem to="/explore">
-               <Icon>
-                  <ExploreIcon />
-               </Icon>
-               <Text>Explore</Text>
-            </LinkedItem>
+               <LinkedItem to="/explore">
+                  <Icon>
+                     <ExploreIcon />
+                  </Icon>
+                  <Text>Explore</Text>
+               </LinkedItem>
 
-            {/* <LinkedItem to="/direct">
+               {/* <LinkedItem to="/direct">
                <Icon>
                   <DirectIcon />
                </Icon>
                <Text>Messages</Text>
             </LinkedItem> */}
 
-            <BottunItem onClick={() => setShowNotifications(true)}>
-               <Icon>
-                  <ActivityIcon />
-               </Icon>
-               <Text>Notifications</Text>
-            </BottunItem>
+               <BottunItem onClick={() => setShowNotifications(true)}>
+                  <Icon>
+                     <ActivityIcon />
+                  </Icon>
+                  <Text>Notifications</Text>
+               </BottunItem>
 
-            <LinkedItem to="/create">
-               <Icon>
-                  <CreatePostIcon />
-               </Icon>
-               <Text>Create</Text>
-            </LinkedItem>
-            {!userInfoLoading ? (
-               <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
-                  <ProfilePhoto
-                     src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${userInfos?.profile_photo}` : NoProfilePhoto}
-                  />
-                  <Text>Profile</Text>
+               <LinkedItem to="/create">
+                  <Icon>
+                     <CreatePostIcon />
+                  </Icon>
+                  <Text>Create</Text>
                </LinkedItem>
-            ) : (
-               <LeftMenuProfile />
-            )}
-         </Links>
+               {!userInfoLoading ? (
+                  <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
+                     <ProfilePhoto
+                        src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${userInfos?.profile_photo}` : NoProfilePhoto}
+                     />
+                     <Text>Profile</Text>
+                  </LinkedItem>
+               ) : (
+                  <LeftMenuProfile />
+               )}
+            </Links>
 
-         <MoreOptions>
-            <BottunItem onClick={changeTheme}>
-               <Icon>
-                  <ThemeChangeIcon />
-               </Icon>
-               <Text>Change theme</Text>
-            </BottunItem>
+            <MoreOptions>
+               <BottunItem onClick={changeTheme}>
+                  <Icon>
+                     <ThemeChangeIcon />
+                  </Icon>
+                  <Text>Change theme</Text>
+               </BottunItem>
 
-            <BottunItem onClick={() => setIsToggleMenuOpen((prev) => !prev)}>
-               <Icon>
-                  <MoreIcon />
-               </Icon>
-               <Text>More</Text>
-               <SidebarToggleMenu isOpen={isToggleMenuOpen} closeMenu={() => setIsToggleMenuOpen(false)} userInfoLoading={userInfoLoading} />
-            </BottunItem>
-         </MoreOptions>
+               <BottunItem onClick={() => setIsToggleMenuOpen((prev) => !prev)}>
+                  <Icon>
+                     <MoreIcon />
+                  </Icon>
+                  <Text>More</Text>
+                  <SidebarToggleMenu
+                     isOpen={isToggleMenuOpen}
+                     closeMenu={() => setIsToggleMenuOpen(false)}
+                     userInfoLoading={userInfoLoading}
+                     setLogoutLoading={setLogoutLoading}
+                  />
+               </BottunItem>
+            </MoreOptions>
 
-         <NotificationDrawer show={showNotifications} colseHandler={() => setShowNotifications(false)} templateTheme={templateTheme} />
-         <SearchDrawer show={showSearch} colseHandler={() => setShowSearch(false)} templateTheme={templateTheme} />
-      </Leftside>
+            <NotificationDrawer show={showNotifications} colseHandler={() => setShowNotifications(false)} templateTheme={templateTheme} />
+            <SearchDrawer show={showSearch} colseHandler={() => setShowSearch(false)} templateTheme={templateTheme} />
+         </Leftside>
+         <Backdrop open={logoutLoading} sx={{ zIndex: 15 }}>
+            <CircularProgress color="primary" />
+         </Backdrop>
+      </>
    );
 };
 
