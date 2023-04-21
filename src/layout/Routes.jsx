@@ -12,8 +12,13 @@ import ProfilePosts from "../components/ProfilePosts/ProfilePosts";
 import Explore from "../pages/Explore/Explore";
 import Create from "../pages/Create/Create";
 import Developers from "../pages/Developers/Developers";
+import NotFound from "../pages/NotFound/NotFound";
 
 const Routes = [
+   {
+      path: "*",
+      element: <NotFound />,
+   },
    {
       path: "/*",
       element: <AuthRoute />,
