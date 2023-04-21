@@ -104,6 +104,7 @@ const UnfollowButton = styled(Button)`
    margin-left: auto !important;
    font-size: 1.4rem !important;
    text-transform: none !important;
+   color: black !important;
 `;
 
 const FollowButton = styled(Button)`
