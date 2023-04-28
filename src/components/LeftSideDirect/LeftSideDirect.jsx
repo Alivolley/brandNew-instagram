@@ -43,10 +43,38 @@ const LeftSideDirect = ({ templateTheme }) => {
 export default LeftSideDirect;
 
 const Wrapper = styled.div`
-   width: 35rem;
+   width: 25rem;
    height: 100%;
    border-right: 0.1rem solid var(--border-color);
    overflow: auto;
+
+   @media (min-width: 330px) {
+      width: 28rem;
+   }
+
+   @media (min-width: 360px) {
+      width: 31rem;
+   }
+
+   @media (min-width: 390px) {
+      width: 34rem;
+   }
+
+   @media (min-width: 420px) {
+      width: 37rem;
+   }
+
+   @media (min-width: 600px) {
+      width: 25rem;
+   }
+
+   @media (min-width: 700px) {
+      width: 30rem;
+   }
+
+   @media (min-width: 1100px) {
+      width: 35rem;
+   }
 `;
 
 const Header = styled.div`

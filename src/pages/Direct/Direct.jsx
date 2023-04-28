@@ -1,16 +1,31 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import LeftSideDirect from "../../components/LeftSideDirect/LeftSideDirect";
-import RightSideDirect from "../../components/RightSideDirect/RightSideDirect";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import { Outlet, useParams } from "react-router-dom";
+import DirectIntroduce from "../../components/DirectIntroduce/DirectIntroduce";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const Direct = () => {
+   const { username } = useParams();
    const { templateTheme } = useContext(GeneralInfoContext);
+   const theme = useTheme();
+   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
    return (
       <Wrapper templateTheme={templateTheme}>
-         <LeftSideDirect templateTheme={templateTheme} />
-         <RightSideDirect templateTheme={templateTheme} />
+         {!isMatch ? (
+            <>
+               <LeftSideDirect templateTheme={templateTheme} />
+               <Outlet />
+            </>
+         ) : isMatch && username ? (
+            <Outlet />
+         ) : isMatch && !username ? (
+            <LeftSideDirect templateTheme={templateTheme} />
+         ) : null}
+
+         {!username && !isMatch && <DirectIntroduce />}
       </Wrapper>
    );
 };

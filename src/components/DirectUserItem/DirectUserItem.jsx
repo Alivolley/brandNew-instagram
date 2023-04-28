@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const DirectUserItem = ({ templateTheme }) => {
    return (
-      <Wrapper to={`/direct`} templatetheme={templateTheme}>
+      <Wrapper to={`/direct/some`} templatetheme={templateTheme}>
          <Image src={noProfile} />
          <Detail>
             <Username>ali azghandi</Username>

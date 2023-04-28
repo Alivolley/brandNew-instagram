@@ -14,6 +14,7 @@ import Create from "../pages/Create/Create";
 import Developers from "../pages/Developers/Developers";
 import NotFound from "../pages/NotFound/NotFound";
 import Direct from "../pages/Direct/Direct";
+import RightSideDirect from "../components/RightSideDirect/RightSideDirect";
 
 const Routes = [
    {
@@ -37,7 +38,7 @@ const Routes = [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
          { path: "explore", element: <Explore /> },
-         { path: "direct", element: <Direct /> },
+         { path: "direct/", element: <Direct />, children: [{ path: ":username", element: <RightSideDirect /> }] },
          { path: "create", element: <Create /> },
          { path: "developers", element: <Developers /> },
          {
