@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SearchIcon from "../../assets/svgs/SearchIcon";
 import HomeIcon from "./../../assets/svgs/HomeIcon";
 import ExploreIcon from "./../../assets/svgs/ExploreIcon";
-// import DirectIcon from "./../../assets/svgs/DirectIcon";
+import DirectIcon from "./../../assets/svgs/DirectIcon";
 import ActivityIcon from "./../../assets/svgs/ActivityIcon";
 import CreatePostIcon from "./../../assets/svgs/CreatePostIcon";
 import InstagramText from "./../../assets/svgs/InstagramText";
@@ -59,12 +59,12 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                   <Text>Explore</Text>
                </LinkedItem>
 
-               {/* <LinkedItem to="/direct">
-               <Icon>
-                  <DirectIcon />
-               </Icon>
-               <Text>Messages</Text>
-            </LinkedItem> */}
+               <LinkedItem to="/direct">
+                  <Icon>
+                     <DirectIcon />
+                  </Icon>
+                  <Text>Messages</Text>
+               </LinkedItem>
 
                <BottunItem onClick={() => setShowNotifications(true)}>
                   <Icon>

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import CreatePostIcon from "../../assets/svgs/CreatePostIcon";
-// import DirectIcon from "../../assets/svgs/DirectIcon";
+import DirectIcon from "../../assets/svgs/DirectIcon";
 import ExploreIcon from "../../assets/svgs/ExploreIcon";
 import HomeIcon from "../../assets/svgs/HomeIcon";
 import ThemeChangeIcon from "../../assets/svgs/ThemeChangeIcon";
@@ -39,11 +39,11 @@ const Footer = ({ userInfoLoading }) => {
             </Icon>
          </LinkedItem>
 
-         {/* <LinkedItem to="/direct">
+         <LinkedItem to="/direct">
             <Icon>
                <DirectIcon />
             </Icon>
-         </LinkedItem> */}
+         </LinkedItem>
 
          <BottunItem onClick={changeTheme}>
             <Icon>

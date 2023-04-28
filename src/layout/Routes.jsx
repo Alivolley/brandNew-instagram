@@ -13,6 +13,7 @@ import Explore from "../pages/Explore/Explore";
 import Create from "../pages/Create/Create";
 import Developers from "../pages/Developers/Developers";
 import NotFound from "../pages/NotFound/NotFound";
+import Direct from "../pages/Direct/Direct";
 
 const Routes = [
    {
@@ -36,6 +37,7 @@ const Routes = [
          { path: "", element: <Home /> },
          { path: "setting", element: <Setting /> },
          { path: "explore", element: <Explore /> },
+         { path: "direct", element: <Direct /> },
          { path: "create", element: <Create /> },
          { path: "developers", element: <Developers /> },
          {
