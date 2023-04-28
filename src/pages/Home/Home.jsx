@@ -52,7 +52,7 @@ const Home = () => {
 
                   {suggestionsloading && <SuggestionsSkeleton />}
                </SuggestionBody>
-               <SuggestionFooter>Lorem ipsum dolor sit amet consectetur adipisicing elit</SuggestionFooter>
+               <SuggestionFooter>Experience the magic of Instagram. the perfect platform to showcase your creativity</SuggestionFooter>
             </SuggestionWrapper>
          )}
       </Wrapper>

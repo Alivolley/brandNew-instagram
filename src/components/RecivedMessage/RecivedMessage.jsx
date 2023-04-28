@@ -2,11 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import dsafd from "./../../assets/Images/ali.png";
+import { Link } from "react-router-dom";
 
 const RecivedMessage = ({ templateTheme }) => {
    return (
       <Wrapper>
-         <Image src={dsafd} />
+         <ImageWrapper to={`/direct`}>
+            <Image src={dsafd} />
+         </ImageWrapper>
          <Text templateTheme={templateTheme} s>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum odio fugiat quas voluptate nesciunt recusandae nulla ullam, dolores
             ducimus dicta exercitationem porro quos, iste sint, error repellat veritatis rerum distinctio?
@@ -23,9 +26,14 @@ const Wrapper = styled.div`
    align-items: end;
 `;
 
-const Image = styled.img`
+const ImageWrapper = styled(Link)`
    width: 2.5rem;
    height: 2.5rem;
+`;
+
+const Image = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;

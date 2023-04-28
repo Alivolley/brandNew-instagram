@@ -30,7 +30,9 @@ const RightSideDirect = () => {
    return (
       <Wrapper>
          <Header templateTheme={templateTheme}>
-            <Image src={noProfile} onLoad={() => setReload((prev) => !prev)} />
+            <ImageWrapper to={`/direct`}>
+               <Image src={noProfile} onLoad={() => setReload((prev) => !prev)} />
+            </ImageWrapper>
             <HeaderUsername>javad najjar</HeaderUsername>
          </Header>
 
@@ -135,15 +137,20 @@ const Header = styled.div`
    right: 0;
    display: flex;
    align-items: center;
-   gap: 2rem;
+   gap: 1rem;
    padding: 1.7rem 2rem;
    border-bottom: 0.1rem solid var(--border-color);
    background-color: ${({ templateTheme }) => templateTheme};
 `;
 
-const Image = styled.img`
+const ImageWrapper = styled(Link)`
    width: 2.4rem;
    height: 2.4rem;
+`;
+
+const Image = styled.img`
+   width: 100%;
+   height: 100%;
    border-radius: 50%;
    object-fit: contain;
    background-color: black;
