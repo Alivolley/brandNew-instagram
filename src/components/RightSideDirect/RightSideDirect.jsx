@@ -6,9 +6,9 @@ import GeneralInfoContext from "../../contexts/GeneralInfoContext";
 import SentMessage from "../SentMessage/SentMessage";
 import RecivedMessage from "../RecivedMessage/RecivedMessage";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
-import { LoadingButton } from "@mui/lab";
 import EmojiPicker from "emoji-picker-react";
 import useOnClickOutside from "../../hooks/useOnclickOutside";
+import SendIcon from "@mui/icons-material/Send";
 
 const RightSideDirect = () => {
    const [reload, setReload] = useState(false);
@@ -62,9 +62,9 @@ const RightSideDirect = () => {
 
             <Input type="text" placeholder="Message..." value={messageValue} onChange={(e) => setMessageValue(e.target.value)} />
 
-            <PostButton variant="text" size="small" type="submit">
-               Post
-            </PostButton>
+            <SendButton variant="text" size="small" type="submit">
+               <SendIcon fontSize="large" />
+            </SendButton>
 
             {showEmojies && (
                <EmojiWrapper ref={emojiRef}>
@@ -210,9 +210,10 @@ const Input = styled.textarea`
    height: 2.5rem;
 `;
 
-const PostButton = styled(LoadingButton)`
+const SendButton = styled.div`
    margin-left: auto !important;
    text-transform: none !important;
    font-size: 1.4rem !important;
    padding: 0 !important;
+   cursor: pointer;
 `;
