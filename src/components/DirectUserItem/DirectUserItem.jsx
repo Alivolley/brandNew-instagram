@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
+import fkhdrofile from "./../../assets/Images/javad.jpg";
 import { NavLink } from "react-router-dom";
 
 const DirectUserItem = ({ templateTheme }) => {
    return (
       <Wrapper to={`/direct/some`} templatetheme={templateTheme}>
-         <Image src={noProfile} />
+         <Image src={fkhdrofile} />
          <Detail>
             <Username>ali azghandi</Username>
             <LastMessage>has sent you a message</LastMessage>

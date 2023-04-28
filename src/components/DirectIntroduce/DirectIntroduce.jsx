@@ -52,18 +52,14 @@ const Wrapper = styled.div`
    }
 
    @media (min-width: 1100px) {
-      width: 35rem;
-   }
-
-   @media (min-width: 1200px) {
       width: 38rem;
    }
 
-   @media (min-width: 1300px) {
+   @media (min-width: 1200px) {
       width: 45rem;
    }
 
-   @media (min-width: 1400px) {
+   @media (min-width: 1300px) {
       width: 55rem;
    }
 `;

@@ -71,10 +71,6 @@ const Wrapper = styled.div`
    @media (min-width: 700px) {
       width: 30rem;
    }
-
-   @media (min-width: 1100px) {
-      width: 35rem;
-   }
 `;
 
 const Header = styled.div`

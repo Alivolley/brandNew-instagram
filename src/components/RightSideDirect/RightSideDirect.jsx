@@ -1,76 +1,85 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
 import GeneralInfoContext from "../../contexts/GeneralInfoContext";
+import SentMessage from "../SentMessage/SentMessage";
+import RecivedMessage from "../RecivedMessage/RecivedMessage";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import { LoadingButton } from "@mui/lab";
+import EmojiPicker from "emoji-picker-react";
+import useOnClickOutside from "../../hooks/useOnclickOutside";
 
 const RightSideDirect = () => {
+   const [reload, setReload] = useState(false);
    const { templateTheme } = useContext(GeneralInfoContext);
+
+   const [showEmojies, setShowEmojies] = useState(false);
+   const [messageValue, setMessageValue] = useState("");
+
+   const bodyRef = useRef(null);
+   const emojiRef = useRef();
+
+   useEffect(() => {
+      const element = bodyRef.current;
+      element.scrollTop = element.scrollHeight;
+   }, [reload]);
+
+   useOnClickOutside(emojiRef, () => setShowEmojies(false));
+
    return (
       <Wrapper>
          <Header templateTheme={templateTheme}>
-            <Image src={noProfile} />
+            <Image src={noProfile} onLoad={() => setReload((prev) => !prev)} />
             <HeaderUsername>javad najjar</HeaderUsername>
          </Header>
 
-         <Body>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo sit vero voluptates aliquid laboriosam velit earum fugiat porro? Dolores
-            aliquam tempora, fuga quisquam et corporis laboriosam, reprehenderit libero fugit ipsum modi debitis ducimus consequatur? Recusandae,
-            delectus iure. Blanditiis, delectus corporis, rerum alias esse praesentium cupiditate eaque voluptates quasi animi quidem facere
-            reiciendis officiis at odio facilis reprehenderit? Est unde laborum eveniet aliquam! Dicta repudiandae iure recusandae. Repudiandae
-            voluptatibus laudantium fuga velit reiciendis quisquam veniam quaerat, cupiditate quos est corrupti. Nesciunt voluptatum eaque natus nemo
-            reprehenderit ea accusantium suscipit quidem dolorem est commodi, dicta temporibus magni pariatur hic modi dignissimos laborum maiores
-            consectetur impedit quae sequi. Cumque soluta corrupti, culpa provident doloremque neque ad deserunt enim similique nisi atque ea vitae
-            voluptates. A suscipit vitae saepe laudantium ipsa voluptatum asperiores totam architecto voluptate dolores quo illo molestiae veniam
-            laboriosam, ut sed iure voluptas atque! Corporis id quos vero nemo nam vel consequuntur deserunt. Dolor, dolore porro suscipit beatae
-            quibusdam optio. Non quas reiciendis dolore ipsam distinctio dolorum, modi, quos voluptatum qui sequi ea illo excepturi adipisci error
-            odio sint asperiores! Inventore quisquam in non? Labore itaque illo similique praesentium doloribus odio quidem dolores natus omnis nam
-            repudiandae animi molestias corrupti error architecto optio esse sed, facilis sint aliquid voluptatem quod? Consectetur architecto numquam
-            debitis dolor? Recusandae, commodi. Voluptatum dignissimos fugiat neque autem labore, quod enim consectetur laboriosam sunt ratione, minus
-            error esse perspiciatis eaque reiciendis quis corrupti culpa mollitia alias maiores impedit! Architecto quidem doloribus delectus modi in
-            recusandae unde quia inventore atque tempora possimus odio rerum laudantium deserunt, incidunt consequuntur iusto dicta ipsam vel
-            reiciendis explicabo excepturi commodi voluptas! Repellendus veniam recusandae reiciendis eligendi obcaecati dolore impedit nihil unde,
-            tempore iure voluptas soluta tempora autem repellat asperiores dolores incidunt cumque blanditiis excepturi. Iusto voluptatibus voluptatem
-            odit, temporibus placeat ducimus enim aliquam laborum voluptate quae dignissimos at laudantium reiciendis facere, voluptatum est ex
-            aliquid reprehenderit debitis hic odio cumque deserunt, rerum inventore. Doloribus nemo, iusto quae eligendi incidunt, dolor fugiat
-            accusamus culpa voluptas deserunt ex ipsum reiciendis repudiandae aperiam quia neque. Corporis dolorem itaque ex temporibus neque deserunt
-            harum saepe sunt quas dolorum eaque, ipsa maiores sit omnis nihil nam repudiandae? Cupiditate, possimus. Dolore animi, nobis, tempore
-            porro debitis assumenda harum laboriosam ex, temporibus dolorem recusandae. Corrupti deleniti minus voluptas amet aspernatur nulla
-            ratione, quibusdam dolore quisquam ut nisi commodi id perferendis error, ipsam labore repellat delectus recusandae et! Optio perspiciatis
-            suscipit iure, labore accusamus itaque consequatur vero error pariatur ut temporibus quas inventore aperiam quae nemo iste a consequuntur
-            impedit sunt rem dolorum dolores totam. Earum dolore, exercitationem atque est autem et obcaecati saepe, quod mollitia ipsa distinctio
-            eveniet quae? Voluptas fuga asperiores reiciendis odit facere at pariatur expedita eum perferendis illo quae quisquam vero fugiat neque
-            fugit sint, maiores exercitationem ea repudiandae. Porro dicta, at voluptatem modi repudiandae ea earum expedita doloremque esse in vel
-            eum similique? Non eaque consectetur adipisci dolorem praesentium eum id assumenda, incidunt facere fugiat porro nam veniam deleniti
-            neque, minus quia omnis quidem, temporibus animi optio! Quisquam corporis asperiores omnis distinctio, itaque earum praesentium animi sunt
-            voluptas deleniti ipsam ad consectetur incidunt, corrupti dicta accusantium cum quidem exercitationem hic autem ducimus recusandae
-            perspiciatis. Beatae, cupiditate ipsa atque eum, cum voluptas dicta enim doloribus minus, voluptatem laboriosam eligendi. Quae quia itaque
-            eveniet ad harum aut ullam mollitia iure, qui, soluta ducimus? Ipsa, labore beatae ipsum voluptas corrupti ipsam, reiciendis est voluptate
-            deleniti natus, commodi aliquid inventore nihil exercitationem minima! Cum minus doloribus ipsa voluptas ex animi facere corrupti, nisi
-            magni sit fuga sed suscipit nobis quas saepe delectus repudiandae, eum at rerum vero sunt. Velit dignissimos labore blanditiis ab
-            excepturi! At possimus facilis accusantium aspernatur est et provident, quia iste minus. Ex fuga soluta maxime asperiores voluptas
-            aspernatur quam quasi. Optio amet minima laborum et expedita, corporis hic neque veniam esse repudiandae! Quo repellat culpa optio. Ea
-            dolorum alias consectetur autem, quod eligendi ducimus exercitationem dolorem quae ab rerum quam qui tenetur odio necessitatibus soluta
-            quis, laborum, molestias error ipsam molestiae maxime itaque nobis! Adipisci maxime qui magnam maiores saepe quasi vel quia ad quod nisi
-            corrupti atque cupiditate velit magni assumenda iste dicta eveniet voluptatum, consequatur nam mollitia distinctio aliquid consectetur
-            esse. Sit, et quibusdam facere modi rem aperiam veniam ex quo corporis laboriosam. A expedita natus, mollitia officia ut earum harum
-            officiis aspernatur, fugit consectetur saepe rerum voluptatum quaerat quos aliquam iusto dolores nihil modi perferendis optio iure est.
-            Quas, recusandae! Officia vel velit reiciendis architecto rerum. Sapiente assumenda, in fuga dolor dolores hic enim error neque voluptatem
-            asperiores autem nesciunt earum, vel voluptate suscipit similique! Dolorem rerum facilis odio sit impedit, sed dolor doloremque alias
-            commodi saepe pariatur debitis laudantium illum quod, animi voluptatem quaerat molestias magni libero velit tempora amet? Voluptates
-            facilis provident dolor assumenda quis modi voluptate recusandae autem maiores sit quisquam, a magni, nihil magnam. At, eius? Totam
-            suscipit harum veritatis ad, necessitatibus voluptatibus magni ipsum at veniam facere ea repellat natus dolores laudantium, deleniti ab
-            repellendus repudiandae, quidem tempore impedit vero esse. Quisquam asperiores distinctio facilis maiores? Dignissimos necessitatibus
-            voluptatibus nobis, accusantium, laboriosam dolorem nemo excepturi quo illum earum vero eos odio at est, repellat porro nulla quos
-            consequatur ipsum eveniet inventore amet? Dolores repellat adipisci, minima mollitia, distinctio quaerat veritatis at temporibus aliquid
-            similique eius rerum illum maiores ut enim fugiat. Dolorem ex delectus odit ipsum velit repellat cumque est nam laudantium natus accusamus
-            reiciendis doloremque modi sunt veniam pariatur nesciunt cupiditate deleniti reprehenderit nobis, animi facere vitae, accusantium a.
-            Tempore porro placeat minus quas officia impedit necessitatibus earum maiores blanditiis reprehenderit doloribus excepturi magni, veniam
-            inventore, aliquam, recusandae dolores at voluptates quo quos. Quia sit architecto sed sapiente pariatur iste beatae ut a, tempora illo
-            quibusdam totam ab, fugit harum provident repellat, fugiat tenetur commodi iure labore ipsum! Quaerat commodi sapiente quia deleniti
-            nostrum molestias, recusandae aspernatur nam totam, distinctio aut officiis consectetur incidunt! Veritatis magnam eveniet totam hic
-            ducimus blanditiis neque obcaecati impedit tempore assumenda beatae culpa, maxime rem expedita dolor natus! Dolore, magnam omnis!
+         <Body ref={bodyRef}>
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
          </Body>
+
+         <MessageSection>
+            <EmojiIcon onClick={() => setShowEmojies(true)}>
+               <SentimentSatisfiedAltIcon fontSize="inherit" />
+            </EmojiIcon>
+
+            <Input type="text" placeholder="Message..." value={messageValue} onChange={(e) => setMessageValue(e.target.value)} />
+
+            <PostButton variant="text" size="small" type="submit">
+               Post
+            </PostButton>
+
+            {showEmojies && (
+               <EmojiWrapper ref={emojiRef}>
+                  <EmojiPicker
+                     width="100%"
+                     height="100%"
+                     theme={templateTheme === "white" ? "light" : "dark"}
+                     skinTonesDisabled={true}
+                     searchDisabled={true}
+                     suggestedEmojisMode="recent"
+                     onEmojiClick={(emo) => setMessageValue((prev) => prev.concat(emo.emoji))}
+                  />
+               </EmojiWrapper>
+            )}
+         </MessageSection>
       </Wrapper>
    );
 };
@@ -78,9 +87,9 @@ const RightSideDirect = () => {
 export default RightSideDirect;
 
 const Wrapper = styled.div`
+   position: relative;
    width: 25rem;
    height: 100%;
-   overflow: auto;
 
    @media (min-width: 330px) {
       width: 28rem;
@@ -107,25 +116,23 @@ const Wrapper = styled.div`
    }
 
    @media (min-width: 1100px) {
-      width: 35rem;
-   }
-
-   @media (min-width: 1200px) {
       width: 38rem;
    }
 
-   @media (min-width: 1300px) {
+   @media (min-width: 1200px) {
       width: 45rem;
    }
 
-   @media (min-width: 1400px) {
+   @media (min-width: 1300px) {
       width: 55rem;
    }
 `;
 
 const Header = styled.div`
-   position: sticky;
+   position: absolute;
    top: 0;
+   left: 0;
+   right: 0;
    display: flex;
    align-items: center;
    gap: 2rem;
@@ -149,4 +156,63 @@ const HeaderUsername = styled(Link)`
    text-decoration: none;
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+   position: absolute;
+   top: 5.9rem;
+   left: 0;
+   right: 0;
+   width: 100%;
+   bottom: 7.4rem;
+   padding: 2rem 1.5rem;
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+   overflow: auto;
+`;
+
+const MessageSection = styled.form`
+   position: absolute;
+   bottom: 2rem;
+   right: 2rem;
+   left: 2rem;
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   padding: 1rem 1.5rem;
+   border: 0.1rem solid var(--border-color);
+   border-radius: 3rem;
+`;
+
+const EmojiIcon = styled.div`
+   font-size: 2.2rem;
+   cursor: pointer;
+`;
+
+const EmojiWrapper = styled.div`
+   position: absolute;
+   bottom: 100%;
+   left: 0;
+   width: 30rem;
+   height: 30rem;
+
+   .epr-preview {
+      display: none;
+   }
+`;
+
+const Input = styled.textarea`
+   resize: none;
+   font-size: 1.4rem;
+   border: none;
+   outline: none;
+   background-color: transparent;
+   width: 100%;
+   height: 2.5rem;
+`;
+
+const PostButton = styled(LoadingButton)`
+   margin-left: auto !important;
+   text-transform: none !important;
+   font-size: 1.4rem !important;
+   padding: 0 !important;
+`;
