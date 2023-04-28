@@ -45,4 +45,9 @@ const Wrapper = styled.div`
       color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
       box-sizing: border-box;
    }
+
+   @media (max-width: 900px) {
+      margin-top: 0;
+      height: 79vh;
+   }
 `;
