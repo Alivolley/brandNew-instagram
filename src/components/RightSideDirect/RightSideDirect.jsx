@@ -213,6 +213,10 @@ const MessageSection = styled.form`
    padding: 1rem 1.5rem;
    border: 0.1rem solid var(--border-color);
    border-radius: 3rem;
+
+   @media (max-width: 600px) {
+      bottom: 0;
+   }
 `;
 
 const EmojiIcon = styled.div`

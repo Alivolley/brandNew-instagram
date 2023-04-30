@@ -50,4 +50,8 @@ const Wrapper = styled.div`
       margin-top: 0;
       height: 79vh;
    }
+
+   @media (max-width: 600px) {
+      border: none;
+   }
 `;
