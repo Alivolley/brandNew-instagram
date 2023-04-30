@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import alipic from "./../../assets/Images/ali.png";
-import javadpic from "./../../assets/Images/javad.jpg";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-import EmailIcon from "@mui/icons-material/Email";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import alipic from './../../assets/Images/ali.png';
+import javadpic from './../../assets/Images/javad.jpg';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import EmailIcon from '@mui/icons-material/Email';
 
 const Developers = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -82,7 +82,7 @@ const Container = styled.div`
    border-radius: 1rem;
 
    * {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
    }
 
    @media (max-width: 900px) {

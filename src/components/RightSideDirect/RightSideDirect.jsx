@@ -1,24 +1,46 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import SentMessage from "../SentMessage/SentMessage";
-import RecivedMessage from "../RecivedMessage/RecivedMessage";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
-import EmojiPicker from "emoji-picker-react";
-import useOnClickOutside from "../../hooks/useOnclickOutside";
-import SendIcon from "@mui/icons-material/Send";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import noProfile from './../../assets/Images/NoProfilePhoto.jpg';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import SentMessage from '../SentMessage/SentMessage';
+import RecivedMessage from '../RecivedMessage/RecivedMessage';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import EmojiPicker from 'emoji-picker-react';
+import useOnClickOutside from '../../hooks/useOnclickOutside';
+import SendIcon from '@mui/icons-material/Send';
+import { io } from 'socket.io-client';
 
 const RightSideDirect = () => {
    const [reload, setReload] = useState(false);
    const { templateTheme } = useContext(GeneralInfoContext);
 
    const [showEmojies, setShowEmojies] = useState(false);
-   const [messageValue, setMessageValue] = useState("");
+   const [messageValue, setMessageValue] = useState('');
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
+
+   const socket = io('https://djangoinsta.pythonanywhere.com/direct/peggy_carter/');
+
+   socket.on('connect', () => {
+      // این وقتی اجرا میشه که کانکشن شکل بگیره
+      console.log('connected');
+   });
+
+   socket.on('disconnect', () => {
+      // این وقتی اجرا میشه که کانکشن قطع بشه
+      console.log('disConnected');
+   });
+
+   socket.on('recived', data => {
+      // وقتی که پیامی دریافت میشه اجرا میشه
+      console.log('resived message :', data);
+   });
+
+   const sendTheMessage = () => {
+      socket.emit('send', messageValue);
+   };
 
    useEffect(() => {
       const element = bodyRef.current;
@@ -31,7 +53,7 @@ const RightSideDirect = () => {
       <Wrapper>
          <Header templateTheme={templateTheme}>
             <ImageWrapper to={`/direct`}>
-               <Image src={noProfile} onLoad={() => setReload((prev) => !prev)} />
+               <Image src={noProfile} onLoad={() => setReload(prev => !prev)} />
             </ImageWrapper>
             <HeaderUsername>javad najjar</HeaderUsername>
          </Header>
@@ -57,12 +79,12 @@ const RightSideDirect = () => {
             <SentMessage templateTheme={templateTheme} />
          </Body>
 
-         <MessageSection>
+         <MessageSection onSubmit={sendTheMessage}>
             <EmojiIcon onClick={() => setShowEmojies(true)}>
                <SentimentSatisfiedAltIcon fontSize="inherit" />
             </EmojiIcon>
 
-            <Input type="text" placeholder="Message..." value={messageValue} onChange={(e) => setMessageValue(e.target.value)} />
+            <Input type="text" placeholder="Message..." value={messageValue} onChange={e => setMessageValue(e.target.value)} />
 
             <SendButton variant="text" size="small" type="submit">
                <SendIcon fontSize="large" />
@@ -73,11 +95,11 @@ const RightSideDirect = () => {
                   <EmojiPicker
                      width="100%"
                      height="100%"
-                     theme={templateTheme === "white" ? "light" : "dark"}
+                     theme={templateTheme === 'white' ? 'light' : 'dark'}
                      skinTonesDisabled={true}
                      searchDisabled={true}
                      suggestedEmojisMode="recent"
-                     onEmojiClick={(emo) => setMessageValue((prev) => prev.concat(emo.emoji))}
+                     onEmojiClick={emo => setMessageValue(prev => prev.concat(emo.emoji))}
                   />
                </EmojiWrapper>
             )}

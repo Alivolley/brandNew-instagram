@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import LeftSideDirect from "../../components/LeftSideDirect/LeftSideDirect";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import { Outlet, useParams } from "react-router-dom";
-import DirectIntroduce from "../../components/DirectIntroduce/DirectIntroduce";
-import { useMediaQuery, useTheme } from "@mui/material";
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import LeftSideDirect from '../../components/LeftSideDirect/LeftSideDirect';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import { Outlet, useParams } from 'react-router-dom';
+import DirectIntroduce from '../../components/DirectIntroduce/DirectIntroduce';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const Direct = () => {
    const { username } = useParams();
    const { templateTheme } = useContext(GeneralInfoContext);
    const theme = useTheme();
-   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
+   const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
 
    return (
       <Wrapper templateTheme={templateTheme}>
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
 
    * {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
       box-sizing: border-box;
    }
 

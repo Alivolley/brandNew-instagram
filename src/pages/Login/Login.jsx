@@ -1,13 +1,13 @@
-import { LoadingButton } from "@mui/lab";
-import { TextField } from "@mui/material";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import RegisterInstagramText from "../../assets/svgs/RegisterInstagramText";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import useLogin from "../../api/login/useLogin";
+import { LoadingButton } from '@mui/lab';
+import { TextField } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import RegisterInstagramText from '../../assets/svgs/RegisterInstagramText';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import useLogin from '../../api/login/useLogin';
 
 const Login = () => {
    const { templateTheme } = useContext(GeneralInfoContext);
@@ -15,16 +15,16 @@ const Login = () => {
 
    const [showPassword, setShowPassword] = useState(false);
 
-   const [emailValue, setEmailValue] = useState("");
-   const [passwordValue, setPasswordValue] = useState("");
+   const [emailValue, setEmailValue] = useState('');
+   const [passwordValue, setPasswordValue] = useState('');
 
    const [emailError, setEmailError] = useState(false);
    const [passwordError, setPasswordError] = useState(false);
 
-   const [emailTextError, setEmailTextError] = useState("");
-   const [passwordTextError, setPasswordTextError] = useState("");
+   const [emailTextError, setEmailTextError] = useState('');
+   const [passwordTextError, setPasswordTextError] = useState('');
 
-   const loginUpHandler = (e) => {
+   const loginUpHandler = e => {
       e.preventDefault();
       if (!emailValue) {
          cleanErrors();
@@ -43,8 +43,8 @@ const Login = () => {
    const cleanErrors = () => {
       setEmailError(false);
       setPasswordError(false);
-      setEmailTextError("");
-      setPasswordTextError("");
+      setEmailTextError('');
+      setPasswordTextError('');
    };
 
    return (
@@ -62,7 +62,7 @@ const Login = () => {
                      variant="outlined"
                      helperText={emailTextError}
                      value={emailValue}
-                     onChange={(e) => setEmailValue(e.target.value)}
+                     onChange={e => setEmailValue(e.target.value)}
                      error={emailError}
                   />
                </Item>
@@ -72,12 +72,12 @@ const Login = () => {
                      label="Password"
                      variant="outlined"
                      helperText={passwordTextError}
-                     type={showPassword ? "text" : "password"}
+                     type={showPassword ? 'text' : 'password'}
                      value={passwordValue}
-                     onChange={(e) => setPasswordValue(e.target.value)}
+                     onChange={e => setPasswordValue(e.target.value)}
                      error={passwordError}
                   />
-                  <VisibleIcon onClick={() => setShowPassword((prev) => !prev)} templateTheme={templateTheme}>
+                  <VisibleIcon onClick={() => setShowPassword(prev => !prev)} templateTheme={templateTheme}>
                      {showPassword ? <VisibilityOffIcon fontSize="inherit" /> : <VisibilityIcon fontSize="inherit" />}
                   </VisibleIcon>
                </Item>
@@ -125,7 +125,7 @@ const Logo = styled.div`
    justify-content: center;
 
    svg {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
    }
 `;
 
@@ -148,12 +148,12 @@ const Item = styled.div`
    }
 
    input {
-      background-color: ${({ templateTheme }) => (templateTheme === "white" ? " rgb(239, 239, 239)" : " rgb(38, 38, 38)")};
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+      background-color: ${({ templateTheme }) => (templateTheme === 'white' ? ' rgb(239, 239, 239)' : ' rgb(38, 38, 38)')};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)')};
    }
 
    label {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(38, 38, 38)" : "rgb(239, 239, 239)")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'rgb(38, 38, 38)' : 'rgb(239, 239, 239)')};
    }
 `;
 
@@ -176,7 +176,7 @@ const VisibleIcon = styled.div`
    top: 1.7rem;
    cursor: pointer;
    font-size: 1.6rem;
-   color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
 `;
 
 const SubmitBtn = styled(LoadingButton)`
@@ -193,7 +193,7 @@ const LoginText = styled.p`
    margin-top: 3rem;
    font-size: 1.5rem;
    text-align: center;
-   color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
 `;
 
 const GotoLogin = styled(Link)`
