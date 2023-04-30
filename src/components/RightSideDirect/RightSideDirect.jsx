@@ -20,26 +20,29 @@ const RightSideDirect = () => {
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
+   let socket = null;
 
-   const socket = io('https://djangoinsta.pythonanywhere.com/direct/peggy_carter/');
+   useEffect(() => {
+      socket = io('https://djangoinsta.pythonanywhere.com/direct/peggy_carter/');
+   }, []);
 
-   socket.on('connect', () => {
+   socket?.on('connect', () => {
       // این وقتی اجرا میشه که کانکشن شکل بگیره
       console.log('connected');
    });
 
-   socket.on('disconnect', () => {
+   socket?.on('disconnect', () => {
       // این وقتی اجرا میشه که کانکشن قطع بشه
       console.log('disConnected');
    });
 
-   socket.on('recived', data => {
+   socket?.on('recived', data => {
       // وقتی که پیامی دریافت میشه اجرا میشه
       console.log('resived message :', data);
    });
 
    const sendTheMessage = () => {
-      socket.emit('send', messageValue);
+      socket?.emit('send', messageValue);
    };
 
    useEffect(() => {
