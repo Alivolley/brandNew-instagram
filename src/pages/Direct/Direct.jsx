@@ -1,28 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import LeftSideDirect from '../../components/LeftSideDirect/LeftSideDirect';
 import GeneralInfoContext from '../../contexts/GeneralInfoContext';
 import { Outlet, useParams } from 'react-router-dom';
 import DirectIntroduce from '../../components/DirectIntroduce/DirectIntroduce';
 import { useMediaQuery, useTheme } from '@mui/material';
+import useAllDirects from '../../api/allDirects/useAllDirects';
 
 const Direct = () => {
    const { username } = useParams();
-   const { templateTheme } = useContext(GeneralInfoContext);
+   const { templateTheme, userInfos } = useContext(GeneralInfoContext);
    const theme = useTheme();
    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+   const [getAllDirectsRequest, loading, allDirects] = useAllDirects();
+
+   useEffect(() => {
+      getAllDirectsRequest();
+   }, []);
 
    return (
       <Wrapper templateTheme={templateTheme}>
          {!isMatch ? (
             <>
-               <LeftSideDirect templateTheme={templateTheme} />
+               <LeftSideDirect templateTheme={templateTheme} allDirects={allDirects} userInfos={userInfos} loading={loading} />
                <Outlet />
             </>
          ) : isMatch && username ? (
             <Outlet />
          ) : isMatch && !username ? (
-            <LeftSideDirect templateTheme={templateTheme} />
+            <LeftSideDirect templateTheme={templateTheme} allDirects={allDirects} userInfos={userInfos} loading={loading} />
          ) : null}
 
          {!username && !isMatch && <DirectIntroduce />}

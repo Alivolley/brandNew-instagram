@@ -1,15 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
-import fkhdrofile from "./../../assets/Images/javad.jpg";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import noProfile from './../../assets/Images/NoProfilePhoto.jpg';
+import { NavLink } from 'react-router-dom';
 
-const DirectUserItem = ({ templateTheme }) => {
+const DirectUserItem = ({ templateTheme, detail }) => {
    return (
-      <Wrapper to={`/direct/some`} templatetheme={templateTheme}>
-         <Image src={fkhdrofile} />
+      <Wrapper to={`/direct/${detail?.user?.username}`} templatetheme={templateTheme}>
+         <Image src={detail?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${detail?.user?.profile_photo}` : noProfile} />
          <Detail>
-            <Username>ali azghandi</Username>
+            <Username>{detail?.user?.username}</Username>
             <LastMessage>has sent you a message</LastMessage>
          </Detail>
       </Wrapper>
@@ -29,7 +28,7 @@ const Wrapper = styled(NavLink)`
    text-decoration: none;
 
    &:hover {
-      background-color: ${({ templatetheme }) => (templatetheme === "white" ? "rgb(239, 239, 239)" : "rgb(38, 38, 38)")};
+      background-color: ${({ templatetheme }) => (templatetheme === 'white' ? 'rgb(239, 239, 239)' : 'rgb(38, 38, 38)')};
    }
 `;
 

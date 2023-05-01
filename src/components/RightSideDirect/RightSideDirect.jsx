@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import noProfile from './../../assets/Images/NoProfilePhoto.jpg';
 import GeneralInfoContext from '../../contexts/GeneralInfoContext';
@@ -10,20 +10,24 @@ import EmojiPicker from 'emoji-picker-react';
 import useOnClickOutside from '../../hooks/useOnclickOutside';
 import SendIcon from '@mui/icons-material/Send';
 import { io } from 'socket.io-client';
+import useUserDirect from '../../api/userDirect/useUserDirect';
 
 const RightSideDirect = () => {
    const [reload, setReload] = useState(false);
    const { templateTheme } = useContext(GeneralInfoContext);
+   const { username } = useParams();
 
    const [showEmojies, setShowEmojies] = useState(false);
    const [messageValue, setMessageValue] = useState('');
+   const [getAllChatRequest, loading, allChats] = useUserDirect(username);
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
    let socket = null;
 
    useEffect(() => {
-      socket = io('https://djangoinsta.pythonanywhere.com/direct/peggy_carter/');
+      getAllChatRequest();
+      socket = io(`https://djangoinsta.pythonanywhere.com/direct/${username}/`);
    }, []);
 
    socket?.on('connect', () => {
@@ -41,7 +45,8 @@ const RightSideDirect = () => {
       console.log('resived message :', data);
    });
 
-   const sendTheMessage = () => {
+   const sendTheMessage = e => {
+      e.preventDefault();
       socket?.emit('send', messageValue);
    };
 
@@ -200,6 +205,10 @@ const Body = styled.div`
    flex-direction: column;
    gap: 1rem;
    overflow: auto;
+
+   @media (max-width: 600px) {
+      padding: 0 1.5rem;
+   }
 `;
 
 const MessageSection = styled.form`

@@ -1,40 +1,27 @@
-import React from "react";
-import styled from "styled-components";
-import SendMessage from "../../assets/svgs/SendMessage";
-import DirectUserItem from "../DirectUserItem/DirectUserItem";
+import React from 'react';
+import styled from 'styled-components';
+import SendMessage from '../../assets/svgs/SendMessage';
+import DirectUserItem from '../DirectUserItem/DirectUserItem';
+import UserListsDirect from '../Skeletons/UserListsDirect/UserListsDirect';
+import DirectLeftSideHeader from '../Skeletons/DirectLeftSideHeader/DirectLeftSideHeader';
 
-const LeftSideDirect = ({ templateTheme }) => {
+const LeftSideDirect = ({ templateTheme, allDirects, userInfos, loading }) => {
    return (
       <Wrapper>
          <Header templateTheme={templateTheme}>
-            <Headerdiv></Headerdiv>
-            <HeaderUsername>ali-azghandi</HeaderUsername>
+            <HeaderDiv></HeaderDiv>
+            <HeaderUsername>{!loading ? userInfos?.username : <DirectLeftSideHeader />}</HeaderUsername>
             <HeaderIcon>
                <SendMessage />
             </HeaderIcon>
          </Header>
 
          <Body templateTheme={templateTheme}>
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
-            <DirectUserItem templateTheme={templateTheme} />
+            {!loading ? (
+               allDirects?.map(direct => <DirectUserItem key={direct.user.id} templateTheme={templateTheme} detail={direct} />)
+            ) : (
+               <UserListsDirect />
+            )}
          </Body>
       </Wrapper>
    );
@@ -77,13 +64,14 @@ const Header = styled.div`
    position: sticky;
    top: 0;
    display: flex;
+   align-items: center;
    justify-content: space-between;
    padding: 1.5rem 2rem;
    border-bottom: 0.1rem solid var(--border-color);
    background-color: ${({ templateTheme }) => templateTheme};
 `;
 
-const Headerdiv = styled.div``;
+const HeaderDiv = styled.div``;
 
 const HeaderUsername = styled.p`
    font-weight: 600;
@@ -98,7 +86,7 @@ const Body = styled.div`
    display: flex;
    flex-direction: column;
 
-   /* .active {
-      background-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgb(239, 239, 239)" : "rgb(38, 38, 38)")};
-   } */
+   .active {
+      background-color: ${({ templateTheme }) => (templateTheme === 'white' ? 'rgb(239, 239, 239)' : 'rgb(38, 38, 38)')};
+   }
 `;
