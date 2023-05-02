@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const UserListsDirect = () => {
-   const testArray = Array.from({ length: 10 }, (_, index) => index);
+   const testArray = Array.from({ length: 6 }, (_, index) => index);
 
    return (
       <Body>
