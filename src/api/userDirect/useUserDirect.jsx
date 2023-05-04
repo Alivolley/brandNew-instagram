@@ -3,19 +3,15 @@ import axiosInstance from '../../libs/axiosInstance';
 import { toast } from 'react-toastify';
 
 const useUserDirect = username => {
-   const [loading, setLoading] = useState(true);
-   const [allChats, setAllChats] = useState([]);
+   const [userData, setUserData] = useState({});
 
-   const getAllChatRequest = () => {
-      setLoading(true);
-
+   const getDirectUserData = () => {
       axiosInstance
          .get(`direct/${username}/`)
          .then(res => {
-            console.log(res);
-            // if (res.status === 200) {
-            //    setAllChats(res.data);
-            // }
+            if (res.status === 200) {
+               setUserData(res.data);
+            }
          })
          .catch(err => {
             console.log(err);
@@ -23,10 +19,9 @@ const useUserDirect = username => {
                autoClose: 5000,
                theme: 'colored',
             });
-         })
-         .finally(() => setLoading(false));
+         });
    };
 
-   return [getAllChatRequest, loading, allChats];
+   return [getDirectUserData, userData];
 };
 export default useUserDirect;

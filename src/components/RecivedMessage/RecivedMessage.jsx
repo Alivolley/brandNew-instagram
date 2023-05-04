@@ -1,14 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import noProfile from "./../../assets/Images/NoProfilePhoto.jpg";
-import dsafd from "./../../assets/Images/ali.png";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import noProfile from './../../assets/Images/NoProfilePhoto.jpg';
+import { Link } from 'react-router-dom';
 
-const RecivedMessage = ({ templateTheme }) => {
+const RecivedMessage = ({ templateTheme, userData }) => {
    return (
       <Wrapper>
-         <ImageWrapper to={`/direct`}>
-            <Image src={dsafd} />
+         <ImageWrapper to={`/profile/${userData?.user?.username}/posts`}>
+            <Image src={userData?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userData?.user?.profile_photo}` : noProfile} />
          </ImageWrapper>
          <Text templateTheme={templateTheme} s>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum odio fugiat quas voluptate nesciunt recusandae nulla ullam, dolores
@@ -45,7 +44,7 @@ const Text = styled.p`
    width: fit-content;
    max-width: 75%;
    border: 0.1rem solid;
-   border-color: ${({ templateTheme }) => (templateTheme === "white" ? "rgba(0, 0, 0, 0.12)" : "rgba(256,256,256,0.2)")};
+   border-color: ${({ templateTheme }) => (templateTheme === 'white' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(256,256,256,0.2)')};
    padding: 1.2rem 2rem;
    border-radius: 3rem;
    font-size: 1.35rem;

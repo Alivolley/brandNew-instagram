@@ -1,19 +1,19 @@
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ModeCommentIcon from "@mui/icons-material/ModeComment";
-import MultyplyPosts from "./../../assets/svgs/MultyplyPosts";
-import IsVideoIcon from "./../../assets/svgs/IsVideoIcon";
-import ChosenPost from "../../pages/ChosenPost/ChosenPost";
+import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import MultyplyPosts from './../../assets/svgs/MultyplyPosts';
+import IsVideoIcon from './../../assets/svgs/IsVideoIcon';
+import ChosenPost from '../../pages/ChosenPost/ChosenPost';
 
 const PostsCover = ({ detail }) => {
-   const [containerHeight, setContainerHeight] = useState();
+   const [containerHeight, setContainerHeight] = useState(100);
    const [showPost, setShowPost] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
    const containerRef = useRef();
 
    if (containerRef.current) {
-      const observer = new ResizeObserver((entries) => setContainerHeight(entries[0].contentRect.width));
+      const observer = new ResizeObserver(entries => setContainerHeight(entries[0].contentRect.width));
       observer.observe(containerRef.current);
    }
 
@@ -23,16 +23,16 @@ const PostsCover = ({ detail }) => {
       <>
          <Wrapper
             containerHeight={containerHeight}
-            onLoad={(e) => setContainerHeight(e.target.width)}
+            onLoad={e => setContainerHeight(e.target.width)}
             ref={containerRef}
             onClick={() => {
                setShowPost(true);
                setChosenDetail(detail);
             }}
          >
-            <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file?.extension === "video" ? <IsVideoIcon /> : null}</IconWrapper>
+            <IconWrapper>{detail?.multi_files ? <MultyplyPosts /> : detail?.file?.extension === 'video' ? <IsVideoIcon /> : null}</IconWrapper>
 
-            {detail?.file?.extension === "image" ? (
+            {detail?.file?.extension === 'image' ? (
                <ImageCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} />
             ) : (
                <VideoCover src={`https://djangoinsta.pythonanywhere.com/${detail?.file?.page}`} preload="metadata" />

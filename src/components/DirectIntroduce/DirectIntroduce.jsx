@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import DirectIntroduceIcon from "../../assets/svgs/DirectIntroduceIcon";
-import { Button } from "@mui/material";
+import React from 'react';
+import styled from 'styled-components';
+import DirectIntroduceIcon from '../../assets/svgs/DirectIntroduceIcon';
+// import { Button } from '@mui/material';
 
 const DirectIntroduce = () => {
    return (
@@ -10,9 +10,9 @@ const DirectIntroduce = () => {
             <DirectIntroduceIcon />
             <Title>Your Messages</Title>
             <Text>Send private messages to a friends</Text>
-            <ButtonSendMessage variant="contained" size="small">
+            {/* <ButtonSendMessage variant="contained" size="small">
                Send messages
-            </ButtonSendMessage>
+            </ButtonSendMessage> */}
          </Body>
       </Wrapper>
    );
@@ -82,8 +82,8 @@ const Text = styled.p`
    color: gray;
 `;
 
-const ButtonSendMessage = styled(Button)`
-   text-transform: none !important;
-   font-size: 1.3rem !important;
-   margin-top: 1rem !important;
-`;
+// const ButtonSendMessage = styled(Button)`
+//    text-transform: none !important;
+//    font-size: 1.3rem !important;
+//    margin-top: 1rem !important;
+// `;

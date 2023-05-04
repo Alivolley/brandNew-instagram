@@ -9,45 +9,60 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import EmojiPicker from 'emoji-picker-react';
 import useOnClickOutside from '../../hooks/useOnclickOutside';
 import SendIcon from '@mui/icons-material/Send';
-import { io } from 'socket.io-client';
 import useUserDirect from '../../api/userDirect/useUserDirect';
+// import ReconnectingWebSocket from 'reconnecting-websocket';
 
 const RightSideDirect = () => {
    const [reload, setReload] = useState(false);
    const { templateTheme } = useContext(GeneralInfoContext);
    const { username } = useParams();
 
-   const [showEmojies, setShowEmojies] = useState(false);
+   const [showEmojis, setShowEmojis] = useState(false);
    const [messageValue, setMessageValue] = useState('');
-   const [getAllChatRequest, loading, allChats] = useUserDirect(username);
+   const [getDirectUserData, userData] = useUserDirect(username);
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
-   let socket = null;
+   const chatSocketRef = useRef(null);
 
    useEffect(() => {
-      getAllChatRequest();
-      socket = io(`https://djangoinsta.pythonanywhere.com/direct/${username}/`);
+      getDirectUserData(chatSocketRef);
    }, []);
 
-   socket?.on('connect', () => {
-      // این وقتی اجرا میشه که کانکشن شکل بگیره
-      console.log('connected');
-   });
+   // useEffect(() => {
+   //    if (chatSocketRef?.current) {
+   //       chatSocketRef.current = new ReconnectingWebSocket(`wss://djangoinsta.pythonanywhere.com/ws/chat/${username}/`);
 
-   socket?.on('disconnect', () => {
-      // این وقتی اجرا میشه که کانکشن قطع بشه
-      console.log('disConnected');
-   });
+   //       chatSocketRef.current.onopen = () => {
+   //          chatSocketRef.current.send(JSON.stringify({ command: 'fetch_message', chat_id: userData?.id }));
+   //       };
 
-   socket?.on('recived', data => {
-      // وقتی که پیامی دریافت میشه اجرا میشه
-      console.log('resived message :', data);
-   });
+   //       chatSocketRef.current.onmessage = e => {
+   //          console.log(e);
+   //       };
+
+   //       chatSocketRef.current.onclose = () => {
+   //          console.error('Chat socket closed unexpectedly');
+   //       };
+
+   //       // Clean up when the component unmounts
+   //       return () => {
+   //          chatSocketRef.current.close();
+   //       };
+   //    }
+   // }, [chatSocketRef?.current]);
 
    const sendTheMessage = e => {
       e.preventDefault();
-      socket?.emit('send', messageValue);
+
+      // chatSocketRef.current.send(
+      //    JSON.stringify({
+      //       message: messageValue,
+      //       command: 'new_message',
+      //       chat_id: userData?.id,
+      //       username,
+      //    })
+      // );
    };
 
    useEffect(() => {
@@ -55,40 +70,43 @@ const RightSideDirect = () => {
       element.scrollTop = element.scrollHeight;
    }, [reload]);
 
-   useOnClickOutside(emojiRef, () => setShowEmojies(false));
+   useOnClickOutside(emojiRef, () => setShowEmojis(false));
 
    return (
       <Wrapper>
          <Header templateTheme={templateTheme}>
-            <ImageWrapper to={`/direct`}>
-               <Image src={noProfile} onLoad={() => setReload(prev => !prev)} />
+            <ImageWrapper to={`/profile/${username}/posts`}>
+               <Image
+                  src={userData?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userData?.user?.profile_photo}` : noProfile}
+                  onLoad={() => setReload(prev => !prev)}
+               />
             </ImageWrapper>
-            <HeaderUsername>javad najjar</HeaderUsername>
+            <HeaderUsername to={`/profile/${username}/posts`}>{username}</HeaderUsername>
          </Header>
 
          <Body ref={bodyRef}>
-            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
             <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
             <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
             <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
             <SentMessage templateTheme={templateTheme} />
             <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
+            <SentMessage templateTheme={templateTheme} />
+            <SentMessage templateTheme={templateTheme} />
+            <RecivedMessage templateTheme={templateTheme} userData={userData} />
             <SentMessage templateTheme={templateTheme} />
             <SentMessage templateTheme={templateTheme} />
          </Body>
 
          <MessageSection onSubmit={sendTheMessage}>
-            <EmojiIcon onClick={() => setShowEmojies(true)}>
+            <EmojiIcon onClick={() => setShowEmojis(true)}>
                <SentimentSatisfiedAltIcon fontSize="inherit" />
             </EmojiIcon>
 
@@ -98,7 +116,7 @@ const RightSideDirect = () => {
                <SendIcon fontSize="large" />
             </SendButton>
 
-            {showEmojies && (
+            {showEmojis && (
                <EmojiWrapper ref={emojiRef}>
                   <EmojiPicker
                      width="100%"
