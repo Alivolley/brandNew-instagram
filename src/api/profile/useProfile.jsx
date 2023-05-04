@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../libs/axiosInstance";
-import { toast } from "react-toastify";
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../libs/axiosInstance';
+import { toast } from 'react-toastify';
 
-const useProfile = (username) => {
+const useProfile = username => {
    const [loading, setLoading] = useState(true);
    const [profileInfos, setProfileInfos] = useState({});
 
@@ -13,16 +13,16 @@ const useProfile = (username) => {
    const profileDetailRequest = () => {
       axiosInstance
          .get(`accounts/profile/${username}/`)
-         .then((res) => {
+         .then(res => {
             if (res.status === 200) {
                setProfileInfos(res.data);
             }
          })
-         .catch((err) => {
+         .catch(err => {
             console.log(err);
-            toast.error("Somthing went wrong", {
+            toast.error('Somthing went wrong', {
                autoClose: 5000,
-               theme: "colored",
+               theme: 'colored',
             });
          })
          .finally(() => setLoading(false));

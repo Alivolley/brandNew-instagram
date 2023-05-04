@@ -1,20 +1,22 @@
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import React, { useState } from "react";
-import styled from "styled-components";
-import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
-import { Link } from "react-router-dom";
-import ChangePhotoModal from "../Modals/ChangePhotoModal/ChangePhotoModal";
-import FollowersModal from "../Modals/FollowersModal/FollowersModal";
-import FollowingsModal from "../Modals/FollowingsModal/FollowingsModal";
-import { LoadingButton } from "@mui/lab";
-import useFollow from "../../api/follow/useFollow";
+import { Grid, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import NoProfilePhoto from './../../assets/Images/NoProfilePhoto.jpg';
+import { Link } from 'react-router-dom';
+import ChangePhotoModal from '../Modals/ChangePhotoModal/ChangePhotoModal';
+import FollowersModal from '../Modals/FollowersModal/FollowersModal';
+import FollowingsModal from '../Modals/FollowingsModal/FollowingsModal';
+import { LoadingButton } from '@mui/lab';
+import useFollow from '../../api/follow/useFollow';
+import CommonFollowersModal from '../Modals/CommonFollowersModal/CommonFollowersModal';
 
 const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) => {
    const theme = useTheme();
-   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
    const [showChangePhotoModal, setShowChangePhotoModal] = useState(false);
    const [showFollowersModal, setShowFollowersModal] = useState(false);
    const [showFollowingsModal, setShowFollowingsModal] = useState(false);
+   const [showCommonModal, setShowCommonModal] = useState(false);
    const [followRequest, loading] = useFollow();
 
    // console.log(profileInfos);
@@ -68,6 +70,47 @@ const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) =>
                   <BioWrapper>
                      <Name>{profileInfos?.name}</Name>
                      <Bio>{profileInfos?.bio}</Bio>
+
+                     {!profileInfos?.is_owner && profileInfos?.followed_by?.length && (
+                        <CommonFollowers onClick={() => setShowCommonModal(true)}>
+                           <CommonFollowersText>Followed by</CommonFollowersText>
+                           <CommonFollowersBody>
+                              {profileInfos?.followed_by.map((follower, index) =>
+                                 index === 0 ? (
+                                    <CommonFollowersItem
+                                       src={
+                                          follower?.profile_photo
+                                             ? `https://djangoinsta.pythonanywhere.com${follower?.profile_photo}`
+                                             : NoProfilePhoto
+                                       }
+                                       key={follower?.id}
+                                    />
+                                 ) : index === 1 ? (
+                                    <CommonFollowersItemSecond
+                                       src={
+                                          follower?.profile_photo
+                                             ? `https://djangoinsta.pythonanywhere.com${follower?.profile_photo}`
+                                             : NoProfilePhoto
+                                       }
+                                       key={follower?.id}
+                                    />
+                                 ) : index === 2 ? (
+                                    <CommonFollowersItemThird
+                                       src={
+                                          follower?.profile_photo
+                                             ? `https://djangoinsta.pythonanywhere.com${follower?.profile_photo}`
+                                             : NoProfilePhoto
+                                       }
+                                       key={follower?.id}
+                                    />
+                                 ) : null
+                              )}
+                           </CommonFollowersBody>
+                           {profileInfos?.followed_by?.length > 3 && (
+                              <CommonFollowersText>and {profileInfos?.followed_by?.length - 3} more</CommonFollowersText>
+                           )}
+                        </CommonFollowers>
+                     )}
                   </BioWrapper>
                </Discribtion>
             </Grid>
@@ -90,6 +133,14 @@ const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) =>
          {showFollowingsModal && (
             <FollowingsModal show={showFollowingsModal} handleClose={() => setShowFollowingsModal(false)} templateTheme={templateTheme} />
          )}
+         {showCommonModal && (
+            <CommonFollowersModal
+               show={showCommonModal}
+               handleClose={() => setShowCommonModal(false)}
+               templateTheme={templateTheme}
+               commonInfos={profileInfos?.followed_by}
+            />
+         )}
       </Wrapper>
    );
 };
@@ -97,11 +148,11 @@ const ProfileHeader = ({ templateTheme, profileInfos, profileDetailRequest }) =>
 export default ProfileHeader;
 
 const Wrapper = styled.div`
-   margin-top: ${({ isMatch }) => (isMatch ? "0" : "3rem")};
-   color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+   margin-top: ${({ isMatch }) => (isMatch ? '0' : '3rem')};
+   color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
 
    button {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
    }
 `;
 
@@ -223,6 +274,43 @@ const BioWrapper = styled.div`
    @media (max-width: 400px) {
       width: 25rem;
    }
+`;
+
+const CommonFollowers = styled.div`
+   display: flex;
+   text-align: center;
+   cursor: pointer;
+   margin-top: 2.5rem;
+   width: fit-content;
+`;
+
+const CommonFollowersText = styled.p`
+   font-size: 1.2rem;
+`;
+
+const CommonFollowersBody = styled.div`
+   display: flex;
+   align-items: center;
+   margin-left: 1rem;
+`;
+
+const CommonFollowersItem = styled.img`
+   position: relative;
+   width: 2rem;
+   height: 2rem;
+   border-radius: 50%;
+   object-fit: contain;
+   background-color: black;
+   border: 0.2rem solid gray;
+   box-sizing: content-box;
+`;
+
+const CommonFollowersItemSecond = styled(CommonFollowersItem)`
+   left: -0.5rem;
+`;
+
+const CommonFollowersItemThird = styled(CommonFollowersItem)`
+   left: -1rem;
 `;
 
 const Name = styled.h4`

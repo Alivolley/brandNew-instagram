@@ -23,10 +23,10 @@ const RightSideDirect = () => {
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
-   const chatSocketRef = useRef(null);
+   // const chatSocketRef = useRef(null);
 
    useEffect(() => {
-      getDirectUserData(chatSocketRef);
+      getDirectUserData();
    }, []);
 
    // useEffect(() => {
