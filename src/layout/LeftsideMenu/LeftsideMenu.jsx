@@ -1,22 +1,23 @@
-import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import SearchIcon from "../../assets/svgs/SearchIcon";
-import HomeIcon from "./../../assets/svgs/HomeIcon";
-import ExploreIcon from "./../../assets/svgs/ExploreIcon";
-import DirectIcon from "./../../assets/svgs/DirectIcon";
-import ActivityIcon from "./../../assets/svgs/ActivityIcon";
-import CreatePostIcon from "./../../assets/svgs/CreatePostIcon";
-import InstagramText from "./../../assets/svgs/InstagramText";
-import ThemeChangeIcon from "./../../assets/svgs/ThemeChangeIcon";
-import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
-import MoreIcon from "../../assets/svgs/MoreIcon";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import SidebarToggleMenu from "../../components/SidebarToggleMenu/SidebarToggleMenu";
-import LeftMenuProfile from "../../components/Skeletons/LeftMenuProfile/LeftMenuProfile";
-import NotificationDrawer from "../../components/NotificationDrawer/NotificationDrawer";
-import SearchDrawer from "../../components/SearchDrawer/SearchDrawer";
-import { Backdrop, CircularProgress } from "@mui/material";
+import React, { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import SearchIcon from '../../assets/svgs/SearchIcon';
+import HomeIcon from './../../assets/svgs/HomeIcon';
+import ExploreIcon from './../../assets/svgs/ExploreIcon';
+import DirectIcon from './../../assets/svgs/DirectIcon';
+import ActivityIcon from './../../assets/svgs/ActivityIcon';
+import CreatePostIcon from './../../assets/svgs/CreatePostIcon';
+import InstagramText from './../../assets/svgs/InstagramText';
+import ThemeChangeIcon from './../../assets/svgs/ThemeChangeIcon';
+import NoProfilePhoto from './../../assets/Images/NoProfilePhoto.jpg';
+import MoreIcon from '../../assets/svgs/MoreIcon';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import SidebarToggleMenu from '../../components/SidebarToggleMenu/SidebarToggleMenu';
+import LeftMenuProfile from '../../components/Skeletons/LeftMenuProfile/LeftMenuProfile';
+import NotificationDrawer from '../../components/NotificationDrawer/NotificationDrawer';
+import SearchDrawer from '../../components/SearchDrawer/SearchDrawer';
+import GroupIcon from '@mui/icons-material/Group';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const LeftsideMenu = ({ userInfoLoading }) => {
    const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
@@ -26,9 +27,9 @@ const LeftsideMenu = ({ userInfoLoading }) => {
    const [logoutLoading, setLogoutLoading] = useState(false);
 
    const changeTheme = () => {
-      const foundedTheme = localStorage.getItem("theme");
-      setTemplateTheme(() => (foundedTheme === "white" ? "black" : "white"));
-      localStorage.setItem("theme", foundedTheme === "white" ? "black" : "white");
+      const foundedTheme = localStorage.getItem('theme');
+      setTemplateTheme(() => (foundedTheme === 'white' ? 'black' : 'white'));
+      localStorage.setItem('theme', foundedTheme === 'white' ? 'black' : 'white');
    };
 
    return (
@@ -79,6 +80,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                   </Icon>
                   <Text>Create</Text>
                </LinkedItem>
+
                {!userInfoLoading ? (
                   <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
                      <ProfilePhoto
@@ -92,6 +94,13 @@ const LeftsideMenu = ({ userInfoLoading }) => {
             </Links>
 
             <MoreOptions>
+               <LinkedItem to="/developers">
+                  <Icon>
+                     <GroupIcon fontSize="large" />
+                  </Icon>
+                  <Text>Developers</Text>
+               </LinkedItem>
+
                <BottunItem onClick={changeTheme}>
                   <Icon>
                      <ThemeChangeIcon />
@@ -99,7 +108,7 @@ const LeftsideMenu = ({ userInfoLoading }) => {
                   <Text>Change theme</Text>
                </BottunItem>
 
-               <BottunItem onClick={() => setIsToggleMenuOpen((prev) => !prev)}>
+               <BottunItem onClick={() => setIsToggleMenuOpen(prev => !prev)}>
                   <Icon>
                      <MoreIcon />
                   </Icon>
@@ -135,8 +144,8 @@ const Leftside = styled.div`
 
    svg,
    p {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
-      fill: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
+      fill: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
    }
 `;
 
@@ -202,8 +211,12 @@ const ProfilePhoto = styled.img`
 `;
 
 const MoreOptions = styled.div`
-   margin-top: 13rem;
+   margin-top: 10rem;
    display: flex;
    flex-direction: column;
    gap: 2rem;
+
+   .active {
+      font-weight: 700;
+   }
 `;

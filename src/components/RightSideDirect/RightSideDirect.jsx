@@ -10,6 +10,7 @@ import EmojiPicker from 'emoji-picker-react';
 import useOnClickOutside from '../../hooks/useOnclickOutside';
 import SendIcon from '@mui/icons-material/Send';
 import useUserDirect from '../../api/userDirect/useUserDirect';
+import DirectMessagesSkeleton from '../Skeletons/DirectMessagesSkeleton/DirectMessagesSkeleton';
 // import ReconnectingWebSocket from 'reconnecting-websocket';
 
 const RightSideDirect = () => {
@@ -19,7 +20,7 @@ const RightSideDirect = () => {
 
    const [showEmojis, setShowEmojis] = useState(false);
    const [messageValue, setMessageValue] = useState('');
-   const [getDirectUserData, userData] = useUserDirect(username);
+   const [getDirectUserData, userData, loading] = useUserDirect(username);
 
    const bodyRef = useRef(null);
    const emojiRef = useRef();
@@ -27,7 +28,7 @@ const RightSideDirect = () => {
 
    useEffect(() => {
       getDirectUserData();
-   }, []);
+   }, [username]);
 
    // useEffect(() => {
    //    if (chatSocketRef?.current) {
@@ -85,24 +86,17 @@ const RightSideDirect = () => {
          </Header>
 
          <Body ref={bodyRef}>
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
-            <RecivedMessage templateTheme={templateTheme} userData={userData} />
-            <SentMessage templateTheme={templateTheme} />
-            <SentMessage templateTheme={templateTheme} />
+            {!loading ? (
+               userData?.messages?.map((message, index) =>
+                  message.is_author ? (
+                     <SentMessage key={index} templateTheme={templateTheme} content={message.content} />
+                  ) : (
+                     <RecivedMessage key={index} templateTheme={templateTheme} userData={userData} content={message.content} />
+                  )
+               )
+            ) : (
+               <DirectMessagesSkeleton />
+            )}
          </Body>
 
          <MessageSection onSubmit={sendTheMessage}>

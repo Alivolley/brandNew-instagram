@@ -3,9 +3,11 @@ import axiosInstance from '../../libs/axiosInstance';
 import { toast } from 'react-toastify';
 
 const useUserDirect = username => {
+   const [loading, setLoading] = useState(true);
    const [userData, setUserData] = useState({});
 
    const getDirectUserData = () => {
+      setLoading(true);
       axiosInstance
          .get(`direct/${username}/`)
          .then(res => {
@@ -19,9 +21,10 @@ const useUserDirect = username => {
                autoClose: 5000,
                theme: 'colored',
             });
-         });
+         })
+         .finally(() => setLoading(false));
    };
 
-   return [getDirectUserData, userData];
+   return [getDirectUserData, userData, loading];
 };
 export default useUserDirect;

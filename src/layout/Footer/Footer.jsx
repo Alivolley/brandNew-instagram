@@ -1,22 +1,23 @@
-import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import CreatePostIcon from "../../assets/svgs/CreatePostIcon";
-import DirectIcon from "../../assets/svgs/DirectIcon";
-import ExploreIcon from "../../assets/svgs/ExploreIcon";
-import HomeIcon from "../../assets/svgs/HomeIcon";
-import ThemeChangeIcon from "../../assets/svgs/ThemeChangeIcon";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import NoProfilePhoto from "./../../assets/Images/NoProfilePhoto.jpg";
-import FooterProfile from "../../components/Skeletons/FooterProfile/FooterProfile";
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import CreatePostIcon from '../../assets/svgs/CreatePostIcon';
+import DirectIcon from '../../assets/svgs/DirectIcon';
+import ExploreIcon from '../../assets/svgs/ExploreIcon';
+import HomeIcon from '../../assets/svgs/HomeIcon';
+import ThemeChangeIcon from '../../assets/svgs/ThemeChangeIcon';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import NoProfilePhoto from './../../assets/Images/NoProfilePhoto.jpg';
+import FooterProfile from '../../components/Skeletons/FooterProfile/FooterProfile';
+import GroupIcon from '@mui/icons-material/Group';
 
 const Footer = ({ userInfoLoading }) => {
    const { setTemplateTheme, templateTheme, userInfos } = useContext(GeneralInfoContext);
 
    const changeTheme = () => {
-      const foundedTheme = localStorage.getItem("theme");
-      setTemplateTheme(() => (foundedTheme === "white" ? "black" : "white"));
-      localStorage.setItem("theme", foundedTheme === "white" ? "black" : "white");
+      const foundedTheme = localStorage.getItem('theme');
+      setTemplateTheme(() => (foundedTheme === 'white' ? 'black' : 'white'));
+      localStorage.setItem('theme', foundedTheme === 'white' ? 'black' : 'white');
    };
 
    return (
@@ -50,6 +51,13 @@ const Footer = ({ userInfoLoading }) => {
                <ThemeChangeIcon />
             </Icon>
          </BottunItem>
+
+         <LinkedItem to="/developers">
+            <Icon>
+               <GroupIcon fontSize="inherit" />
+            </Icon>
+         </LinkedItem>
+
          {!userInfoLoading ? (
             <LinkedItem to={`/profile/${userInfos?.username}/posts`}>
                <ProfilePhoto src={userInfos?.profile_photo ? `https://djangoinsta.pythonanywhere.com/${userInfos.profile_photo}` : NoProfilePhoto} />
@@ -76,8 +84,8 @@ const Wrapper = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
 
    svg {
-      color: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
-      fill: ${({ templateTheme }) => (templateTheme === "white" ? "black" : "white")};
+      color: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
+      fill: ${({ templateTheme }) => (templateTheme === 'white' ? 'black' : 'white')};
    }
 `;
 
@@ -96,6 +104,7 @@ const LinkedItem = styled(NavLink)`
 
 const Icon = styled.div`
    transition: all 0.15s;
+   font-size: 2.4rem;
 `;
 
 const BottunItem = styled.button`

@@ -1,13 +1,12 @@
-import React, { useContext, useRef } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import SavedIcon from "../../assets/svgs/SavedIcon";
-import SettingIcon from "../../assets/svgs/SettingIcon";
-import GeneralInfoContext from "../../contexts/GeneralInfoContext";
-import GroupIcon from "@mui/icons-material/Group";
-import useOnClickOutside from "../../hooks/useOnclickOutside";
-import MoreOptionsLeftMenu from "../Skeletons/MoreOptionsLeftMenu/MoreOptionsLeftMenu";
-import useLogout from "../../api/logout/useLogout";
+import React, { useContext, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import SavedIcon from '../../assets/svgs/SavedIcon';
+import SettingIcon from '../../assets/svgs/SettingIcon';
+import GeneralInfoContext from '../../contexts/GeneralInfoContext';
+import useOnClickOutside from '../../hooks/useOnclickOutside';
+import MoreOptionsLeftMenu from '../Skeletons/MoreOptionsLeftMenu/MoreOptionsLeftMenu';
+import useLogout from '../../api/logout/useLogout';
 
 const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading, setLogoutLoading }) => {
    const { templateTheme, userInfos } = useContext(GeneralInfoContext);
@@ -40,12 +39,6 @@ const SidebarToggleMenu = ({ isOpen, closeMenu, userInfoLoading, setLogoutLoadin
             ) : (
                <MoreOptionsLeftMenu />
             )}
-            <LinkedItem to="/developers">
-               <Text>Developers</Text>
-               <Icon>
-                  <GroupIcon fontSize="large" />
-               </Icon>
-            </LinkedItem>
 
             <BottunItem onClick={logoutHandler} disabled={loading}>
                <Text>Logout</Text>
@@ -63,7 +56,7 @@ const Wrapper = styled.div`
    background-color: ${({ templateTheme }) => templateTheme};
    border: 0.1rem solid var(--border-color);
    padding: 3rem;
-   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
 
 const Links = styled.div`

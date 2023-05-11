@@ -3,16 +3,13 @@ import styled from 'styled-components';
 import noProfile from './../../assets/Images/NoProfilePhoto.jpg';
 import { Link } from 'react-router-dom';
 
-const RecivedMessage = ({ templateTheme, userData }) => {
+const RecivedMessage = ({ templateTheme, userData, content }) => {
    return (
       <Wrapper>
          <ImageWrapper to={`/profile/${userData?.user?.username}/posts`}>
             <Image src={userData?.user?.profile_photo ? `https://djangoinsta.pythonanywhere.com${userData?.user?.profile_photo}` : noProfile} />
          </ImageWrapper>
-         <Text templateTheme={templateTheme} s>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum odio fugiat quas voluptate nesciunt recusandae nulla ullam, dolores
-            ducimus dicta exercitationem porro quos, iste sint, error repellat veritatis rerum distinctio?
-         </Text>
+         <Text templateTheme={templateTheme}>{content}</Text>
       </Wrapper>
    );
 };
