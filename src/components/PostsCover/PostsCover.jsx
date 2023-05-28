@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
@@ -7,24 +7,14 @@ import IsVideoIcon from './../../assets/svgs/IsVideoIcon';
 import ChosenPost from '../../pages/ChosenPost/ChosenPost';
 
 const PostsCover = ({ detail }) => {
-   const [containerHeight, setContainerHeight] = useState(100);
    const [showPost, setShowPost] = useState(false);
    const [chosenDetail, setChosenDetail] = useState({});
-   const containerRef = useRef();
-
-   if (containerRef.current) {
-      const observer = new ResizeObserver(entries => setContainerHeight(entries[0].contentRect.width));
-      observer.observe(containerRef.current);
-   }
 
    // console.log(detail?.file.page);
 
    return (
       <>
          <Wrapper
-            containerHeight={containerHeight}
-            onLoad={e => setContainerHeight(e.target.width)}
-            ref={containerRef}
             onClick={() => {
                setShowPost(true);
                setChosenDetail(detail);
@@ -68,8 +58,8 @@ export default PostsCover;
 const Wrapper = styled.div`
    width: 100%;
    position: relative;
-   height: ${({ containerHeight }) => `${containerHeight}px`};
    cursor: pointer;
+   aspect-ratio: 1 / 1;
 
    &:hover .shadow-color {
       display: flex;

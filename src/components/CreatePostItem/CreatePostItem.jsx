@@ -1,30 +1,16 @@
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import React from 'react';
+import styled from 'styled-components';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const CreatePostItem = ({ detail, setChosenFiles, setChosenFilesUrl }) => {
-   // eslint-disable-next-line no-unused-vars
-   const [reload, setReload] = useState(false);
-   const [containerHeight, setContainerHeight] = useState();
-   const containerRef = useRef();
-
-   if (containerRef.current) {
-      const observer = new ResizeObserver((entries) => setContainerHeight(entries[0].contentRect.width));
-      observer.observe(containerRef.current);
-   }
-
    const deleteHandler = () => {
-      setChosenFilesUrl((prev) => prev.filter((url) => url !== detail));
-      setChosenFiles((prev) => prev.filter((item) => item !== detail.mainFile));
+      setChosenFilesUrl(prev => prev.filter(url => url !== detail));
+      setChosenFiles(prev => prev.filter(item => item !== detail.mainFile));
    };
 
    return (
-      <Wrapper containerHeight={containerHeight} onLoad={(e) => setContainerHeight(e.target.width)} ref={containerRef} onClick={deleteHandler}>
-         {detail.extention.includes("image") ? (
-            <Image src={detail.source} onLoadedData={() => setReload((prev) => !prev)} />
-         ) : (
-            <Video src={detail.source} onLoadedData={() => setReload((prev) => !prev)} />
-         )}
+      <Wrapper onClick={deleteHandler}>
+         {detail.extention.includes('image') ? <Image src={detail.source} /> : <Video src={detail.source} />}
 
          <CoverShadow className="delete-cover">
             <DeleteForeverIcon fontSize="inherit" color="inherit" />
@@ -38,9 +24,9 @@ export default CreatePostItem;
 const Wrapper = styled.div`
    width: 100%;
    position: relative;
-   height: ${({ containerHeight }) => `${containerHeight}px`};
    border: 0.1rem solid var(--border-color);
    cursor: pointer;
+   aspect-ratio: 1 / 1;
 
    &:hover .delete-cover {
       display: flex;
